@@ -21,7 +21,7 @@ module.exports = {
         alias: {
             Main: "./client/app/components/main.jsx",
             Login: "./client/app/components/login.jsx",
-            MainContainer: "./client/app/components/MainContainer.jsx",
+            Chat: "./client/app/components/chat.jsx",
             UIstore: "./client/app/store/UIstore.js",
             applicationStyles: "./client/app/styles/app.scss",
             snowStyle: "./client/app/styles/quill.snow.scss",

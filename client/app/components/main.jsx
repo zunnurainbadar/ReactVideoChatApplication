@@ -5,9 +5,8 @@ import RaisedButton from "material-ui/RaisedButton";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import { cyan500 } from "material-ui/styles/colors";
 import { greenA400 } from "material-ui/styles/colors";
-import Toolbar from "./toolbar";
+import Chat from "./chat";
 import Login from "./login.jsx";
-import MainContainer from "./MainContainer";
 // This replaces the textColor value on the palette
 // and then update the keys for each component that depends on it.
 // More on Colors: http://www.material-ui.com/#/customization/colors

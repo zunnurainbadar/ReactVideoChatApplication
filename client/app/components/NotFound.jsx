@@ -7,7 +7,6 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import AppBar from "material-ui/AppBar";
 import IconButton from "material-ui/IconButton";
 import IconMenu from "material-ui/IconMenu";
-import Toolbar from "./toolbar.jsx";
 import Store from "../store/UIstore.js";
 import { observer } from "mobx-react";
 import getMuiTheme from "material-ui/styles/getMuiTheme";

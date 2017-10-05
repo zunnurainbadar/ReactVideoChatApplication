@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 const style = {
   height: "100%"
 };
-export default class MainContainer extends React.Component {
+export default class Chat extends React.Component {
   constructor() {
     super();
     this.state = {};
