@@ -92,12 +92,20 @@ boot(app, __dirname, function(err) {
         });
         //For Getting all conversations
         socket.on('gettingConversation', function(data) {
-            console.log("This is data from client ", data.to);
             app.models.Conversations.find({ where: { userOne: data.username } }, function(err, _conversations) {
                 if (err) throw err;
                 else {
-                    console.log("This is user's details", _conversations);
                     io.sockets.emit(data.to + 'myConversations', _conversations)
+                }
+            })
+        });
+        //For Getting Messages of selected conversation
+        socket.on('gettingMessages', function(data) {
+            console.log("THis is cid ", data.conv.cid);
+            app.models.chatMessages.find({ where: { cid: data.conv.cid } }, function(err, _messages) {
+                if (err) throw err;
+                else {
+                    io.sockets.emit(data.to + 'myMessages', _messages)
                 }
             })
         });

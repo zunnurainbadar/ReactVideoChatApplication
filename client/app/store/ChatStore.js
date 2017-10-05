@@ -2,6 +2,8 @@ import mobx, { observable } from "mobx";
 
 class ChatStore {
     @observable conversations = [];
+    @observable conversationSelected = {};
+    @observable messages = [];
     // @observable fullscreen = !
 }
 
