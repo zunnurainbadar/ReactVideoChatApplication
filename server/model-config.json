@@ -38,5 +38,13 @@
   "allUsers": {
     "dataSource": "ReactMessengerHL",
     "public": true
+  },
+  "conversations": {
+    "dataSource": "ReactMessengerHL",
+    "public": true
+  },
+  "chatMessages": {
+    "dataSource": "ReactMessengerHL",
+    "public": true
   }
 }
