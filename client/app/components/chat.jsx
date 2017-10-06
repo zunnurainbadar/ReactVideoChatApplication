@@ -26,6 +26,12 @@ export default class Chat extends React.Component {
     socket.on(username+"myConversations",function(data){
       console.log("This is conversation coming in my conversations ", data);
       ChatStore.conversations = data;
+      ChatStore.conversationSelected =data[0]; 
+      socket.emit('gettingMessages',{to:username,conv:ChatStore.conversationSelected});
+       socket.on(username+"myMessages",function(data){
+    console.log("These are messages ",data);
+    ChatStore.messages = data;
+  })
     })
 
   } 
