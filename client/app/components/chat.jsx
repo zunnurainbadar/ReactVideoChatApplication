@@ -52,9 +52,11 @@ socket.on(UserStore.user.username+"messageSent",function(data){
   } 
   
   btnConversation = conv => {
+    //Selected conversation
   ChatStore.conversationSelected = conv;
 //Emittin getting messages
       socket.emit('gettingMessages',{to:UserStore.user.username,conv:conv});
+      //Receiving messsages on selecting conversation
   socket.on(UserStore.user.username+"myMessages",function(data){
     ChatStore.messages = data;
   })
@@ -66,6 +68,7 @@ sendMessage = function(){
   if(this.refs.message.value == ''){
    console.log("Cannot send message is empty"); 
   }else{
+    //Emitting send message
     socket.emit("sendMessage",{to:ChatStore.conversationSelected.userTwo,message:this.refs.message.value, sender : UserStore.user.username,conversationWith :ChatStore.conversationSelected.userTwo,time : Date.now(),cid : ChatStore.conversationSelected.cid})
     this.refs.message.value = '';
 
