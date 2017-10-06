@@ -10,6 +10,11 @@ const style = {
 const sty = {
   marginTop: "5%"
 };
+const chatinputbox = {
+  height: "3.5rem",
+  margin: "0 0 0rem",
+  resize: "none"
+};
 
 var username = "zunnurainbadar";
 
@@ -19,16 +24,33 @@ export default class Chat extends React.Component {
     super();
     this.state = {};
   }
+  
+  componentWillMount () {
+  //    $.ajax({
+  //     url: '/userInfo',
+  //     type: "GET",
+  //     data: {
+  //       format: "json"
+  //     },
+  //     dataType: "json",
+  //     success: function(data) {
+  //       console.log("Success");
+  //       UserStore.user = data;
+  // }
+  //    })
+  }
+
+  
   componentDidMount() {
     //Here we have to get user details from user and send it to server side same things both
-    socket.emit('gettingConversation',{to:username,username:"zunnurainbadar"});
+    socket.emit('gettingConversation',{to:UserStore.user.username,username:UserStore.user.username});
 //Here in to we have ChatStore.conversations.userTwo
-    socket.on(username+"myConversations",function(data){
+    socket.on(UserStore.user.username+"myConversations",function(data){
       console.log("This is conversation coming in my conversations ", data);
       ChatStore.conversations = data;
       ChatStore.conversationSelected =data[0]; 
-      socket.emit('gettingMessages',{to:username,conv:ChatStore.conversationSelected});
-       socket.on(username+"myMessages",function(data){
+      socket.emit('gettingMessages',{to:UserStore.user.username,conv:ChatStore.conversationSelected});
+       socket.on(UserStore.user.username+"myMessages",function(data){
     console.log("These are messages ",data);
     ChatStore.messages = data;
   })
@@ -40,15 +62,27 @@ export default class Chat extends React.Component {
   console.log("You clicked on this conversation");
   console.log(conv);
   ChatStore.conversationSelected = conv;
-  //Here in to we have ChatStore.conversations.userTwo
-      socket.emit('gettingMessages',{to:username,conv:conv});
-  //Here in to we have ChatStore.conversations.userTwo
-  socket.on(username+"myMessages",function(data){
+      socket.emit('gettingMessages',{to:UserStore.user.username,conv:conv});
+  socket.on(UserStore.user.username+"myMessages",function(data){
     console.log("These are messages ",data);
     ChatStore.messages = data;
   })
+  
 };
 
+
+sendMessage = function(){
+  console.log("This is seendMessage",this.refs.message.value);
+  if(this.refs.message.value == ''){
+   console.log("Cannot send message is empty"); 
+  }else{
+    socket.emit("sendMessage",{to:ChatStore.conversationSelected.userTwo,message:this.refs.message.value, sender : UserStore.user.username,conversationWith :ChatStore.conversationSelected.userTwo,time : Date.now(),cid : ChatStore.conversationSelected.cid})
+socket.on(UserStore.user.username+"messageSent",function(data){
+    console.log("These are messages ",data);
+    ChatStore.messages.push(data);
+  })
+  }
+}
   render() {
     return (
       <div style={sty}>
@@ -76,6 +110,16 @@ export default class Chat extends React.Component {
         })
     }
       </div>
+      <div>
+<textarea
+                  ref="message"
+                  style={chatinputbox}
+                  placeholder="Please Enter Your message......."
+                  className="form-control"
+                  errorText="This field is required"
+                />
+                <input type="button" value="send" className="btn btn-success" onClick={this.sendMessage.bind(this)}/>
+        </div>
         </div>
         </div>
     );

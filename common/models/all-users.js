@@ -1,5 +1,8 @@
 'use strict';
-
+const url = require('url');
+var loopback = require('loopback');
+var boot = require('loopback-boot');
+var app = module.exports = loopback();
 module.exports = function(Allusers) {
     Allusers.afterRemote("login", function(ctx, _user, next) {
         console.log("After login");
@@ -9,12 +12,14 @@ module.exports = function(Allusers) {
         console.log("This is result ");
         console.log(ctx.result.userId);
         Allusers.findOne({ where: { _id: ctx.result.userId } }, function(err, docs) {
-            if (err) throw err;
-            else {
-                console.log("THis is user ", docs);
-            }
-        })
-        res.redirect('/app')
+                if (err) throw err;
+                else {
+                    console.log("THis is user ", docs);
+                    res.redirect('/app')
+                }
+            })
             // next();
     })
+
+
 };

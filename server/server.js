@@ -109,5 +109,16 @@ boot(app, __dirname, function(err) {
                 }
             })
         });
+        //For Sending Messages
+        socket.on('sendMessage', function(data) {
+            console.log("THis is data ", data);
+            app.models.chatMessages.create(data, function(err, _messages) {
+                if (err) throw err;
+                else {
+                    console.log("message is stored successfully");
+                    io.sockets.emit(data.to + 'messageSent', data)
+                }
+            })
+        });
     });
 })
