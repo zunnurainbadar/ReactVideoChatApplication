@@ -16,7 +16,6 @@ const chatinputbox = {
   resize: "none"
 };
 
-var username = "zunnurainbadar";
 
 @observer
 export default class Chat extends React.Component {
@@ -26,18 +25,6 @@ export default class Chat extends React.Component {
   }
   
   componentWillMount () {
-  //    $.ajax({
-  //     url: '/userInfo',
-  //     type: "GET",
-  //     data: {
-  //       format: "json"
-  //     },
-  //     dataType: "json",
-  //     success: function(data) {
-  //       console.log("Success");
-  //       UserStore.user = data;
-  // }
-  //    })
   }
 
   
@@ -58,7 +45,9 @@ export default class Chat extends React.Component {
 
     //Receiving message Real time
 socket.on(UserStore.user.username+"messageSent",function(data){
+  if(ChatStore.conversationSelected.userTwo == data.sender || UserStore.user.username == data.sender){
     ChatStore.messages.push(data);
+  }
   })
   } 
   
