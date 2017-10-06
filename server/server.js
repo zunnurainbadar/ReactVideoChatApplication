@@ -101,13 +101,16 @@ boot(app, __dirname, function(err) {
         });
         //For Getting Messages of selected conversation
         socket.on('gettingMessages', function(data) {
-            console.log("THis is cid ", data.conv.cid);
-            app.models.chatMessages.find({ where: { cid: data.conv.cid } }, function(err, _messages) {
-                if (err) throw err;
-                else {
-                    io.sockets.emit(data.to + 'myMessages', _messages)
-                }
-            })
+            if (data) {
+                console.log("THis is cid ", data.conv.cid);
+                app.models.chatMessages.find({ where: { cid: data.conv.cid } }, function(err, _messages) {
+                    if (err) throw err;
+                    else {
+                        io.sockets.emit(data.to + 'myMessages', _messages)
+                    }
+                })
+            }
+
         });
         //For Sending Messages
         socket.on('sendMessage', function(data) {
@@ -117,6 +120,7 @@ boot(app, __dirname, function(err) {
                 else {
                     console.log("message is stored successfully");
                     io.sockets.emit(data.to + 'messageSent', data)
+                    io.sockets.emit(data.sender + 'messageSent', data)
                 }
             })
         });

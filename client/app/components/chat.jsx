@@ -42,29 +42,31 @@ export default class Chat extends React.Component {
 
   
   componentDidMount() {
-    //Here we have to get user details from user and send it to server side same things both
+    //Emitting event to receive conversations
     socket.emit('gettingConversation',{to:UserStore.user.username,username:UserStore.user.username});
-//Here in to we have ChatStore.conversations.userTwo
+      //Receiving all conversations
     socket.on(UserStore.user.username+"myConversations",function(data){
-      console.log("This is conversation coming in my conversations ", data);
       ChatStore.conversations = data;
       ChatStore.conversationSelected =data[0]; 
+      //Getting messages when click on conversation
       socket.emit('gettingMessages',{to:UserStore.user.username,conv:ChatStore.conversationSelected});
+      //Receiving messages of a conversation
        socket.on(UserStore.user.username+"myMessages",function(data){
-    console.log("These are messages ",data);
     ChatStore.messages = data;
   })
     })
 
+    //Receiving message Real time
+socket.on(UserStore.user.username+"messageSent",function(data){
+    ChatStore.messages.push(data);
+  })
   } 
   
   btnConversation = conv => {
-  console.log("You clicked on this conversation");
-  console.log(conv);
   ChatStore.conversationSelected = conv;
+//Emittin getting messages
       socket.emit('gettingMessages',{to:UserStore.user.username,conv:conv});
   socket.on(UserStore.user.username+"myMessages",function(data){
-    console.log("These are messages ",data);
     ChatStore.messages = data;
   })
   
@@ -72,15 +74,12 @@ export default class Chat extends React.Component {
 
 
 sendMessage = function(){
-  console.log("This is seendMessage",this.refs.message.value);
   if(this.refs.message.value == ''){
    console.log("Cannot send message is empty"); 
   }else{
     socket.emit("sendMessage",{to:ChatStore.conversationSelected.userTwo,message:this.refs.message.value, sender : UserStore.user.username,conversationWith :ChatStore.conversationSelected.userTwo,time : Date.now(),cid : ChatStore.conversationSelected.cid})
-socket.on(UserStore.user.username+"messageSent",function(data){
-    console.log("These are messages ",data);
-    ChatStore.messages.push(data);
-  })
+    this.refs.message.value = '';
+
   }
 }
   render() {

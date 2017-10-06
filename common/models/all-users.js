@@ -4,21 +4,34 @@ var loopback = require('loopback');
 var boot = require('loopback-boot');
 var app = module.exports = loopback();
 module.exports = function(Allusers) {
+    function extend(obj, src) {
+        for (var key in src) {
+            if (src.hasOwnProperty(key)) obj[key] = src[key];
+        }
+        return obj;
+    }
     Allusers.afterRemote("login", function(ctx, _user, next) {
-        console.log("After login");
+        var user;
         var res = ctx.res;
-        console.log("This is data ");
-        console.log(ctx.args);
-        console.log("This is result ");
-        console.log(ctx.result.userId);
-        Allusers.findOne({ where: { _id: ctx.result.userId } }, function(err, docs) {
-                if (err) throw err;
-                else {
-                    console.log("THis is user ", docs);
-                    res.redirect('/app')
-                }
+        const getUser = async() => {
+            let _users = await Allusers.findOne({ where: { _id: ctx.result.userId } });
+            if (_users) {
+                console.log("This is user ", _users);
+                user = _users;
+            } else {}
+        }
+        getUser()
+            .then(function(req, res) {
+                ctx.result.fullname = user.fullname;
+                ctx.result.username = user.username;
+                ctx.result.email = user.email;
+                console.log("This is user indideeeeeeeeeeee ", user);
+                console.log("Thissi si result ", ctx.result);
+                console.log("After extending", extend(user, ctx.result));
+                ctx.result = extend(user, ctx.result);
+                next();
             })
-            // next();
+            .catch(err => console.log(err));
     })
 
 

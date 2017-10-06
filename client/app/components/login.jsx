@@ -2,11 +2,13 @@ import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import { browserHistory } from "react-router";
 
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import { cyan500 } from "material-ui/styles/colors";
 import { greenA400 } from "material-ui/styles/colors";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import userstore from '../store/UserStore';
 const style = {
  width: '100%',
   display:"block",
@@ -54,7 +56,28 @@ export default class Login extends React.Component {
   state = {
   };
 
-  handleOpen = () => {
+  btnLogin = () => {
+      var data = {email:this.refs.email.value,password:this.refs.password.value}
+      console.log("This is handleOpen ");
+       $.ajax({
+        type: "POST",
+        url: "/api/allUsers/login",
+        data: data
+      })
+        .done(function(data) {
+          console.log("asdsadasdsad",data);
+          if(data== "undefined" || data=="null"|| data==""){
+         browserHistory.push("/login");
+        }
+        else{
+          userstore.user = data;
+         browserHistory.push("/app");
+        }
+        })
+        .fail(function(jqXhr) {
+          console.log("failed to register POST REQ",jqXhr);
+          browserHistory.push("/login");
+        });
   };  
 
 
@@ -76,13 +99,12 @@ export default class Login extends React.Component {
     <div className="login-box-body">
        <center><p className="login-box-msg">Sign in to start your session</p></center>
         <div className="col-md-4 col-md-offset-4">
-        <form method="post" action="/api/allUsers/login">
             <div className="form-group has-feedback">
-                <input name="email" type="email" className="form-control" placeholder="Email"/>
+                <input name="email" type="email" className="form-control" placeholder="Email" ref="email"/>
                 <span className="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div className="form-group has-feedback">
-                <input  name="password" type="password" className="form-control" placeholder="Password"/>
+                <input  name="password" type="password" className="form-control" placeholder="Password" ref="password"/>
                 <span className="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div className="row">
@@ -90,10 +112,9 @@ export default class Login extends React.Component {
                     <a href="/signup">SignUp</a>
                 </div>
                 <div className="col-xs-4">
-                    <button type="submit" className="btn btn-primary btn-block btn-flat">Sign In</button>
+                    <button type="submit" className="btn btn-primary btn-block btn-flat" onClick={this.btnLogin.bind(this)}>Sign In</button>
                 </div>
             </div>
-    </form>
     </div>
 
 
