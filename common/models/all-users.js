@@ -25,9 +25,6 @@ module.exports = function(Allusers) {
                 ctx.result.fullname = user.fullname;
                 ctx.result.username = user.username;
                 ctx.result.email = user.email;
-                console.log("This is user indideeeeeeeeeeee ", user);
-                console.log("Thissi si result ", ctx.result);
-                console.log("After extending", extend(user, ctx.result));
                 ctx.result = extend(user, ctx.result);
                 next();
             })

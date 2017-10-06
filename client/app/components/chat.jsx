@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 import Store from "../store/UIstore.js";
 import UserStore from "../store/UserStore";
 import ChatStore from "../store/ChatStore";
+import SimpleWebRTC from "../../node_modules/simplewebrtc/out/simplewebrtc.bundle"
 
 const style = {
   height: "100%"
@@ -62,6 +63,19 @@ socket.on(UserStore.user.username+"messageSent",function(data){
   })
   
 };
+  videoCall = conv => {
+ var webrtc = new SimpleWebRTC({
+            localVideoEl: 'localVideo',
+            remoteVideosEl: 'remotesVideos',
+            autoRequestMedia: true,
+            autoplay: false
+        });
+        webrtc.on('readyToCall', function() {
+            console.log('Ready to call');
+            webrtc.joinRoom("room");
+        });
+  
+};
 
 
 sendMessage = function(){
@@ -82,7 +96,7 @@ sendMessage = function(){
       {ChatStore.conversations.map(conv => {
         return (
                       <li key={conv._id}>
-                            <center><button className="btn btn-block btn-success" onTouchTap={this.btnConversation.bind(this, conv)}>{conv.userTwo}</button></center>
+                            <center><button className="btn btn-block btn-success" onTouchTap={this.btnConversation.bind(this, conv)}><p>{conv.userTwo}</p><input type="button" value="Video Call" onClick={this.videoCall.bind(this,conv)} className="pull-right btn-danger"/></button></center>
                       </li>
         )
         })
@@ -111,6 +125,12 @@ sendMessage = function(){
                 />
                 <input type="button" value="send" className="btn btn-success" onClick={this.sendMessage.bind(this)}/>
         </div>
+        </div>
+
+        <div>
+        <div id="remotesVideos">
+        </div>
+        <div><video height="200" id="localVideo"></video></div>
         </div>
         </div>
     );
