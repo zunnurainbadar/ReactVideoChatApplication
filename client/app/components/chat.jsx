@@ -4,9 +4,22 @@ import Store from "../store/UIstore.js";
 import UserStore from "../store/UserStore";
 import ChatStore from "../store/ChatStore";
 import SimpleWebRTC from "../../node_modules/simplewebrtc/out/simplewebrtc.bundle"
+import IconButton from "material-ui/IconButton";
+import ContentAdd from "material-ui/svg-icons/content/add";
+import getMuiTheme from "material-ui/styles/getMuiTheme";
+// import { cyan500 } from "material-ui/styles/colors";
+// import { greenA400 } from "material-ui/styles/colors";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import Drawer from 'material-ui/Drawer';
+import {MenuItem} from 'material-ui';
+import SearchInput, { createFilter } from "react-search-input";
+const KEYS_TO_FILTERS = ["username", "fullname"];
 
 const style = {
   height: "100%"
+};
+const createConversationStyle = {
+  height: "50%"
 };
 const sty = {
   marginTop: "5%"
@@ -16,13 +29,19 @@ const chatinputbox = {
   margin: "0 0 0rem",
   resize: "none"
 };
+const muiTheme = getMuiTheme({
+  palette: {
+
+  }
+});
 
 
 @observer
 export default class Chat extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {open: false,
+    searchTerm: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'};
   }
   
   componentWillMount () {
@@ -42,6 +61,12 @@ export default class Chat extends React.Component {
        socket.on(UserStore.user.username+"myMessages",function(data){
     ChatStore.messages = data;
   })
+  //Getting all users;
+  socket.emit('gettingALlUsers',{})
+  //Receining all users
+  socket.on("receivingUsers",function(data){
+    UserStore.allUsers = data;
+  })
     })
 
     //Receiving message Real time
@@ -49,6 +74,17 @@ socket.on(UserStore.user.username+"messageSent",function(data){
   if(ChatStore.conversationSelected.userTwo == data.sender || UserStore.user.username == data.sender){
     ChatStore.messages.push(data);
   }
+  })
+    //Receiving createConversation event
+socket.on(UserStore.user.username+"conversationCreated",function(data){
+    //Updating conversations
+    socket.emit('gettingConversation',{to:UserStore.user.username,username:UserStore.user.username});
+setTimeout(
+        function() {
+          console.log("Conversation created");
+          Store.newChatDrawerState = false;
+        },2000
+        );
   })
   } 
   
@@ -88,8 +124,23 @@ sendMessage = function(){
 
   }
 }
+createConversation = user => {
+ socket.emit("createConversation",{
+    userOne : UserStore.user.username,
+    userTwo : user.username,
+    date: Date.now()
+})
+}
+ createConvBtnClick = function(){
+   Store.newChatDrawerState = true;
+ }
+      searchUpdated (term) {
+    this.setState({searchTerm: term})
+  }
   render() {
+   const filteredUsers = UserStore.allUsers.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
     return (
+       <MuiThemeProvider muiTheme={muiTheme}>
       <div style={sty}>
       <div className="col-md-3">
       <div>
@@ -104,6 +155,14 @@ sendMessage = function(){
       </div>
         </div>
       <div className="col-md-9">
+      <div className="pull-right">
+      <IconButton
+                                className="btn btn-succes"
+                                onTouchTap={this.createConvBtnClick.bind(this)}
+                              >
+                                <ContentAdd />
+                              </IconButton>
+      </div>
       <div>
       {ChatStore.messages.map(messages => {
 // Check if message is mine or not
@@ -132,7 +191,27 @@ sendMessage = function(){
         </div>
         <div><video height="200" id="localVideo"></video></div>
         </div>
+                 <Drawer
+          docked={false}
+          width={300}
+          open={Store.newChatDrawerState}
+          onRequestChange={(open) => this.setState({open})}
+        >
+            <SearchInput className="search-input" onChange={this.searchUpdated.bind(this)} />
+        {filteredUsers.map(user => {
+          if(user.username != UserStore.user.username)
+          {
+          return (
+            <div key={user.id}>
+              <button onClick ={this.createConversation.bind(this,user)}><h3>{user.fullname}</h3>
+              <p>@{user.username}</p></button>
+            </div>
+          )
+          }
+        })}
+        </Drawer>
         </div>
+        </MuiThemeProvider>
     );
   }
 }

@@ -20,6 +20,7 @@
         "loopback-component-explorer": "^2.4.0",
         "loopback-connector-mongodb": "^1.18.1",
         "loopback-datasource-juggler": "^2.39.0",
+        "loopback-sdk-react": "0.2.7",
         "material-ui": "^0.16.7",
         "mobx": "^2.3.0",
         "mobx-react": "^3.0.0",
@@ -33,13 +34,13 @@
         "react-search-input": "^0.11.0",
         "react-tap-event-plugin": "^0.2.0",
         "serve-favicon": "^2.0.1",
-        "socket.io": "^2.0.1",
+        "socket.io": "^2.0.3",
         "strong-error-handler": "^2.0.0",
         "to-array": "^0.1.4",
+        "uuid": "^3.1.0",
         "webpack": "^1.15.0",
         "xmlhttprequest-ssl": "^1.5.3",
-        "yeast": "^0.1.2",
-        "loopback-sdk-react": "0.2.7"
+        "yeast": "^0.1.2"
     },
     "devDependencies": {
         "babel-core": "^6.5.1",

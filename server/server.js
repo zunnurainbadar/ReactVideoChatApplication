@@ -6,7 +6,7 @@ var sslConfig = require('./ssl-config');
 var http = require('http');
 var https = require('https');
 var app = module.exports = loopback();
-
+const uuidv4 = require('uuid/v4');
 
 ////////////////////HTTP and HTTPS starts
 // app.start = function(httpOnly) {
@@ -101,28 +101,72 @@ boot(app, __dirname, function(err) {
         });
         //For Getting Messages of selected conversation
         socket.on('gettingMessages', function(data) {
+            console.log("THis is data ", data);
             if (data) {
-                console.log("THis is cid ", data.conv.cid);
-                app.models.chatMessages.find({ where: { cid: data.conv.cid } }, function(err, _messages) {
-                    if (err) throw err;
-                    else {
-                        io.sockets.emit(data.to + 'myMessages', _messages)
-                    }
-                })
+                if (data.conv) {
+                    console.log("THis is cid ", data.conv.cid);
+                    app.models.chatMessages.find({ where: { cid: data.conv.cid } }, function(err, _messages) {
+                        if (err) throw err;
+                        else {
+                            io.sockets.emit(data.to + 'myMessages', _messages)
+                        }
+                    })
+                }
             }
 
         });
         //For Sending Messages
         socket.on('sendMessage', function(data) {
-            console.log("THis is data ", data);
             app.models.chatMessages.create(data, function(err, _messages) {
                 if (err) throw err;
                 else {
-                    console.log("message is stored successfully");
                     io.sockets.emit(data.to + 'messageSent', data)
                     io.sockets.emit(data.sender + 'messageSent', data)
                 }
             })
         });
+        //For Creating conversations
+        socket.on('createConversation', function(data) {
+            //Generate cid here
+            var uuid = uuidv4();;
+            console.log("This is uuid ", uuid);
+            app.models.Conversations.create({
+                userOne: data.userOne,
+                userTwo: data.userTwo,
+                date: data.date,
+                cid: uuid
+            }, function(err, _messages) {
+                if (err) throw err;
+                else {
+                    app.models.Conversations.create({
+                        userOne: data.userTwo,
+                        userTwo: data.userOne,
+                        date: data.date,
+                        cid: uuid
+                    }, function(err, _messages) {
+                        if (err) throw err;
+                        else {
+                            io.sockets.emit(data.userOne + 'conversationCreated', {})
+                            io.sockets.emit(data.userTwo + 'conversationCreated', {})
+                        }
+                    })
+                }
+            })
+
+        });
+        //For storing all users in store to search
+        socket.on('gettingALlUsers', function(data) {
+            app.models.allUsers.find({}, function(err, _users) {
+                if (err) throw err;
+                else {
+                    console.log("THis is user ", _users);
+                    var data = [];
+                    for (var i = 0; i < _users.length; i++) {
+                        data.push({ id: _users[i].id, username: _users[i].username, fullname: _users[i].fullname })
+                    }
+                    socket.emit('receivingUsers', data);
+                }
+            })
+        })
     });
 })
