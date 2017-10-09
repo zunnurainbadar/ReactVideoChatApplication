@@ -29,6 +29,9 @@ export default class videoCall extends React.Component {
   }
   componentDidMount() {
 console.log("Inside componentDidMount", ChatStore.conversationSelected.cid);
+};
+  render() {
+      if(Store.videoCallView == true){
  webrtc = new SimpleWebRTC({
             localVideoEl: 'localVideo',
             remoteVideosEl: 'remotesVideos',
@@ -39,12 +42,7 @@ console.log("Inside componentDidMount", ChatStore.conversationSelected.cid);
             console.log('Ready to call');
             webrtc.joinRoom(ChatStore.conversationSelected.cid);
         });
-};
-  btnClick = function(){
-
-  }
-  render() {
-    return (
+            return (
        <MuiThemeProvider muiTheme={muiTheme}>
       <div>
           <div>
@@ -56,6 +54,16 @@ console.log("Inside componentDidMount", ChatStore.conversationSelected.cid);
           </div>
         </MuiThemeProvider>
     );
+      }else{
+          return(
+   <MuiThemeProvider muiTheme={muiTheme}>
+      <div>
+          <h2>Sorry!!!! You have to select conversation</h2>
+          </div>
+          </MuiThemeProvider>
+          )
+      }
+
   }
 }
 

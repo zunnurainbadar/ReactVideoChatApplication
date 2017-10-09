@@ -109,18 +109,16 @@ export default class Chat extends React.Component {
   };
   videoCall = conv => {
     //Changing view for video call
-    console.log('Inside videoCall');
-    // Store.videoCallView = true;
-    // Store.callView = false;
-    // Store.conversationView = false;
+    Store.videoCallView = true;
+    Store.callView = false;
+    Store.conversationView = false;
     browserHistory.push('/videoCall')
   };
   Call = conv => {
-    console.log('Inside Call');
-    // //Changing call for view
-    // Store.videoCallView = false;
-    // Store.callView = true;
-    // Store.conversationView = false;
+    //Changing call for view
+    Store.videoCallView = false;
+    Store.callView = true;
+    Store.conversationView = false;
         browserHistory.push('/call')
   };
 
