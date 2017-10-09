@@ -28,7 +28,7 @@ export default class videoCall extends React.Component {
   componentWillMount () {
   }
   componentDidMount() {
-console.log("Inside componentDidMount");
+console.log("Inside componentDidMount", ChatStore.conversationSelected.cid);
  webrtc = new SimpleWebRTC({
             localVideoEl: 'localVideo',
             remoteVideosEl: 'remotesVideos',
@@ -37,7 +37,7 @@ console.log("Inside componentDidMount");
         });
         webrtc.on('readyToCall', function() {
             console.log('Ready to call');
-            webrtc.joinRoom("room");
+            webrtc.joinRoom(ChatStore.conversationSelected.cid);
         });
 };
   btnClick = function(){
