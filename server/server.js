@@ -101,10 +101,8 @@ boot(app, __dirname, function(err) {
         });
         //For Getting Messages of selected conversation
         socket.on('gettingMessages', function(data) {
-            console.log("THis is data ", data);
             if (data) {
                 if (data.conv) {
-                    console.log("THis is cid ", data.conv.cid);
                     app.models.chatMessages.find({ where: { cid: data.conv.cid } }, function(err, _messages) {
                         if (err) throw err;
                         else {
@@ -129,7 +127,6 @@ boot(app, __dirname, function(err) {
         socket.on('createConversation', function(data) {
             //Generate cid here
             var uuid = uuidv4();;
-            console.log("This is uuid ", uuid);
             app.models.Conversations.create({
                 userOne: data.userOne,
                 userTwo: data.userTwo,
@@ -138,6 +135,7 @@ boot(app, __dirname, function(err) {
             }, function(err, _messages) {
                 if (err) throw err;
                 else {
+                    //Creatin other person's conversation
                     app.models.Conversations.create({
                         userOne: data.userTwo,
                         userTwo: data.userOne,
@@ -159,7 +157,6 @@ boot(app, __dirname, function(err) {
             app.models.allUsers.find({}, function(err, _users) {
                 if (err) throw err;
                 else {
-                    console.log("THis is user ", _users);
                     var data = [];
                     for (var i = 0; i < _users.length; i++) {
                         data.push({ id: _users[i].id, username: _users[i].username, fullname: _users[i].fullname })

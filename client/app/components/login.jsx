@@ -71,7 +71,7 @@ export default class Login extends React.Component {
         }
         else{
           userstore.user = data;
-         browserHistory.push("/app");
+         browserHistory.push("/");
         }
         })
         .fail(function(jqXhr) {

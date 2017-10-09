@@ -7,6 +7,11 @@ import { cyan500 } from "material-ui/styles/colors";
 import { greenA400 } from "material-ui/styles/colors";
 import Chat from "./chat";
 import Login from "./login.jsx";
+import Store from "../store/UIstore.js";
+import videoCall from "./videoCall.jsx";
+import Call from "./call.jsx";
+import UserStore from "../store/UserStore";
+import ChatStore from "../store/ChatStore";
 // This replaces the textColor value on the palette
 // and then update the keys for each component that depends on it.
 // More on Colors: http://www.material-ui.com/#/customization/colors
@@ -37,7 +42,41 @@ const style = {
 }
 
 var Main = () => {
+  if(Store.conversationView == true && Store.videoCallView == false && Store.callView == false){
   return (
+    <MuiThemeProvider muiTheme={muiTheme}>
+
+      <div style={style}>
+        {/*<NewNav />*/}
+     <Chat></Chat>
+      </div>
+    </MuiThemeProvider>
+  );
+  }
+else if(Store.conversationView == false && Store.videoCallView == true && Store.callView == false){
+  return (
+    <MuiThemeProvider muiTheme={muiTheme}>
+
+      <div style={style}>
+        {/*<NewNav />*/}
+     <videoCall></videoCall>
+      </div>
+    </MuiThemeProvider>
+  );
+  }
+  else if(Store.conversationView == false && Store.videoCallView == false && Store.callView == true){
+  return (
+    <MuiThemeProvider muiTheme={muiTheme}>
+
+      <div style={style}>
+        {/*<NewNav />*/}
+     <Call></Call>
+      </div>
+    </MuiThemeProvider>
+  );
+}
+else{
+    return (
     <MuiThemeProvider muiTheme={muiTheme}>
 
       <div style={style}>
@@ -46,6 +85,8 @@ var Main = () => {
       </div>
     </MuiThemeProvider>
   );
+}
+
 };
 
 module.exports = Main;
