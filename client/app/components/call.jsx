@@ -13,7 +13,9 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Drawer from 'material-ui/Drawer';
 import {MenuItem} from 'material-ui';
 
-
+const muiTheme = getMuiTheme({
+  palette: {},
+});
 
 @observer
 export default class Call extends React.Component {
@@ -39,10 +41,14 @@ export default class Call extends React.Component {
 //         });
   
 // };
+btnclick(){
+    console.log("THis is conversation selected ", ChatStore.conversationSelected);
+}
   render() {
     return (
        <MuiThemeProvider muiTheme={muiTheme}>
       <div>
+            <button onClick={this.btnclick.bind(this)}>asdasdad</button>
         </div>
         </MuiThemeProvider>
     );

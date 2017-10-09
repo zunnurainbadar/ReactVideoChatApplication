@@ -11,6 +11,8 @@ var Main = require("./components/main");
 import Login from "./components/login.jsx";
 import Signup from "./components/signup.jsx";
 import Chat from "./components/chat.jsx";
+import videoCall from "./components/videoCall.jsx";
+import Call from "./components/call.jsx";
 import injectTapEventPlugin from "react-tap-event-plugin";
 import Store from "./store/UIstore.js";
 import NotFound from "./components/NotFound.jsx";
@@ -40,6 +42,8 @@ ReactDOM.render(
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
     <Route path="/app" component={Chat} />
+    <Route path="/call" component={Call} />
+    <Route path="/videoCall" component={videoCall} />
     <Route path="*" component={NotFound} />
   </Router>,
   document.getElementById("app")

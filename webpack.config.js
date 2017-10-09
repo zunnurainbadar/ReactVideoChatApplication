@@ -22,6 +22,8 @@ module.exports = {
             Main: "./client/app/components/main.jsx",
             Login: "./client/app/components/login.jsx",
             Chat: "./client/app/components/chat.jsx",
+            Call: "./client/app/components/call.jsx",
+            videoCall: "./client/app/components/videoCall.jsx",
             UIstore: "./client/app/store/UIstore.js",
             applicationStyles: "./client/app/styles/app.scss",
             snowStyle: "./client/app/styles/quill.snow.scss",

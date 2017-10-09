@@ -14,6 +14,10 @@ import Drawer from 'material-ui/Drawer';
 import {MenuItem} from 'material-ui';
 
 
+var webrtc;
+const muiTheme = getMuiTheme({
+  palette: {},
+});
 
 @observer
 export default class videoCall extends React.Component {
@@ -24,26 +28,32 @@ export default class videoCall extends React.Component {
   componentWillMount () {
   }
   componentDidMount() {
-  }
+console.log("Inside componentDidMount");
+ webrtc = new SimpleWebRTC({
+            localVideoEl: 'localVideo',
+            remoteVideosEl: 'remotesVideos',
+            autoRequestMedia: true,
+            autoplay: false
+        });
+        webrtc.on('readyToCall', function() {
+            console.log('Ready to call');
+            webrtc.joinRoom("room");
+        });
+};
+  btnClick = function(){
 
-//   videoCall = conv => {
-//  var webrtc = new SimpleWebRTC({
-//             localVideoEl: 'localVideo',
-//             remoteVideosEl: 'remotesVideos',
-//             autoRequestMedia: true,
-//             autoplay: false
-//         });
-//         webrtc.on('readyToCall', function() {
-//             console.log('Ready to call');
-//             webrtc.joinRoom("room");
-//         });
-  
-// };
+  }
   render() {
     return (
        <MuiThemeProvider muiTheme={muiTheme}>
       <div>
-        </div>
+          <div>
+            <div id="remotesVideos" />
+            <div>
+              <video height="200" id="localVideo" />
+            </div>
+          </div>        
+          </div>
         </MuiThemeProvider>
     );
   }

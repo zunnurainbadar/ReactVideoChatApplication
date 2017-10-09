@@ -6,7 +6,9 @@ module.exports = function(app) {
         "/",
         "/login",
         "/signup",
-        "/app"
+        "/app",
+        "/videoCall",
+        "/call"
     ]
 
     states.forEach(function(state) {

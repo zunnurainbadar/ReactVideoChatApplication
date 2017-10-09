@@ -42,7 +42,8 @@ const style = {
 }
 
 var Main = () => {
-  if(Store.conversationView == true && Store.videoCallView == false && Store.callView == false){
+  // console.log("Inside main again");
+  // if(Store.conversationView == true && Store.videoCallView == false && Store.callView == false){
   return (
     <MuiThemeProvider muiTheme={muiTheme}>
 
@@ -52,40 +53,40 @@ var Main = () => {
       </div>
     </MuiThemeProvider>
   );
-  }
-else if(Store.conversationView == false && Store.videoCallView == true && Store.callView == false){
-  return (
-    <MuiThemeProvider muiTheme={muiTheme}>
+  // }
+// else if(Store.conversationView == false && Store.videoCallView == true && Store.callView == false){
+//   return (
+//     <MuiThemeProvider muiTheme={muiTheme}>
 
-      <div style={style}>
-        {/*<NewNav />*/}
-     <videoCall></videoCall>
-      </div>
-    </MuiThemeProvider>
-  );
-  }
-  else if(Store.conversationView == false && Store.videoCallView == false && Store.callView == true){
-  return (
-    <MuiThemeProvider muiTheme={muiTheme}>
+//       <div style={style}>
+//         {/*<NewNav />*/}
+//      <videoCall></videoCall>
+//       </div>
+//     </MuiThemeProvider>
+//   );
+//   }
+//   else if(Store.conversationView == false && Store.videoCallView == false && Store.callView == true){
+//   return (
+//     <MuiThemeProvider muiTheme={muiTheme}>
 
-      <div style={style}>
-        {/*<NewNav />*/}
-     <Call></Call>
-      </div>
-    </MuiThemeProvider>
-  );
-}
-else{
-    return (
-    <MuiThemeProvider muiTheme={muiTheme}>
+//       <div style={style}>
+//         {/*<NewNav />*/}
+//      <Call></Call>
+//       </div>
+//     </MuiThemeProvider>
+//   );
+// }
+// else{
+//     return (
+//     <MuiThemeProvider muiTheme={muiTheme}>
 
-      <div style={style}>
-        {/*<NewNav />*/}
-     <Login></Login>
-      </div>
-    </MuiThemeProvider>
-  );
-}
+//       <div style={style}>
+//         {/*<NewNav />*/}
+//      <Login></Login>
+//       </div>
+//     </MuiThemeProvider>
+//   );
+// }
 
 };
 
