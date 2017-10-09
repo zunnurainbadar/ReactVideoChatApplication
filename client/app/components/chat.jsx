@@ -112,6 +112,7 @@ export default class Chat extends React.Component {
     Store.videoCallView = true;
     Store.callView = false;
     Store.conversationView = false;
+    ChatStore.roomToJoin = ChatStore.conversationSelected.cid;
     browserHistory.push('/videoCall')
   };
   Call = conv => {

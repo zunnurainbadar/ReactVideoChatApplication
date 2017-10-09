@@ -4,6 +4,7 @@ class ChatStore {
     @observable conversations = [];
     @observable conversationSelected = {};
     @observable messages = [];
+    @observable roomToJoin = "";
     // @observable fullscreen = !
 }
 

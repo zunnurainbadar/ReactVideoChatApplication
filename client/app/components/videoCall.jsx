@@ -32,7 +32,7 @@ console.log("Inside componentDidMount", ChatStore.conversationSelected.cid);
 };
   render() {
       if(Store.videoCallView == true){
- webrtc = new SimpleWebRTC({
+         webrtc = new SimpleWebRTC({
             localVideoEl: 'localVideo',
             remoteVideosEl: 'remotesVideos',
             autoRequestMedia: true,
@@ -40,7 +40,7 @@ console.log("Inside componentDidMount", ChatStore.conversationSelected.cid);
         });
         webrtc.on('readyToCall', function() {
             console.log('Ready to call');
-            webrtc.joinRoom(ChatStore.conversationSelected.cid);
+            webrtc.joinRoom(ChatStore.roomToJoin);
         });
             return (
        <MuiThemeProvider muiTheme={muiTheme}>
