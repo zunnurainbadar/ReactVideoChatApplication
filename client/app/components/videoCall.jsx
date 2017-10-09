@@ -15,6 +15,7 @@ import {MenuItem} from 'material-ui';
 
 
 var webrtc;
+var room;
 const muiTheme = getMuiTheme({
   palette: {},
 });
@@ -26,12 +27,16 @@ export default class videoCall extends React.Component {
     this.state = {open: false}
   }
   componentWillMount () {
+        console.log("This is in parameter ",this.props.params.roomToJoin)
+room = this.props.params.roomToJoin;
   }
   componentDidMount() {
 console.log("Inside componentDidMount", ChatStore.conversationSelected.cid);
+
 };
   render() {
-      if(Store.videoCallView == true){
+    console.log("Thiss is room ",room);
+          if(Store.videoCallView == true){
          webrtc = new SimpleWebRTC({
             localVideoEl: 'localVideo',
             remoteVideosEl: 'remotesVideos',

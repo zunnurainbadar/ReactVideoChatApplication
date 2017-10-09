@@ -113,14 +113,14 @@ export default class Chat extends React.Component {
     Store.callView = false;
     Store.conversationView = false;
     ChatStore.roomToJoin = ChatStore.conversationSelected.cid;
-    browserHistory.push('/videoCall')
+    browserHistory.push('/videoCall/'+ChatStore.roomToJoin)
   };
   Call = conv => {
     //Changing call for view
     Store.videoCallView = false;
     Store.callView = true;
     Store.conversationView = false;
-        browserHistory.push('/call')
+        browserHistory.push('/call/'+ChatStore.roomToJoin)
   };
 
   sendMessage = function() {

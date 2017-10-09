@@ -42,8 +42,8 @@ ReactDOM.render(
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
     <Route path="/app" component={Chat} />
-    <Route path="/call" component={Call} />
-    <Route path="/videoCall" component={videoCall} />
+    <Route path="/call/:roomToJoin" component={Call} />
+    <Route path="/videoCall/:roomToJoin" component={videoCall} />
     <Route path="*" component={NotFound} />
   </Router>,
   document.getElementById("app")
