@@ -25,10 +25,10 @@ module.exports = {
             Call: "./client/app/components/call.jsx",
             videoCall: "./client/app/components/videoCall.jsx",
             UIstore: "./client/app/store/UIstore.js",
-            applicationStyles: "./client/app/styles/app.scss",
-            snowStyle: "./client/app/styles/quill.snow.scss",
-            coreStyle: "./client/app/styles/quill.core.css",
-            bubbleStyle: "./client/app/styles/quill.bubble.css"
+            applicationStyles: "./client/app/styles/app.css",
+            // snowStyle: "./client/app/styles/quill.snow.scss",
+            // coreStyle: "./client/app/styles/quill.core.css",
+            // bubbleStyle: "./client/app/styles/quill.bubble.css"
         },
         extensions: ["", ".js", ".jsx"]
     },

@@ -7,8 +7,8 @@ module.exports = function(app) {
         "/login",
         "/signup",
         "/app",
-        "/videoCall",
-        "/call"
+        "/videoCall/:id",
+        "/call/:id"
     ]
 
     states.forEach(function(state) {

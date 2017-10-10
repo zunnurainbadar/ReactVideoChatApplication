@@ -71,6 +71,8 @@ export default class Login extends React.Component {
         }
         else{
           userstore.user = data;
+          console.log("data",data);
+          localStorage.setItem("userInfo", JSON.stringify(data));
          browserHistory.push("/");
         }
         })
