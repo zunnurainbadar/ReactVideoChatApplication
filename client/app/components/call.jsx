@@ -24,6 +24,9 @@ export default class Call extends React.Component {
     this.state = {open: false}
   }
   componentWillMount () {
+    userstore.user =JSON.parse(localStorage.getItem("userInfo"));
+
+    
   }
   componentDidMount() {
   }

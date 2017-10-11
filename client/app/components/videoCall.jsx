@@ -1,7 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
 import Store from "../store/UIstore.js";
-import UserStore from "../store/UserStore";
 import ChatStore from "../store/ChatStore";
 import SimpleWebRTC from "../../node_modules/simplewebrtc/out/simplewebrtc.bundle"
 import IconButton from "material-ui/IconButton";
@@ -12,6 +11,7 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Drawer from 'material-ui/Drawer';
 import {MenuItem} from 'material-ui';
+import UserStore from "../store/UserStore";
 
 
 var webrtc;
@@ -27,12 +27,12 @@ export default class videoCall extends React.Component {
     this.state = {open: false}
   }
   componentWillMount () {
+    Userstore.user =JSON.parse(localStorage.getItem("userInfo"));
         console.log("This is in parameter ",this.props.params.roomToJoin)
 room = this.props.params.roomToJoin;
   }
   componentDidMount() {
 console.log("Inside componentDidMount", ChatStore.conversationSelected.cid);
-
 };
   render() {
     console.log("Thiss is room ",room);

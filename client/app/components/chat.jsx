@@ -15,8 +15,6 @@ import {MenuItem} from 'material-ui';
 import SearchInput, {createFilter} from 'react-search-input';
 const KEYS_TO_FILTERS = ['username', 'fullname'];
 import { browserHistory } from "react-router";
-// import userstore from './e:/work/React/ReactVideoChatApplication/client/app/store/UserStore';
-import userstore from '../store/UserStore';
 
 const style = {
   height: '100%',
@@ -48,7 +46,7 @@ export default class Chat extends React.Component {
   }
 
   componentWillMount() {
-     userstore.user =JSON.parse(localStorage.getItem("userInfo"));
+     UserStore.user =JSON.parse(localStorage.getItem("userInfo"));
 }
 
   componentDidMount() {
