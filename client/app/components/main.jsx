@@ -7,9 +7,14 @@ import { cyan500 } from "material-ui/styles/colors";
 import { greenA400 } from "material-ui/styles/colors";
 import Chat from "./chat";
 import Login from "./login.jsx";
+import OtherProfile from "./otherProfile.jsx";
+import MyProfile from "./myProfile.jsx";
 import Store from "../store/UIstore.js";
 import videoCall from "./videoCall.jsx";
 import Call from "./call.jsx";
+import Search from "./search.jsx";
+import Buttons from "./buttons.jsx";
+import GroupList from "./groupList.jsx";
 import UserStore from "../store/UserStore";
 import ChatStore from "../store/ChatStore";
 // This replaces the textColor value on the palette
@@ -17,28 +22,28 @@ import ChatStore from "../store/ChatStore";
 // More on Colors: http://www.material-ui.com/#/customization/colors
 const muiTheme = getMuiTheme({
   palette: {
-    //   textColor: greenA400,
-    primary1Color: greenA400
-    //   primary2Color: greenA400,
-    //  primary3Color:greenA400,
-    //   accent1Color: greenA400,
-    //   accent2Color: greenA400,
-    //   accent3Color: greenA400
-
-    //this is for changing the theme
+    
   },
-  toggle: {
-    thumbOnColor: "yellow",
-    trackOnColor: "red",
-    backgroundColor: "red"
-  },
-  appBar: {
-    height: 50
-  }
 });
 
 const style = {
   height: '100%',
+}
+const myProfileStyle = {
+
+}
+const searchStyle = {
+marginTop:"25%"
+}
+
+const groupStyle = {
+
+}
+const otherProfileStyle = {
+
+}
+const chatStyle = {
+
 }
 
 var Main = () => {
@@ -46,10 +51,17 @@ var Main = () => {
   // if(Store.conversationView == true && Store.videoCallView == false && Store.callView == false){
   return (
     <MuiThemeProvider muiTheme={muiTheme}>
-
-      <div style={style}>
-        {/*<NewNav />*/}
-     <Chat></Chat>
+    <div style={style}>
+      <div className="col-md-3">
+      <MyProfile style={myProfileStyle}></MyProfile>
+      <Search style={searchStyle}></Search>
+      <Buttons></Buttons>
+      <GroupList style={groupStyle}></GroupList>
+      </div>
+      <div className="col-md-9">
+      <OtherProfile style={otherProfileStyle}></OtherProfile>
+     <Chat style={chatStyle}></Chat>
+      </div>
       </div>
     </MuiThemeProvider>
   );
