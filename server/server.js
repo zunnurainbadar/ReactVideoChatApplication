@@ -95,8 +95,33 @@ boot(app, __dirname, function(err) {
             app.models.Conversations.find({ where: { userOne: data.username } }, function(err, _conversations) {
                 if (err) throw err;
                 else {
-                    io.sockets.emit(data.to + 'myConversations', _conversations)
+                    const getUser = async() => {
+                        for (var i = 0; i < _conversations.length; i++) {
+                            console.log("indside for");
+                            let _users = await app.models.allUsers.findOne({ where: { username: _conversations[i].userTwo } });
+                            console.log("This is users ", _users);
+                            if (_users) {
+                                _conversations[i].avatar = _users.avatar;
+                                _conversations[i].desc = _users.desc;
+                            } else {}
+                        }
+                    }
+                    getUser()
+                        .then(function() {
+                            console.log("This is conversation ", _conversations);
+                            io.sockets.emit(data.to + 'myConversations', _conversations)
+                        })
+                        .catch(err => console.log(err));
                 }
+                //  _conversations[i] = {
+                //                 cid: _conversations[i].cid,
+                //                 date: _conversations[i].date,
+                //                 id: _conversations[i].id,
+                //                 userOne: _conversations[i].userOne,
+                //                 userTwo: _conversations[i].userTwo,
+                //                 avatar: _user.avatar,
+                //                 desc: _user.desc
+                //             }
             })
         });
         //For Getting Messages of selected conversation

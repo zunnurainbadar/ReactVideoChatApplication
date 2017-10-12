@@ -12,6 +12,9 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Drawer from 'material-ui/Drawer';
 import {MenuItem} from 'material-ui';
+import Avatar from 'material-ui/Avatar';
+import {List, ListItem} from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
 
 const muiTheme = getMuiTheme({
   palette: {},
@@ -78,15 +81,13 @@ export default class GroupList extends React.Component {
                   <div >
                   <ul style={liStyle}>
                   <li key={conv._id} >
-                    <center>
-                      <button className="removing"
-                        onClick={this.btnConversation.bind(this, conv)}
-                      >
-                        <p>
-                          {conv.userTwo}
-                        </p>
-                      </button>
-                    </center>
+                      
+                       <List>
+                      <ListItem
+                    primaryText= {conv.userTwo}
+                    leftAvatar={<Avatar src={conv.avatar} />}
+                     />
+                       </List>
                   </li>
                   </ul>
                   </div>
@@ -98,4 +99,3 @@ export default class GroupList extends React.Component {
     );
   }
 }
-
