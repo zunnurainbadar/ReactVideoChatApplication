@@ -32,7 +32,7 @@ export default class MyProfile extends React.Component {
     return (
        <MuiThemeProvider muiTheme={muiTheme}>
       <div>
-           <h2>oooooooooooooooooooooooooooooooooooooo</h2>
+           <h2>Badar</h2>
         </div>
         </MuiThemeProvider>
     );

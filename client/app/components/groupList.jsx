@@ -16,6 +16,9 @@ import {MenuItem} from 'material-ui';
 const muiTheme = getMuiTheme({
   palette: {},
 });
+const liStyle = {
+  listStyle: "none"
+}
 
 @observer
 export default class GroupList extends React.Component {
@@ -72,7 +75,8 @@ export default class GroupList extends React.Component {
               {ChatStore.conversations.map(conv => {
                 //Mapping all converations
                 return (
-                  <li key={conv._id}>
+                  <ul style={liStyle}>
+                  <li key={conv._id} >
                     <center>
                       <button
                         className="btn btn-block btn-success"
@@ -84,6 +88,7 @@ export default class GroupList extends React.Component {
                       </button>
                     </center>
                   </li>
+                  </ul>
                 );
               })}
             </div>

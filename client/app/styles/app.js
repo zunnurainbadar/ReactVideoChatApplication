@@ -1,7 +1,8 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  'testing': {
-    'fontSize': [{ 'unit': 'px', 'value': 30 }]
+  'backgroundLeft': {
+    'backgroundColor': '#F0F4F8',
+    'height': [{ 'unit': 'string', 'value': '-webkit-fill-available' }]
   }
 });

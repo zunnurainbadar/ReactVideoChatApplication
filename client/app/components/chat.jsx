@@ -18,6 +18,9 @@ import { browserHistory } from "react-router";
 const style = {
   height: '100%',
 };
+const liStyle = {
+ listStyle: "none"
+};
 const createConversationStyle = {
   height: '50%',
 };
@@ -97,11 +100,13 @@ export default class Chat extends React.Component {
               {ChatStore.messages.map(messages => {
                 // Check if message is mine or not
                 return (
+                  <ul style={liStyle}>
                   <li key={messages.id}>
                     <ul>
                       {messages.message}
                     </ul>
                   </li>
+                  </ul>
                 );
               })}
             </div>

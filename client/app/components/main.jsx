@@ -26,7 +26,7 @@ const muiTheme = getMuiTheme({
   },
 });
 
-const style = {
+const leftSide = {
   height: '100%',
 }
 const myProfileStyle = {
@@ -51,8 +51,8 @@ var Main = () => {
   // if(Store.conversationView == true && Store.videoCallView == false && Store.callView == false){
   return (
     <MuiThemeProvider muiTheme={muiTheme}>
-    <div style={style}>
-      <div className="col-md-3">
+    <div style={leftSide}>
+      <div className="col-md-3 backgroundLeft">
       <MyProfile style={myProfileStyle}></MyProfile>
       <Search style={searchStyle}></Search>
       <Buttons></Buttons>
