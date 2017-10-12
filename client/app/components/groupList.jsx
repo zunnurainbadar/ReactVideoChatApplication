@@ -75,7 +75,8 @@ export default class GroupList extends React.Component {
               {ChatStore.conversations.map(conv => {
                 //Mapping all converations
                 return (
-                  <ul style={liStyle}>
+                  <div className="groupListStyles">
+                  <ul style={liStyle} >
                   <li key={conv._id} >
                     <center>
                       <button
@@ -89,6 +90,7 @@ export default class GroupList extends React.Component {
                     </center>
                   </li>
                   </ul>
+                  </div>
                 );
               })}
             </div>

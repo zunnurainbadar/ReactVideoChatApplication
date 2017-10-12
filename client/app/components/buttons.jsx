@@ -11,13 +11,18 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 // import { greenA400 } from "material-ui/styles/colors";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Drawer from 'material-ui/Drawer';
-import {MenuItem} from 'material-ui';
+import {MenuItem, Avatar} from 'material-ui';
+import FlatButton from 'material-ui/FlatButton';
+import FontIcon from 'material-ui/FontIcon';
+import ActionHome from 'material-ui/svg-icons/action/home';
+import {List, ListItem} from 'material-ui/List';
 
 const muiTheme = getMuiTheme({
   palette: {},
 });
 const buttonStyle = {
-
+    width: 36,
+    height: 36,
 }
 @observer
 export default class Buttons extends React.Component {
@@ -30,18 +35,42 @@ export default class Buttons extends React.Component {
   }
   componentDidMount() {
   }
+  gotohome(){
+console.log("Inside go to home")
+  }
   render() {
     return (
        <MuiThemeProvider muiTheme={muiTheme}>
        <div style={buttonStyle}>
       <div>
-           <button>Home</button>
-           <button>Call</button>
-           <button>New</button>
+<div style={{display:"inline-flex"}}>  
+<button className="removing" onClick={this.gotohome.bind(this)} style={{display:"inline-flex"}}>
+   <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+    <path d="M0 0h24v24H0z" fill="none"/>
+</svg><p style={{marginTop:"10%"}}>Home</p>
+</button>
+<button className="removing" onClick={this.gotohome.bind(this)} style={{display:"inline-flex", marginLeft:"20%"}}>
+   <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0h24v24H0z" fill="none"/>
+    <path d="M12 19c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 1c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12-8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-6 8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+</svg><p style={{marginTop:"10%", marginLeft:"10%"}}>Call</p>
+</button>
+<button className="removing" onClick={this.gotohome.bind(this)} style={{display:"inline-flex",marginLeft:"20%"}}>
+  <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+    <path d="M0 0h24v24H0z" fill="none"/>
+</svg><p style={{marginTop:"10%", marginLeft:"10%"}}>New</p>
+</button>
+</div>
         </div>
-        <div>
-            <button>Contacts</button>
-            <button>Recent</button>
+        <div style={{display:"inline-flex",marginTop:"10%"}}>
+        <button className="removing" onClick={this.gotohome.bind(this)}>
+        <p style={{marginTop:"10%", marginLeft:"10%"}}>Contacts</p>
+</button>
+        <button className="removing" onClick={this.gotohome.bind(this)} style={{marginLeft:"20%"}}>
+        <p style={{marginTop:"10%", marginLeft:"10%"}}>Recent</p>
+</button>
         </div>
         </div>
         </MuiThemeProvider>

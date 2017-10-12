@@ -53,14 +53,26 @@ var Main = () => {
     <MuiThemeProvider muiTheme={muiTheme}>
     <div style={leftSide}>
       <div className="col-md-3 backgroundLeft">
+      <div className="row">
       <MyProfile style={myProfileStyle}></MyProfile>
+      </div>
+            <div className="row">
       <Search style={searchStyle}></Search>
+      </div>
+            <div className="row">
       <Buttons></Buttons>
+      </div>
+            <div className="row">
       <GroupList style={groupStyle}></GroupList>
       </div>
+      </div>
       <div className="col-md-9">
+            <div className="row">
       <OtherProfile style={otherProfileStyle}></OtherProfile>
+      </div>
+            <div className="row">
      <Chat style={chatStyle}></Chat>
+     </div>
       </div>
       </div>
     </MuiThemeProvider>

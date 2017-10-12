@@ -18,6 +18,12 @@ const KEYS_TO_FILTERS = ['username', 'fullname'];
 const muiTheme = getMuiTheme({
   palette: {},
 });
+const searchStyles = {
+  width: "100%",
+    marginTop: "10%",
+    border: "none",
+    backgroundColor: "#F0F4F8",
+};
 
 @observer
 export default class Search extends React.Component {
@@ -51,6 +57,9 @@ export default class Search extends React.Component {
   };
    searchUpdated(term) {
     this.setState({searchTerm: term});
+    if(term==''){
+          this.setState({searchTerm: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'});
+    }
   }
   render() {
           //Filtering data of all users in realtime search
@@ -63,7 +72,11 @@ export default class Search extends React.Component {
             <SearchInput
               className="search-input"
               onChange={this.searchUpdated.bind(this)}
+              style={searchStyles}
             />
+            <br/>
+            <hr />
+            <br/>
             {filteredUsers.map(user => {
               //Mapping filtered users
               if (user.username != UserStore.user.username) {
