@@ -20,7 +20,7 @@ const muiTheme = getMuiTheme({
   palette: {},
 });
 const liStyle = {
-  listStyle: "none",
+ 
 }
 
 @observer
@@ -79,8 +79,8 @@ export default class GroupList extends React.Component {
                 //Mapping all converations
                 return (
                   <div >
-                  <ul style={liStyle}>
-                  <li key={conv._id} >
+                  <div style={liStyle}>
+                  <div key={conv._id} >
                       
                        <List>
                       <ListItem
@@ -88,8 +88,8 @@ export default class GroupList extends React.Component {
                     leftAvatar={<Avatar src={conv.avatar} />}
                      />
                        </List>
-                  </li>
-                  </ul>
+                  </div>
+                  </div>
                   </div>
                 );
               })}
