@@ -36,9 +36,6 @@ const searchStyle = {
 marginTop:"25%"
 }
 
-const groupStyle = {
-
-}
 const otherProfileStyle = {
 
 }
@@ -56,14 +53,14 @@ var Main = () => {
       <div className="row">
       <MyProfile style={myProfileStyle}></MyProfile>
       </div>
-            <div className="row">
+      <div className="row">
       <Search style={searchStyle}></Search>
       </div>
-            <div className="row">
+      <div className="row">
       <Buttons></Buttons>
       </div>
-            <div className="row">
-      <GroupList style={groupStyle}></GroupList>
+      <div className="row" >
+      <GroupList></GroupList>
       </div>
       </div>
       <div className="col-md-9">

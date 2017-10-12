@@ -17,7 +17,7 @@ const muiTheme = getMuiTheme({
   palette: {},
 });
 const liStyle = {
-  listStyle: "none"
+  listStyle: "none",
 }
 
 @observer
@@ -71,16 +71,15 @@ export default class GroupList extends React.Component {
     return (
        <MuiThemeProvider muiTheme={muiTheme}>
        <div>
-     <div>
+     <div style={{marginTop:"20%"}}>
               {ChatStore.conversations.map(conv => {
                 //Mapping all converations
                 return (
-                  <div className="groupListStyles">
-                  <ul style={liStyle} >
+                  <div >
+                  <ul style={liStyle}>
                   <li key={conv._id} >
                     <center>
-                      <button
-                        className="btn btn-block btn-success"
+                      <button className="removing"
                         onClick={this.btnConversation.bind(this, conv)}
                       >
                         <p>
