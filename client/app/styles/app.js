@@ -31,5 +31,9 @@ export default StyleSheet.create({
   },
   'groupListStyles': {
     'marginTop': [{ 'unit': '%V', 'value': NaN }]
+  },
+  'search-input': {
+    'height': [{ 'unit': 'px', 'value': 70 }],
+    'position': 'relative'
   }
 });

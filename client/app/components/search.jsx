@@ -20,6 +20,7 @@ const muiTheme = getMuiTheme({
 });
 const searchStyles = {
   width: "100%",
+  height:"50%",
     marginTop: "10%",
     border: "none",
     backgroundColor: "#F0F4F8",

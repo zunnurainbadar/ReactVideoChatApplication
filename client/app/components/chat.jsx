@@ -95,8 +95,10 @@ export default class Chat extends React.Component {
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <div style={sty}>
-            <div>
+        <div >
+                    <hr/>
+            <div style={sty}>
+
               {ChatStore.messages.map(messages => {
                 // Check if message is mine or not
                 if(messages.sender == UserStore.user.username)

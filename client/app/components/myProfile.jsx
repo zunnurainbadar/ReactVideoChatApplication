@@ -27,7 +27,7 @@ export default class MyProfile extends React.Component {
     this.state = {open: false};
   }
   componentWillMount() {
-    userstore.user = JSON.parse(localStorage.getItem('userInfo'));
+    UserStore.user = JSON.parse(localStorage.getItem('userInfo'));
   }
   componentDidMount() {}
   render() {
@@ -38,11 +38,11 @@ export default class MyProfile extends React.Component {
             <ListItem
               disabled={true}
               leftAvatar={
-                <Avatar src="https://cdn.pixabay.com/photo/2013/04/06/11/50/image-editing-101040_960_720.jpg" size={70} />
+                <Avatar src={UserStore.user.avatar} size={70} />
               }
 />
 <ListItem>
-              <h2 style={{marginTop:"2%"}}>Badar</h2>
+              <h2 style={{marginTop:"2%"}}>{UserStore.user.fullname}</h2>
               </ListItem>
           </List>
         </div>

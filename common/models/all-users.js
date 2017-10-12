@@ -16,7 +16,6 @@ module.exports = function(Allusers) {
         const getUser = async() => {
             let _users = await Allusers.findOne({ where: { _id: ctx.result.userId } });
             if (_users) {
-                console.log("This is user ", _users);
                 user = _users;
             } else {}
         }
@@ -25,6 +24,8 @@ module.exports = function(Allusers) {
                 ctx.result.fullname = user.fullname;
                 ctx.result.username = user.username;
                 ctx.result.email = user.email;
+                ctx.result.avatar = user.avatar;
+                ctx.result.desc = user.desc;
                 ctx.result = extend(user, ctx.result);
                 next();
             })
