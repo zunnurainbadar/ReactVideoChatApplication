@@ -75,6 +75,7 @@ export default class GroupList extends React.Component {
        <MuiThemeProvider muiTheme={muiTheme}>
        <div>
      <div style={{marginTop:"20%"}}>
+                    <hr/>
               {ChatStore.conversations.map(conv => {
                 //Mapping all converations
                 return (
