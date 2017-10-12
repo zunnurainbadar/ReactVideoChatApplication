@@ -128,6 +128,7 @@ export default class Chat extends React.Component {
               })}
             </div>
             <div>
+            
               <textarea
                 ref="message"
                 style={chatinputbox}

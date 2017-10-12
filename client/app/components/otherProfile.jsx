@@ -14,6 +14,11 @@ import Drawer from 'material-ui/Drawer';
 import {MenuItem, Avatar, List, ListItem} from 'material-ui';
 import Call from './call';
 import videoCall from './videoCall';
+import RaisedButton from "material-ui/RaisedButton";
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import VideCallIcon from "material-ui/svg-icons/av/videocam"
+import CallIcon from "material-ui/svg-icons/communication/call"
+import AddPerson from "material-ui/svg-icons/social/person-add"
 
 const muiTheme = getMuiTheme({
   palette: {},
@@ -50,7 +55,7 @@ export default class OtherProfile extends React.Component {
     return (
        <MuiThemeProvider muiTheme={muiTheme}>
       <div>
-            <List style={{display: 'inline-flex'}}>
+            <List style={{display: 'inline-flex',width:"100%"}}>
             <ListItem
               disabled={true}
               leftAvatar={
@@ -61,25 +66,32 @@ export default class OtherProfile extends React.Component {
               <h2 style={{marginTop:"2%"}}>{ChatStore.conversationSelected.userTwo}</h2>
                <h5>{UserStore.user.desc}</h5>
               </ListItem>
-              <ListItem className="pull-right">
-                                                 <input
-                          type="button"
-                          value="Video Call"
-                          onClick={this.videoCall.bind(this)}
-                          className="pull-right btn-danger"
-                        />
-              </ListItem>
-
-              <ListItem>
-                           <input
-                          type="button"
-                          value="Call"
-                          onClick={this.Call.bind(this)}
-                          className="pull-right btn-danger"
-                        />
-              </ListItem>              
-
           </List>
+           <div className="pull-right ">
+               <FloatingActionButton 
+               backgroundColor={"#077DB4"} 
+              disabled={false} 
+              labelColor={'#FFFFFF'}
+               onClick={this.videoCall.bind(this)}
+              >
+                    <VideCallIcon />
+               </FloatingActionButton>
+               <FloatingActionButton 
+               backgroundColor={"#077DB4"} 
+              disabled={false} 
+              labelColor={'#FFFFFF'}
+               onClick={this.Call.bind(this)}
+              >
+                    <CallIcon />
+               </FloatingActionButton>
+               <FloatingActionButton 
+               backgroundColor={"#FFFFFF"} 
+              disabled={true} 
+              labelColor={'#077DB4'}
+              >
+                    <AddPerson />
+               </FloatingActionButton>
+</div>
         </div>
         </MuiThemeProvider>
     );

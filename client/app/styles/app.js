@@ -35,5 +35,33 @@ export default StyleSheet.create({
   'search-input': {
     'height': [{ 'unit': 'px', 'value': 70 }],
     'position': 'relative'
+  },
+  'right': {
+    'marginRight': [{ 'unit': '%H', 'value': NaN }]
+  },
+  'search-input::before': {
+    'content': 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAAXNSR0IArs4c6QAAAQJJREFUKBWVkr2uQUEUhf3ET6GRaC5aFRoJKrf1BKpb8SwqovYGXkCj00k0QnRKEYkILYobvpUYmeMMyVnJl7P3mjN7Zu9zwiGv2qRFyMMSRrAFp6JPN8XzBj+wgDkUYAg7WINTYdwpDECxrRLJHeq2accdkgm8bzTvNAg2EDOGeUYI1KNO1gkuzTA1g8T7ojbn4ONQWPuHPWgeHmnzCqoe15tkSNPgPEAn68oVcOmA2XMtGK9FoE/VhOTTVNExqLCGZnxCv2pYauEC6lF0oQxX6IOvb7yX9NPEQafan+aPXDdQC18LsO6Tip5BBY6gIQaSbnMCFRCBZRcIvFkbsvCr4AFGOCxQy+JdGQAAAABJRU5ErkJggg==")',
+    'display': 'block',
+    'position': 'absolute',
+    'width': [{ 'unit': 'px', 'value': 15 }],
+    'zIndex': '3',
+    'height': [{ 'unit': 'px', 'value': 15 }],
+    'fontSize': [{ 'unit': 'px', 'value': 20 }],
+    'top': [{ 'unit': 'px', 'value': 11 }],
+    'left': [{ 'unit': 'px', 'value': 16 }],
+    'lineHeight': [{ 'unit': 'px', 'value': 32 }],
+    'opacity': '0.6'
+  },
+  'search-input > input': {
+    'width': [{ 'unit': '%H', 'value': 1 }],
+    'fontSize': [{ 'unit': 'px', 'value': 18 }],
+    'border': [{ 'unit': 'string', 'value': 'none' }],
+    'lineHeight': [{ 'unit': 'px', 'value': 22 }],
+    'padding': [{ 'unit': 'px', 'value': 5 }, { 'unit': 'px', 'value': 10 }, { 'unit': 'px', 'value': 5 }, { 'unit': 'px', 'value': 25 }],
+    'height': [{ 'unit': 'px', 'value': 32 }],
+    'position': 'relative'
+  },
+  'search-input > input:focus': {
+    'outline': 'none'
   }
 });
