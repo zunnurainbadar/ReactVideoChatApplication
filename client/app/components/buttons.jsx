@@ -16,6 +16,8 @@ import FlatButton from 'material-ui/FlatButton';
 import FontIcon from 'material-ui/FontIcon';
 import ActionHome from 'material-ui/svg-icons/action/home';
 import {List, ListItem} from 'material-ui/List';
+import NavigationExpandMoreIcon from "material-ui/svg-icons/navigation/expand-more";
+import IconMenu from "material-ui/IconMenu";
 
 const muiTheme = getMuiTheme({
   palette: {},
@@ -37,6 +39,12 @@ export default class Buttons extends React.Component {
   }
   gotohome(){
 console.log("Inside go to home")
+  }
+  all(){
+console.log("Inside All")
+  }
+  unread(){
+console.log("Inside unread")
   }
   render() {
     return (
@@ -71,7 +79,18 @@ console.log("Inside go to home")
         <button className="removing" onClick={this.gotohome.bind(this)} style={{marginLeft:"20%"}}>
         <p style={{marginTop:"10%", marginLeft:"10%"}}>Recent</p>
 </button>
-        </div>
+        <IconMenu
+                  className="pull-right"
+                  iconButtonElement={
+                    <IconButton touch={true}>
+                      <NavigationExpandMoreIcon />
+                    </IconButton>
+                  }
+                >
+                  <MenuItem primaryText="All" onClick={this.all.bind(this)} />
+                  <MenuItem primaryText="Unread" onClick={this.unread.bind(this)} />
+                </IconMenu>
+      </div>
         </div>
         </MuiThemeProvider>
     );

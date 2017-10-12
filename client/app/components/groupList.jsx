@@ -11,10 +11,11 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 // import { greenA400 } from "material-ui/styles/colors";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Drawer from 'material-ui/Drawer';
-import {MenuItem} from 'material-ui';
+import {MenuItem, makeSelectable} from 'material-ui';
 import Avatar from 'material-ui/Avatar';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
+let SelectableList = makeSelectable(List);
 
 const muiTheme = getMuiTheme({
   palette: {},
@@ -73,29 +74,25 @@ export default class GroupList extends React.Component {
   render() {
     return (
        <MuiThemeProvider muiTheme={muiTheme}>
-       <div>
      <div style={{marginTop:"20%"}}>
                     <hr/>
+            <SelectableList>
               {ChatStore.conversations.map(conv => {
                 //Mapping all converations
                 return (
-                  <div >
-                  <div style={liStyle}>
                   <div key={conv._id} >
-                      
-                       <List>
+                       
                       <ListItem
                     primaryText= {conv.userTwo}
+                    value={conv._id}
                     leftAvatar={<Avatar src={conv.avatar} />}
+                    onClick={this.btnConversation.bind(this,conv)}
                      />
-                       </List>
-                  </div>
-                  </div>
                   </div>
                 );
               })}
+            </SelectableList>
             </div>
-        </div>
         </MuiThemeProvider>
     );
   }
