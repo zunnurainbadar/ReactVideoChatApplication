@@ -30,23 +30,26 @@ module.exports = {
             OtherProfile: "./client/app/components/otherProfile.jsx",
             GroupList: "./client/app/components/groupList.jsx",
             UIstore: "./client/app/store/UIstore.js",
-            applicationStyles: "./client/app/styles/app.css",
-            // snowStyle: "./client/app/styles/quill.snow.scss",
-            // coreStyle: "./client/app/styles/quill.core.css",
-            // bubbleStyle: "./client/app/styles/quill.bubble.css"
+            applicationStyles: "client/app/styles/app.scss",
+            // snowStyle: "client/app/styles/quill.snow.scss",
+            // coreStyle: "client/app/styles/quill.core.css",
+            // bubbleStyle: "client/app/styles/quill.bubble.css"
         },
         extensions: ["", ".js", ".jsx"]
     },
     module: {
         loaders: [{
-            loader: ["babel-loader"],
-            query: {
-                presets: ["react", "es2015", "stage-0"],
-                plugins: ["transform-decorators-legacy", "transform-class-properties"]
+                loader: ["babel-loader"],
+                query: {
+                    cacheDirectory: true,
+                    presets: ["react", "es2015", "stage-0"],
+                    plugins: ["transform-decorators-legacy", "transform-class-properties"]
+                },
+                test: /\.jsx?$/,
+                exclude: /(node_modules|bower_components)/
             },
-            test: /\.jsx?$/,
-            exclude: /(node_modules|bower_components)/
-        }]
+            { test: /\.css$/, loader: "style-loader!css-loader" },
+        ]
     },
     devtool: "cheap-module-eval-source-map"
 };

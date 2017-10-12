@@ -21,9 +21,10 @@ import NotFound from "./components/NotFound.jsx";
 // require("style!css!foundation-sites/dist/foundation.min.css");
 
 // app.scss
-// require("style!css!sass!applicationStyles");
+require("style!css!sass!applicationStyles");
 // require("style!css!sass!snowStyle");
 // require("style!css!sass!coreStyle");
+// require("./styles/app.scss");
 
 // require("style!css!sass!homepage");
 
