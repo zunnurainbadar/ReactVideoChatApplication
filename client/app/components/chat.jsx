@@ -99,14 +99,29 @@ export default class Chat extends React.Component {
             <div>
               {ChatStore.messages.map(messages => {
                 // Check if message is mine or not
+                if(messages.sender == UserStore.user.username)
                 return (
+                  <div className="mineMsg">
                   <ul style={liStyle}>
                   <li key={messages.id}>
-                    <ul>
+                    <h4 style={{padding:"1%",paddingRight:"0%"}}>
                       {messages.message}
-                    </ul>
+                    </h4>
                   </li>
                   </ul>
+                  </div>
+                );
+                else
+           return(
+                  <div className="otherMsg">
+                  <ul style={liStyle}>
+                  <li key={messages.id}>
+                    <h4 style={{padding:"1%",paddingLeft:"0%"}}>
+                      {messages.message}
+                    </h4>
+                  </li>
+                  </ul>
+                  </div>
                 );
               })}
             </div>
