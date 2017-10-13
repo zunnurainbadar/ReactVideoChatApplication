@@ -95,7 +95,7 @@ export default class Chat extends React.Component {
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <div >
+        <div>
                     <hr/>
             <div style={sty}>
 
@@ -127,25 +127,34 @@ export default class Chat extends React.Component {
                 );
               })}
             </div>
-            <div>
-            
-              <textarea
+            <div className ="row fixedbutton">
+            <div className="col-md-12">
+            <div className="col-md-9">
+            <textarea
+              rows="2"
                 ref="message"
                 style={chatinputbox}
                 placeholder="Type a message here......."
                 className="form-control"
                 errorText="This field is required"
               />
+            </div>
+            <div className = "col-md-1">              
+
+              </div>
+            <div className = "col-md-1">              
+
+              </div>
+            <div className = "col-md-1">              
               <input
                 type="button"
                 value="send"
                 className="btn btn-success"
                 onClick={this.sendMessage.bind(this)}
               />
-              <div>
-              
               </div>
-            </div>
+              </div>
+              </div>
           </div>
       </MuiThemeProvider>
     );

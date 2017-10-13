@@ -65,5 +65,21 @@ export default StyleSheet.create({
   },
   'search-input > input:focus': {
     'outline': 'none'
+  },
+  'textareas': {
+    'width': [{ 'unit': '%H', 'value': 1 }],
+    'fontSize': [{ 'unit': 'px', 'value': 18 }],
+    'border': [{ 'unit': 'string', 'value': 'none' }],
+    'lineHeight': [{ 'unit': 'px', 'value': 22 }],
+    'padding': [{ 'unit': 'px', 'value': 5 }, { 'unit': 'px', 'value': 10 }, { 'unit': 'px', 'value': 5 }, { 'unit': 'px', 'value': 25 }],
+    'height': [{ 'unit': 'px', 'value': 32 }],
+    'position': 'relative'
+  },
+  'textarea:focus': {
+    'outline': 'none'
+  },
+  'fixedbutton': {
+    'position': 'fixed',
+    'bottom': [{ 'unit': 'px', 'value': 15 }]
   }
 });

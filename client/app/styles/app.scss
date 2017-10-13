@@ -76,3 +76,23 @@ hr {
     outline: none;
     // border-bottom: thick solid #ff0000;
 }
+
+.textareas {
+    width: 100%;
+    font-size: 18px;
+    border: none;
+    line-height: 22px;
+    padding: 5px 10px 5px 25px;
+    height: 32px;
+    position: relative; // border-bottom: thick solid #ff0000;
+}
+
+textarea:focus {
+    outline: none;
+    // border-bottom: thick solid #ff0000;
+}
+
+.fixedbutton {
+    position: fixed;
+    bottom: 15px;
+}
