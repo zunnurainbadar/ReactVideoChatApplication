@@ -54,7 +54,9 @@ export default class OtherProfile extends React.Component {
   render() {
     return (
        <MuiThemeProvider muiTheme={muiTheme}>
-      <div>
+      <div className="row">
+        <div className="col-md-12">  
+        <div className="col-md-6"> 
             <List style={{display: 'inline-flex',width:"100%"}}>
             <ListItem
               disabled={true}
@@ -67,7 +69,9 @@ export default class OtherProfile extends React.Component {
                <h5>{UserStore.user.desc}</h5>
               </ListItem>
           </List>
-           <div className="pull-right ">
+          </div>
+          <div className="col-md-6">
+           <div className="pull-right" style={{marginTop: "5%"}}>
                <FloatingActionButton 
                backgroundColor={"#077DB4"} 
               disabled={false} 
@@ -91,6 +95,8 @@ export default class OtherProfile extends React.Component {
               >
                     <AddPerson />
                </FloatingActionButton>
+</div>
+</div>
 </div>
         </div>
         </MuiThemeProvider>

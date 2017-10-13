@@ -50,7 +50,9 @@ export default StyleSheet.create({
     'top': [{ 'unit': 'px', 'value': 11 }],
     'left': [{ 'unit': 'px', 'value': 16 }],
     'lineHeight': [{ 'unit': 'px', 'value': 32 }],
-    'opacity': '0.6'
+    'opacity': '0.6',
+    'marginTop': [{ 'unit': '%V', 'value': 0.07 }],
+    'marginLeft': [{ 'unit': '%H', 'value': -0.03 }]
   },
   'search-input > input': {
     'width': [{ 'unit': '%H', 'value': 1 }],

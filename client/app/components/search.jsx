@@ -75,9 +75,6 @@ export default class Search extends React.Component {
               onChange={this.searchUpdated.bind(this)}
               style={searchStyles}
             />
-            <br/>
-            <hr />
-            <br/>
             {filteredUsers.map(user => {
               //Mapping filtered users
               if (user.username != UserStore.user.username) {

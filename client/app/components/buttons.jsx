@@ -23,8 +23,8 @@ const muiTheme = getMuiTheme({
   palette: {},
 });
 const buttonStyle = {
-    width: 36,
-    height: 36,
+    // width: 36,
+    // height: 36,
 }
 @observer
 export default class Buttons extends React.Component {
@@ -49,7 +49,7 @@ console.log("Inside unread")
   render() {
     return (
        <MuiThemeProvider muiTheme={muiTheme}>
-       <div style={buttonStyle}>
+       <div >
       <div>
 <div style={{display:"inline-flex"}}>  
 <button className="removing" onClick={this.gotohome.bind(this)} style={{display:"inline-flex"}}>
@@ -72,13 +72,19 @@ console.log("Inside unread")
 </button>
 </div>
         </div>
-        <div style={{display:"inline-flex",marginTop:"10%"}}>
+        <div className = "row">
+        <div className="col-md-12">
+        <div className="col-md-4">
         <button className="removing" onClick={this.gotohome.bind(this)}>
-        <p style={{marginTop:"10%", marginLeft:"10%"}}>Contacts</p>
+        <p style={{marginTop:"10%"}}>CONTACTS</p>
+</button>  
+        </div>
+        <div className="col-md-4">
+        <button className="removing" onClick={this.gotohome.bind(this)}>
+        <p style={{marginTop:"14%"}}>RECENT</p>
 </button>
-        <button className="removing" onClick={this.gotohome.bind(this)} style={{marginLeft:"20%"}}>
-        <p style={{marginTop:"10%", marginLeft:"10%"}}>Recent</p>
-</button>
+        </div>
+        <div className="col-md-4" style={{    marginTop: "-2%"}}>
         <IconMenu
                   className="pull-right"
                   iconButtonElement={
@@ -90,7 +96,9 @@ console.log("Inside unread")
                   <MenuItem primaryText="All" onClick={this.all.bind(this)} />
                   <MenuItem primaryText="Unread" onClick={this.unread.bind(this)} />
                 </IconMenu>
-      </div>
+        </div>
+        </div>
+        </div>
         </div>
         </MuiThemeProvider>
     );

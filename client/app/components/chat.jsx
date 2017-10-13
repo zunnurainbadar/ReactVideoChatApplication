@@ -132,7 +132,7 @@ export default class Chat extends React.Component {
               <textarea
                 ref="message"
                 style={chatinputbox}
-                placeholder="Please Enter Your message......."
+                placeholder="Type a message here......."
                 className="form-control"
                 errorText="This field is required"
               />
@@ -142,6 +142,9 @@ export default class Chat extends React.Component {
                 className="btn btn-success"
                 onClick={this.sendMessage.bind(this)}
               />
+              <div>
+              
+              </div>
             </div>
           </div>
       </MuiThemeProvider>
