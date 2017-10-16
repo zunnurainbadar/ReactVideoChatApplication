@@ -94,5 +94,23 @@ textarea:focus {
 
 .fixedbutton {
     position: fixed;
-    bottom: 15px;
+    bottom: 0%;
+    background-color: #ffffff;
+    width: 80%;
+}
+
+.rotate {
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    -o-transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    transform: rotate(135deg);
+}
+
+.rotateSend {
+    -webkit-transform: rotate(335deg);
+    -moz-transform: rotate(335deg);
+    -o-transform: rotate(335deg);
+    -ms-transform: rotate(335deg);
+    transform: rotate(335deg);
 }

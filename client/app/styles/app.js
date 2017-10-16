@@ -80,6 +80,22 @@ export default StyleSheet.create({
   },
   'fixedbutton': {
     'position': 'fixed',
-    'bottom': [{ 'unit': 'px', 'value': 15 }]
+    'bottom': [{ 'unit': '%V', 'value': 0 }],
+    'backgroundColor': '#ffffff',
+    'width': [{ 'unit': '%H', 'value': 0.8 }]
+  },
+  'rotate': {
+    'WebkitTransform': 'rotate(135deg)',
+    'MozTransform': 'rotate(135deg)',
+    'OTransform': 'rotate(135deg)',
+    'MsTransform': 'rotate(135deg)',
+    'transform': 'rotate(135deg)'
+  },
+  'rotateSend': {
+    'WebkitTransform': 'rotate(335deg)',
+    'MozTransform': 'rotate(335deg)',
+    'OTransform': 'rotate(335deg)',
+    'MsTransform': 'rotate(335deg)',
+    'transform': 'rotate(335deg)'
   }
 });

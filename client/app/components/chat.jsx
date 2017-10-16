@@ -11,10 +11,19 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 // import { greenA400 } from "material-ui/styles/colors";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Drawer from 'material-ui/Drawer';
-import {MenuItem} from 'material-ui';
+import {MenuItem, Avatar} from 'material-ui';
 import SearchInput, {createFilter} from 'react-search-input';
 import { browserHistory } from "react-router";
+import Attachment from "material-ui/svg-icons/file/attachment"
+import Send from "material-ui/svg-icons/content/send"
+import Mood from "material-ui/svg-icons/social/mood"
+import Contacts from "material-ui/svg-icons/communication/contact-phone.js"
+import Message from "material-ui/svg-icons/communication/message.js"
+import VideCallIcon from "material-ui/svg-icons/av/videocam";
+import Image from "material-ui/svg-icons/image/image.js";
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 
+var time;
 const style = {
   height: '100%',
 };
@@ -31,6 +40,8 @@ const chatinputbox = {
   height: '3.5rem',
   margin: '0 0 0rem',
   resize: 'none',
+  marginLeft: "-7%",
+  border: "none",
 };
 const muiTheme = getMuiTheme({
   palette: {},
@@ -55,10 +66,12 @@ export default class Chat extends React.Component {
 
     //Receiving message Real time
     socket.on(UserStore.user.username + 'messageSent', function(data) {
+      console.log("Inside message sent",data);
       if (
         ChatStore.conversationSelected.userTwo == data.sender ||
         UserStore.user.username == data.sender
       ) {
+        console.log("Inside if");
         ChatStore.messages.push(data);
       }
     });
@@ -69,6 +82,7 @@ export default class Chat extends React.Component {
  
 
   sendMessage = function() {
+    console.log("Inside send ",this.refs.message.value);
     if (this.refs.message.value == '') {
       console.log('Cannot send message is empty');
     } else {
@@ -92,23 +106,33 @@ export default class Chat extends React.Component {
   //Function for realtime search
  
   render() {
-
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
                     <hr/>
             <div style={sty}>
-
+              
               {ChatStore.messages.map(messages => {
+                time = messages.time.split("T");
+                time = time[1].substr(0,7);
                 // Check if message is mine or not
                 if(messages.sender == UserStore.user.username)
                 return (
-                  <div className="mineMsg">
+                  <div>
                   <ul style={liStyle}>
                   <li key={messages.id}>
-                    <h4 style={{padding:"1%",paddingRight:"0%"}}>
+                  <div className="row">
+                  <div className="col-md-1">
+                  </div>
+                  <div className="col-md-10 mineMsg">
+                  <h4 style={{padding:"1%",paddingRight:"0%"}}>
                       {messages.message}
-                    </h4>
+                  </h4>
+                  </div>
+                    <div className="col-md-1">
+                    {time}
+                    </div>
+                    </div>
                   </li>
                   </ul>
                   </div>
@@ -118,18 +142,34 @@ export default class Chat extends React.Component {
                   <div className="otherMsg">
                   <ul style={liStyle}>
                   <li key={messages.id}>
+                  <div className="row">
+                  <div  className="col-md-1">
+                   <Avatar src={ChatStore.conversationSelected.avatar} size={35} />
+                  </div>
+                  <div className="col-md-10">
                     <h4 style={{padding:"1%",paddingLeft:"0%"}}>
                       {messages.message}
                     </h4>
+                  </div>
+                  <div className="col-md-1">
+                    <time>
+                      {time}
+                    </time>
+                  </div>
+                  
+                  </div>
+                  
                   </li>
                   </ul>
                   </div>
                 );
               })}
             </div>
+            <br/>
+            <br/>
             <div className ="row fixedbutton">
             <div className="col-md-12">
-            <div className="col-md-9">
+            <div className="col-md-8">
             <textarea
               rows="2"
                 ref="message"
@@ -138,21 +178,30 @@ export default class Chat extends React.Component {
                 className="form-control"
                 errorText="This field is required"
               />
-            </div>
-            <div className = "col-md-1">              
-
-              </div>
-            <div className = "col-md-1">              
-
-              </div>
-            <div className = "col-md-1">              
-              <input
-                type="button"
-                value="send"
-                className="btn btn-success"
+            </div>         
+            <div className = "col-md-4">              
+                <div className="row">
+                <IconButton disabled={true}><Image color="#077DB4" style={{ width: 30,height: 30}}/></IconButton>
+                <IconButton disabled={true}>
+                <Message color="#077DB4" style={{ width: 30,height: 30}} >
+                <VideCallIcon color="#ffffff" />
+                </Message>
+                </IconButton>
+                <IconButton disabled={true}><Contacts color="#077DB4"  style={{ width: 30,height: 30}}/></IconButton>
+                <IconButton disabled={true}><Attachment color="#077DB4" className="rotate" style={{ width: 30,height: 30}}/></IconButton>
+                <IconButton disabled={true}><Mood color="#077DB4" style={{ width: 30,height: 30}} /></IconButton>  
+                <FloatingActionButton 
+                 mini={true}
+                 backgroundColor={"#077DB4"} 
+                 disabled={false} 
+                 labelColor={'#FFFFFF'}
                 onClick={this.sendMessage.bind(this)}
-              />
+              >
+                    <Send className="rotateSend"/>
+               </FloatingActionButton>
+            </div>   
               </div>
+           
               </div>
               </div>
           </div>
