@@ -184,7 +184,7 @@ boot(app, __dirname, function(err) {
                 else {
                     var data = [];
                     for (var i = 0; i < _users.length; i++) {
-                        data.push({ id: _users[i].id, username: _users[i].username, fullname: _users[i].fullname })
+                        data.push({ id: _users[i].id, username: _users[i].username, fullname: _users[i].fullname, avatar: _users[i].avatar })
                     }
                     socket.emit('receivingUsers', data);
                 }

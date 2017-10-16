@@ -13,6 +13,9 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Drawer from 'material-ui/Drawer';
 import {MenuItem} from 'material-ui';
 import SearchInput, {createFilter} from 'react-search-input';
+import {List, ListItem} from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
+
 const KEYS_TO_FILTERS = ['username', 'fullname'];
 
 const muiTheme = getMuiTheme({
@@ -80,14 +83,18 @@ export default class Search extends React.Component {
               if (user.username != UserStore.user.username) {
                 return (
                   <div key={user.id}>
-                    <button onClick={this.createConversation.bind(this, user)}>
-                      <h3>
-                        {user.fullname}
-                      </h3>
-                      <p>
-                        @{user.username}
-                      </p>
-                    </button>
+                  <div className="row">
+                  <div className="col-md-12">
+                  <List>
+      <ListItem
+        primaryText={user.fullname}
+       leftAvatar={<Avatar src={user.avatar} 
+        onClick={this.createConversation.bind(this, user)}
+        />}
+      />
+      </List>
+                  </div>
+                  </div>
                   </div>
                 );
               }
