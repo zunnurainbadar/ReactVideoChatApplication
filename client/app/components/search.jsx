@@ -79,20 +79,29 @@ export default class Search extends React.Component {
               style={searchStyles}
             />
             {filteredUsers.map(user => {
+              var exists = false;
+              for(var i=0;i<ChatStore.conversations.length;i++){
+                if(user.username == ChatStore.conversations[i].userTwo && UserStore.user.username == ChatStore.conversations[i].userOne){
+                  console.log("Conversation already exists");
+                  exists = true;
+                }else{
+                  console.log("Conversation does not exist");
+                }
+              }
               //Mapping filtered users
-              if (user.username != UserStore.user.username) {
+              if (user.username != UserStore.user.username && exists == false) {
                 return (
                   <div key={user.id}>
                   <div className="row">
                   <div className="col-md-12">
                   <List>
-      <ListItem
-        primaryText={user.fullname}
-       leftAvatar={<Avatar src={user.avatar} 
-        onClick={this.createConversation.bind(this, user)}
-        />}
-      />
-      </List>
+                      <ListItem
+                        primaryText={user.fullname}
+                        leftAvatar={<Avatar src={user.avatar} 
+                        onClick={this.createConversation.bind(this, user)}
+                        />}
+                      />
+                  </List>
                   </div>
                   </div>
                   </div>
