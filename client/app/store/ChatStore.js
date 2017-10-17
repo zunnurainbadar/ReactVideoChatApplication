@@ -5,6 +5,12 @@ class ChatStore {
     @observable conversationSelected = {};
     @observable messages = [];
     @observable roomToJoin = "";
+    @observable isBusy = false;
+    @observable dialogOpen = false;
+    @observable videoCall = false;
+    @observable call = false;
+    @observable from = '';
+    @observable to = '';
     // @observable fullscreen = !
 }
 

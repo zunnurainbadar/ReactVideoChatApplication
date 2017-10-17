@@ -16,6 +16,7 @@ import UserStore from "../store/UserStore";
 
 var webrtc;
 var room;
+var isBusy = false;
 const muiTheme = getMuiTheme({
   palette: {},
 });
@@ -27,17 +28,11 @@ export default class videoCall extends React.Component {
     this.state = {open: false}
   }
   componentWillMount () {
-    Userstore.user =JSON.parse(localStorage.getItem("userInfo"));
+    UserStore.user =JSON.parse(localStorage.getItem("userInfo"));
         console.log("This is in parameter ",this.props.params.roomToJoin)
-room = this.props.params.roomToJoin;
-  }
-  componentDidMount() {
-console.log("Inside componentDidMount", ChatStore.conversationSelected.cid);
-};
-  render() {
-    console.log("Thiss is room ",room);
-          if(Store.videoCallView == true){
-         webrtc = new SimpleWebRTC({
+        room = this.props.params.roomToJoin;
+        
+             webrtc = new SimpleWebRTC({
             localVideoEl: 'localVideo',
             remoteVideosEl: 'remotesVideos',
             autoRequestMedia: true,
@@ -47,6 +42,16 @@ console.log("Inside componentDidMount", ChatStore.conversationSelected.cid);
             console.log('Ready to call');
             webrtc.joinRoom(ChatStore.roomToJoin);
         });
+        console.log("This is username ",UserStore.user.username);
+        
+
+  }
+  componentDidMount() {
+
+};
+  render() {
+    console.log("Thiss is room ",room);
+          if(room){
             return (
        <MuiThemeProvider muiTheme={muiTheme}>
       <div>

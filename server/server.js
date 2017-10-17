@@ -113,15 +113,6 @@ boot(app, __dirname, function(err) {
                         })
                         .catch(err => console.log(err));
                 }
-                //  _conversations[i] = {
-                //                 cid: _conversations[i].cid,
-                //                 date: _conversations[i].date,
-                //                 id: _conversations[i].id,
-                //                 userOne: _conversations[i].userOne,
-                //                 userTwo: _conversations[i].userTwo,
-                //                 avatar: _user.avatar,
-                //                 desc: _user.desc
-                //             }
             })
         });
         //For Getting Messages of selected conversation
@@ -179,16 +170,32 @@ boot(app, __dirname, function(err) {
         });
         //For storing all users in store to search
         socket.on('gettingALlUsers', function(data) {
-            app.models.allUsers.find({}, function(err, _users) {
-                if (err) throw err;
-                else {
-                    var data = [];
-                    for (var i = 0; i < _users.length; i++) {
-                        data.push({ id: _users[i].id, username: _users[i].username, fullname: _users[i].fullname, avatar: _users[i].avatar })
+                app.models.allUsers.find({}, function(err, _users) {
+                    if (err) throw err;
+                    else {
+                        var data = [];
+                        for (var i = 0; i < _users.length; i++) {
+                            data.push({ id: _users[i].id, username: _users[i].username, fullname: _users[i].fullname, avatar: _users[i].avatar })
+                        }
+                        socket.emit('receivingUsers', data);
                     }
-                    socket.emit('receivingUsers', data);
-                }
+                })
             })
+            //For Video call
+        socket.on('NewVideoCall', function(data) {
+                //Sending call notification
+                io.sockets.emit(data.to + 'calling', data)
+            })
+            //When user click on answer
+        socket.on('answer', function(data) {
+                //Sending notification that answer is clicked
+                console.log("Inside answer ", data);
+                io.sockets.emit(data.to + 'answers', data)
+            })
+            //When user rejects the call
+        socket.on('reject', function(data) {
+            //Sending notification that reject button is clicked
+            io.sockets.emit(data.to + 'rejects', data)
         })
     });
 })

@@ -113,8 +113,8 @@ export default class Chat extends React.Component {
             <div style={sty}>
               
               {ChatStore.messages.map(messages => {
-                time = messages.time.split("T");
-                time = time[1].substr(0,7);
+                // time = messages.time.split("T");
+                // time = time[1].substr(0,7);
                 // Check if message is mine or not
                 if(messages.sender == UserStore.user.username)
                 return (

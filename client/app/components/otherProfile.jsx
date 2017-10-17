@@ -19,7 +19,11 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import VideCallIcon from "material-ui/svg-icons/av/videocam"
 import CallIcon from "material-ui/svg-icons/communication/call"
 import AddPerson from "material-ui/svg-icons/social/person-add"
+import { browserHistory } from "react-router";
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
+var answer = false;
 const muiTheme = getMuiTheme({
   palette: {},
 });
@@ -28,30 +32,105 @@ const muiTheme = getMuiTheme({
 export default class OtherProfile extends React.Component {
   constructor() {
     super();
-    this.state = {open: false}
+     this.state = {
+      open: false
+    };
   }
   componentWillMount () {
     userstore.user =JSON.parse(localStorage.getItem("userInfo"));    
   }
   componentDidMount() {
-  }
+    //Show the dialog that use is calling
+    socket.on(UserStore.user.username+"calling",function(data){
+        if(ChatStore.isBusy == false){
+          console.log(data.from + " is calling you");
+          ChatStore.callFrom = data.from;
+          ChatStore.callTo = data.to;
+          ChatStore.videoCall = data.videoCall;
+          ChatStore.call = data.call;
+          ChatStore.roomToJoin = data.room;
+          ChatStore.dialogOpen = true;
+          }
+          else
+          {
+            console.log("Busy on another file");
+          }
+        })
+        // socket.on('videoCall',function(data){
 
+        // })
+        //When other user pressed answer
+        socket.on('answers',function(data){
+         if(ChatStore.videoCall == true){
+              browserHistory.push('/videoCall/'+ChatStore.roomToJoin)
+         }else{
+              browserHistory.push('/call/'+ChatStore.roomToJoin)
+         }
+        })
+        //When other user press reject
+        socket.on('rejects',function(data){
+         console.log("User clicked on Reject button",data);
+        })
+  }
+//For video calling
    videoCall = function() {
+     console.log("This is video call function");
     //Changing view for video call
     Store.videoCallView = true;
     Store.callView = false;
     Store.conversationView = false;
+    ChatStore.videoCall = true;    
+    ChatStore.call = false;
     ChatStore.roomToJoin = ChatStore.conversationSelected.cid;
-    browserHistory.push('/videoCall/'+ChatStore.roomToJoin)
+    // Sending Notification of call to Other person
+    socket.emit("NewVideoCall",{to:ChatStore.conversationSelected.userTwo,room:ChatStore.roomToJoin,from: UserStore.user.username,videoCall:true,call:false});
+    // browserHistory.push('/videoCall/'+ChatStore.roomToJoin)
   };
   Call = function() {
     //Changing call for view
     Store.videoCallView = false;
     Store.callView = true;
     Store.conversationView = false;
-        browserHistory.push('/call/'+ChatStore.roomToJoin)
+    ChatStore.videoCall = false;    
+    ChatStore.call = true;
+    // browserHistory.push('/call/'+ChatStore.roomToJoin)
   };
+  // when user answers the call
+  answer = function(){
+    answer = true;
+    ChatStore.isBusy = true;
+    socket.emit("answer",{to:ChatStore.from,answer:answer,isBusy:ChatStore.isBusy})
+    ChatStore.dialogOpen = false;
+    if(ChatStore.videoCall == true){
+    browserHistory.push('/videoCall/'+ChatStore.roomToJoin)    
+    }else{
+          browserHistory.push('/call/'+ChatStore.roomToJoin)
+    }
+
+  }
+  //When user rejects the call
+  reject = function(){
+    answer = false;
+  ChatStore.isBusy = false;
+    socket.emit("reject",{to:ChatStore.from,answer:answer,isBusy:ChatStore.isBusy})
+    ChatStore.dialogOpen = false;
+  }
   render() {
+    const actions = [
+      <FlatButton
+        label="Answer"
+        primary={true}
+         keyboardFocused={true}
+         backgroundColor= {"#00ff00"}
+        onClick={this.answer.bind(this)}
+      />,
+      <FlatButton
+        label="Reject"
+        primary={true}
+       backgroundColor= {"#ff0000"}
+        onClick={this.reject.bind(this)}
+      />,
+    ];
     return (
        <MuiThemeProvider muiTheme={muiTheme}>
       <div className="row">
@@ -98,6 +177,14 @@ export default class OtherProfile extends React.Component {
 </div>
 </div>
 </div>
+<Dialog
+          title="Dialog With Actions"
+          actions={actions}
+          modal={false}
+          open={ChatStore.dialogOpen}
+        >
+          The actions in this window were passed in as an array of React objects.
+        </Dialog>
         </div>
         </MuiThemeProvider>
     );
