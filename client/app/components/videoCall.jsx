@@ -56,7 +56,7 @@ muteVideo(){
           if(room){
             return (
        <MuiThemeProvider muiTheme={muiTheme}>
-      <div className= "container-fluid containers" >
+      <div className= "container-fluid containers" style={{backgroundColor:"#000000",overflow:"hidden",height:"100%",width:"100%"}}>
           <div className="row">
           <div className= "col-md-12" >
           <div className= "col-md-8" >
