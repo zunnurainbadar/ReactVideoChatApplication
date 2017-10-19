@@ -10,9 +10,9 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 // import { greenA400 } from "material-ui/styles/colors";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Drawer from 'material-ui/Drawer';
-import {MenuItem} from 'material-ui';
+import {MenuItem, FloatingActionButton} from 'material-ui';
 import UserStore from "../store/UserStore";
-
+import VideCallIcon from "material-ui/svg-icons/av/videocam";
 
 var webrtc;
 var room;
@@ -49,18 +49,38 @@ export default class videoCall extends React.Component {
   componentDidMount() {
 
 };
+muteVideo(){
+  console.log("MuteVideo is called");
+}
   render() {
-    console.log("Thiss is room ",room);
           if(room){
             return (
        <MuiThemeProvider muiTheme={muiTheme}>
-      <div>
-          <div>
-            <div id="remotesVideos" />
-            <div>
-              <video height="200" id="localVideo" />
+      <div className= "container-fluid containers" >
+          <div className="row">
+          <div className= "col-md-12" >
+          <div className= "col-md-8" >
+            <div id="remotesVideos" className = "remoteVideo" />
+            <div className="overlay">
+            <FloatingActionButton 
+                 mini={true}
+                 backgroundColor={"#077DB4"} 
+                 disabled={false} 
+                 labelColor={'#FFFFFF'}
+                onClick={this.muteVideo.bind(this)}
+              >
+                    <VideCallIcon/>
+               </FloatingActionButton>
+            </div>
+            </div>
+            <div className= "col-md-2" >
+              <video id="localVideo" className="localVideo" >
+              </video>
+            </div>
+            <div className= "col-md-2" >
             </div>
           </div>        
+          </div> 
           </div>
         </MuiThemeProvider>
     );

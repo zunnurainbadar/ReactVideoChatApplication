@@ -114,3 +114,32 @@ textarea:focus {
     -ms-transform: rotate(335deg);
     transform: rotate(335deg);
 }
+
+.remoteVideo>video {
+    margin-left: 10%;
+    margin-top: 5%;
+    width: 85% !important;
+    height: 20% !important;
+}
+
+.localVideo {
+    margin-top: 30%;
+    width: 100% !important;
+    height: 40% !important;
+}
+
+.container {
+    position: relative;
+}
+
+.containers video {
+    position: relative;
+    z-index: 0;
+}
+
+.overlay {
+    position: absolute;
+    bottom: "10%";
+    left: 0;
+    z-index: 1;
+}

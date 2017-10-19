@@ -97,5 +97,29 @@ export default StyleSheet.create({
     'OTransform': 'rotate(335deg)',
     'MsTransform': 'rotate(335deg)',
     'transform': 'rotate(335deg)'
+  },
+  'remoteVideo > video': {
+    'marginLeft': [{ 'unit': '%H', 'value': 0.1 }],
+    'marginTop': [{ 'unit': '%V', 'value': 0.05 }],
+    'width': [{ 'unit': '%H', 'value': 0.85 }, { 'unit': 'string', 'value': '!important' }],
+    'height': [{ 'unit': '%V', 'value': 0.2 }, { 'unit': 'string', 'value': '!important' }]
+  },
+  'localVideo': {
+    'marginTop': [{ 'unit': '%V', 'value': 0.3 }],
+    'width': [{ 'unit': '%H', 'value': 1 }, { 'unit': 'string', 'value': '!important' }],
+    'height': [{ 'unit': '%V', 'value': 0.4 }, { 'unit': 'string', 'value': '!important' }]
+  },
+  'container': {
+    'position': 'relative'
+  },
+  'containers video': {
+    'position': 'relative',
+    'zIndex': '0'
+  },
+  'overlay': {
+    'position': 'absolute',
+    'bottom': [{ 'unit': '%V', 'value': NaN }],
+    'left': [{ 'unit': 'px', 'value': 0 }],
+    'zIndex': '1'
   }
 });
