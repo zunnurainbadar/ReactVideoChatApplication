@@ -13,6 +13,8 @@ import Drawer from 'material-ui/Drawer';
 import {MenuItem, FloatingActionButton} from 'material-ui';
 import UserStore from "../store/UserStore";
 import VideCallIcon from "material-ui/svg-icons/av/videocam";
+import Mic from "material-ui/svg-icons/av/mic";
+import Hangup from "material-ui/svg-icons/communication/call-end";
 
 var webrtc;
 var room;
@@ -52,6 +54,15 @@ export default class videoCall extends React.Component {
 muteVideo(){
   console.log("MuteVideo is called");
 }
+mute(){
+  console.log("Mute is called");
+}
+add(){
+  console.log("Add is called");
+}
+hangup(){
+  console.log("Hangup is called");
+}
   render() {
           if(room){
             return (
@@ -61,7 +72,7 @@ muteVideo(){
           <div className= "col-md-12" >
           <div className= "col-md-8" >
             <div id="remotesVideos" className = "remoteVideo" >
-             <div className="overlay">
+             <div className="overlay row">
             <center><FloatingActionButton 
                  mini={true}
                  backgroundColor={"#077DB4"} 
@@ -70,7 +81,35 @@ muteVideo(){
                 onClick={this.muteVideo.bind(this)}
               >
                     <VideCallIcon/>
-               </FloatingActionButton></center>
+               </FloatingActionButton>
+               <FloatingActionButton 
+                 mini={true}
+                 backgroundColor={"#077DB4"} 
+                 disabled={false} 
+                 labelColor={'#FFFFFF'}
+                onClick={this.mute.bind(this)}
+              >
+                    <Mic/>
+               </FloatingActionButton>
+                <FloatingActionButton 
+                 mini={true}
+                 backgroundColor={"#077DB4"} 
+                 disabled={true} 
+                 labelColor={'#FFFFFF'}
+                onClick={this.add.bind(this)}
+              >
+                    <ContentAdd/>
+               </FloatingActionButton>
+                <FloatingActionButton 
+                 mini={true}
+                 backgroundColor={"#FF0000"} 
+                 disabled={false} 
+                 labelColor={'#FFFFFF'}
+                onClick={this.hangup.bind(this)}
+              >
+                    <Hangup/>
+               </FloatingActionButton>
+               </center>
             </div>
             </div>
            
