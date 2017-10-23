@@ -118,8 +118,14 @@ export default StyleSheet.create({
   },
   'overlay': {
     'position': 'absolute',
-    'bottom': [{ 'unit': '%V', 'value': NaN }],
-    'left': [{ 'unit': 'px', 'value': 0 }],
+    'marginTop': [{ 'unit': '%V', 'value': 0.6 }],
+    'left': [{ 'unit': '%H', 'value': 0.5 }],
     'zIndex': '1'
+  },
+  'background': {
+    'backgroundSize': 'cover',
+    'backgroundPosition': 'center',
+    'width': [{ 'unit': '%H', 'value': 1 }],
+    'textAlign': 'center'
   }
 });

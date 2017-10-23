@@ -40,6 +40,7 @@ module.exports = {
     module: {
         loaders: [{
                 loader: ["babel-loader"],
+                // options: { url: false }, // disable webpack url() handling
                 query: {
                     cacheDirectory: true,
                     presets: ["react", "es2015", "stage-0"],

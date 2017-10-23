@@ -55,14 +55,14 @@ muteVideo(){
   render() {
           if(room){
             return (
-       <MuiThemeProvider muiTheme={muiTheme}>
-      <div className= "container-fluid containers" style={{backgroundColor:"#000000",overflow:"hidden",height:"100%",width:"100%"}}>
+       <MuiThemeProvider muiTheme={muiTheme} className="background">
+      <div  style={{overflow:"hidden"}}>
           <div className="row">
           <div className= "col-md-12" >
           <div className= "col-md-8" >
-            <div id="remotesVideos" className = "remoteVideo" />
-            <div className="overlay">
-            <FloatingActionButton 
+            <div id="remotesVideos" className = "remoteVideo" >
+             <div className="overlay">
+            <center><FloatingActionButton 
                  mini={true}
                  backgroundColor={"#077DB4"} 
                  disabled={false} 
@@ -70,8 +70,10 @@ muteVideo(){
                 onClick={this.muteVideo.bind(this)}
               >
                     <VideCallIcon/>
-               </FloatingActionButton>
+               </FloatingActionButton></center>
             </div>
+            </div>
+           
             </div>
             <div className= "col-md-2" >
               <video id="localVideo" className="localVideo" >
