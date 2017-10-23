@@ -11,6 +11,9 @@ class ChatStore {
     @observable call = false;
     @observable from = '';
     @observable to = '';
+    @observable answer = false;
+    @observable callTo = '';
+    @observable callFrom = '';
     // @observable fullscreen = !
 }
 

@@ -194,8 +194,16 @@ boot(app, __dirname, function(err) {
             })
             //When user rejects the call
         socket.on('reject', function(data) {
-            //Sending notification that reject button is clicked
-            io.sockets.emit(data.to + 'rejects', data)
+                //Sending notification that reject button is clicked
+                io.sockets.emit(data.to + 'rejects', data)
+            })
+            //When user press hangup
+        socket.on('hangup', function(data) {
+            console.log("Inside hangup", data);
+            //Sending notification to Caller
+            io.sockets.emit(data.to + "hangups", data);
+            //Sending notification to Callee
+            io.sockets.emit(data.from + "hangups", data);
         })
     });
 })

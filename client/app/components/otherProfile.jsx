@@ -46,6 +46,8 @@ export default class OtherProfile extends React.Component {
           console.log(data.from + " is calling you");
           ChatStore.callFrom = data.from;
           ChatStore.callTo = data.to;
+          // ChatStore.to = data.from;
+          // ChatStore.from =data.to;
           ChatStore.videoCall = data.videoCall;
           ChatStore.call = data.call;
           ChatStore.roomToJoin = data.room;
@@ -53,7 +55,7 @@ export default class OtherProfile extends React.Component {
           }
           else
           {
-            console.log("Busy on another file");
+            console.log("Busy on another call");
           }
         })
         // socket.on('videoCall',function(data){
@@ -82,6 +84,10 @@ export default class OtherProfile extends React.Component {
     ChatStore.videoCall = true;    
     ChatStore.call = false;
     ChatStore.roomToJoin = ChatStore.conversationSelected.cid;
+    ChatStore.to = ChatStore.conversationSelected.userTwo;
+    ChatStore.from = UserStore.user.username;
+    ChatStore.callTo =ChatStore.conversationSelected.userTwo;
+    ChatStore.callFrom = UserStore.user.username;
     // Sending Notification of call to Other person
     socket.emit("NewVideoCall",{to:ChatStore.conversationSelected.userTwo,room:ChatStore.roomToJoin,from: UserStore.user.username,videoCall:true,call:false});
     // browserHistory.push('/videoCall/'+ChatStore.roomToJoin)

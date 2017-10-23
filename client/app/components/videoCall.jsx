@@ -15,10 +15,10 @@ import UserStore from "../store/UserStore";
 import VideCallIcon from "material-ui/svg-icons/av/videocam";
 import Mic from "material-ui/svg-icons/av/mic";
 import Hangup from "material-ui/svg-icons/communication/call-end";
+import { browserHistory } from "react-router";
 
 var webrtc;
 var room;
-var isBusy = false;
 const muiTheme = getMuiTheme({
   palette: {},
 });
@@ -49,7 +49,12 @@ export default class videoCall extends React.Component {
 
   }
   componentDidMount() {
-
+socket.on(UserStore.user.username+"hangups",function(data){
+  console.log("Inside hangups");
+   webrtc.leaveRoom();
+   webrtc.stopLocalVideo();
+    browserHistory.push('/');
+})
 };
 muteVideo(){
   console.log("MuteVideo is called");
@@ -62,6 +67,11 @@ add(){
 }
 hangup(){
   console.log("Hangup is called");
+  ChatStore.isBusy = false;
+  ChatStore.answer = false;
+  console.log("This is chatStore.chatTo",ChatStore.callTo);
+  console.log("This is chatStore.chatFrom",ChatStore.callFrom);
+  socket.emit("hangup",{to:ChatStore.callTo,from:ChatStore.callFrom,answer: ChatStore.answer})
 }
   render() {
           if(room){
