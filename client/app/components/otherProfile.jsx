@@ -88,6 +88,7 @@ export default class OtherProfile extends React.Component {
     ChatStore.from = UserStore.user.username;
     ChatStore.callTo =ChatStore.conversationSelected.userTwo;
     ChatStore.callFrom = UserStore.user.username;
+    console.log("This is chatStore conversation selected ",ChatStore.conversationSelected.userTwo);
     // Sending Notification of call to Other person
     socket.emit("NewVideoCall",{to:ChatStore.conversationSelected.userTwo,room:ChatStore.roomToJoin,from: UserStore.user.username,videoCall:true,call:false});
     // browserHistory.push('/videoCall/'+ChatStore.roomToJoin)

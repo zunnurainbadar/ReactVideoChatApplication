@@ -51,6 +51,10 @@ export default class videoCall extends React.Component {
   componentDidMount() {
 socket.on(UserStore.user.username+"hangups",function(data){
   console.log("Inside hangups");
+  ChatStore.from="";
+  ChatStore.to="";
+  ChatStore.callFrom="";
+  ChatStore.callTo="";
    webrtc.leaveRoom();
    webrtc.stopLocalVideo();
     browserHistory.push('/');
