@@ -157,6 +157,7 @@ export default class OtherProfile extends React.Component {
         onClick={this.cancel.bind(this)}
       />
     ];
+    if(ChatStore.conversationSelected){
     return (
        <MuiThemeProvider muiTheme={muiTheme}>
       <div className="row">
@@ -222,6 +223,23 @@ export default class OtherProfile extends React.Component {
         </div>
         </MuiThemeProvider>
     );
+  }
+  else{
+    return(
+        <MuiThemeProvider muiTheme={muiTheme}>
+      <div className="row">
+        <div className="col-md-12">  
+        <div>
+        <h3>      You have no conversations please create a conversation</h3> 
+
+      </div>
+      </div>
+      </div>
+      </MuiThemeProvider>
+      
+      )
+  }
+
   }
 }
 

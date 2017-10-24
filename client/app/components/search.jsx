@@ -52,6 +52,7 @@ export default class Search extends React.Component {
     });  
 }
     createConversation = user => {
+      console.log("Creating conversations",user);
     //Creating conversations
     socket.emit('createConversation', {
       userOne: UserStore.user.username,
@@ -90,6 +91,7 @@ export default class Search extends React.Component {
               }
               //Mapping filtered users
               if (user.username != UserStore.user.username && exists == false) {
+                console.log("Inside other if")
                 return (
                   <div key={user.id}>
                   <div className="row">
@@ -99,6 +101,7 @@ export default class Search extends React.Component {
                         primaryText={user.fullname}
                         leftAvatar={<Avatar src={user.avatar} 
                         onClick={this.createConversation.bind(this, user)}
+                        // onClick={this.createConversation.bind(this, user)}
                         />}
                       />
                   </List>
