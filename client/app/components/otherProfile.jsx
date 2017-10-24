@@ -46,8 +46,6 @@ export default class OtherProfile extends React.Component {
           console.log(data.from + " is calling you");
           ChatStore.callFrom = data.from;
           ChatStore.callTo = data.to;
-          // ChatStore.to = data.from;
-          // ChatStore.from =data.to;
           ChatStore.videoCall = data.videoCall;
           ChatStore.call = data.call;
           ChatStore.roomToJoin = data.room;
@@ -62,20 +60,28 @@ export default class OtherProfile extends React.Component {
 
         // })
         //When other user pressed answer
-        socket.on('answers',function(data){
+        socket.on(UserStore.user.username+'answers',function(data){
          if(ChatStore.videoCall == true){
               browserHistory.push('/videoCall/'+ChatStore.roomToJoin)
+            ChatStore.callingDialogOpen = false;
          }else{
+           ChatStore.callingDialogOpen = false;
               browserHistory.push('/call/'+ChatStore.roomToJoin)
          }
         })
         //When other user press reject
         socket.on('rejects',function(data){
          console.log("User clicked on Reject button",data);
+         ChatStore.callingDialogOpen = false;
+        })
+        //When user clicks on cancel button
+        socket.on(UserStore.user.username+"cancels",function(data){
+          ChatStore.dialogOpen = false;
         })
   }
 //For video calling
    videoCall = function() {
+     ChatStore.callingDialogOpen = true;
      console.log("This is video call function");
     //Changing view for video call
     Store.videoCallView = true;
@@ -106,7 +112,7 @@ export default class OtherProfile extends React.Component {
   answer = function(){
     answer = true;
     ChatStore.isBusy = true;
-    socket.emit("answer",{to:ChatStore.from,answer:answer,isBusy:ChatStore.isBusy})
+    socket.emit("answer",{to:ChatStore.callFrom,from:ChatStore.callTo,answer:answer,isBusy:ChatStore.isBusy})
     ChatStore.dialogOpen = false;
     if(ChatStore.videoCall == true){
     browserHistory.push('/videoCall/'+ChatStore.roomToJoin)    
@@ -121,6 +127,10 @@ export default class OtherProfile extends React.Component {
   ChatStore.isBusy = false;
     socket.emit("reject",{to:ChatStore.from,answer:answer,isBusy:ChatStore.isBusy})
     ChatStore.dialogOpen = false;
+  }
+  cancel = function(){
+    ChatStore.callingDialogOpen = false;
+    socket.emit('cancel',{to:ChatStore.conversationSelected.userTwo,room:ChatStore.roomToJoin,from: UserStore.user.username});
   }
   render() {
     const actions = [
@@ -137,6 +147,15 @@ export default class OtherProfile extends React.Component {
        backgroundColor= {"#ff0000"}
         onClick={this.reject.bind(this)}
       />,
+    ];
+    const actionsCalling  = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+         keyboardFocused={true}
+         backgroundColor= {"#00ff00"}
+        onClick={this.cancel.bind(this)}
+      />
     ];
     return (
        <MuiThemeProvider muiTheme={muiTheme}>
@@ -185,12 +204,20 @@ export default class OtherProfile extends React.Component {
 </div>
 </div>
 <Dialog
-          title="Dialog With Actions"
+          title="Video Call"
           actions={actions}
           modal={false}
           open={ChatStore.dialogOpen}
         >
-          The actions in this window were passed in as an array of React objects.
+          SomeOne is calling you
+        </Dialog>
+<Dialog
+          title="Calling"
+          actions={actionsCalling}
+          modal={false}
+          open={ChatStore.callingDialogOpen}
+        >
+        Calling......
         </Dialog>
         </div>
         </MuiThemeProvider>

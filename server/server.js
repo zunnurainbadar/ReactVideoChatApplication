@@ -199,11 +199,15 @@ boot(app, __dirname, function(err) {
             })
             //When user press hangup
         socket.on('hangup', function(data) {
-            console.log("Inside hangup", data);
-            //Sending notification to Caller
-            io.sockets.emit(data.to + "hangups", data);
-            //Sending notification to Callee
-            io.sockets.emit(data.from + "hangups", data);
+                //Sending notification to Caller
+                io.sockets.emit(data.to + "hangups", data);
+                //Sending notification to Callee
+                io.sockets.emit(data.from + "hangups", data);
+            })
+            //When user clicks cancel
+        socket.on('cancel', function(data) {
+            //Sending call notification
+            io.sockets.emit(data.to + 'cancels', data)
         })
     });
 })

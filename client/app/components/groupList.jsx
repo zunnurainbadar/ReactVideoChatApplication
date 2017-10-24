@@ -37,6 +37,7 @@ export default class GroupList extends React.Component {
     //Receiving all conversations
     socket.on(UserStore.user.username + 'myConversations', function(data) {
       ChatStore.conversations = data;
+      console.log("This is conversaton selected ",data[0]);
       ChatStore.conversationSelected = data[0];
       //Getting messages when click on conversation
       socket.emit('gettingMessages', {

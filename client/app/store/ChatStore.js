@@ -7,6 +7,7 @@ class ChatStore {
     @observable roomToJoin = "";
     @observable isBusy = false;
     @observable dialogOpen = false;
+    @observable callingDialogOpen = false;
     @observable videoCall = false;
     @observable call = false;
     @observable from = '';
