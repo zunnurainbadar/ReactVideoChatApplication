@@ -100,9 +100,8 @@ export default class Search extends React.Component {
                       <ListItem
                         primaryText={user.fullname}
                         leftAvatar={<Avatar src={user.avatar} 
-                        onClick={this.createConversation.bind(this, user)}
-                        // onClick={this.createConversation.bind(this, user)}
                         />}
+                        onClick={this.createConversation.bind(this, user)}
                       />
                   </List>
                   </div>
