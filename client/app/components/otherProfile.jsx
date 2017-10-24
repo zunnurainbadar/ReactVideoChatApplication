@@ -42,6 +42,7 @@ export default class OtherProfile extends React.Component {
   componentDidMount() {
     //Show the dialog that use is calling
     socket.on(UserStore.user.username+"calling",function(data){
+      console.log("THis is busy option ",ChatStore.isBusy);
         if(ChatStore.isBusy == false){
           console.log(data.from + " is calling you");
           ChatStore.callFrom = data.from;
@@ -73,10 +74,18 @@ export default class OtherProfile extends React.Component {
         socket.on('rejects',function(data){
          console.log("User clicked on Reject button",data);
          ChatStore.callingDialogOpen = false;
+         ChatStore.from="";
+  ChatStore.to="";
+  ChatStore.callFrom="";
+  ChatStore.callTo="";
         })
         //When user clicks on cancel button
         socket.on(UserStore.user.username+"cancels",function(data){
           ChatStore.dialogOpen = false;
+          ChatStore.from="";
+  ChatStore.to="";
+  ChatStore.callFrom="";
+  ChatStore.callTo="";
         })
   }
 //For video calling
@@ -125,11 +134,19 @@ export default class OtherProfile extends React.Component {
   reject = function(){
     answer = false;
   ChatStore.isBusy = false;
+  ChatStore.from="";
+  ChatStore.to="";
+  ChatStore.callFrom="";
+  ChatStore.callTo="";
     socket.emit("reject",{to:ChatStore.from,answer:answer,isBusy:ChatStore.isBusy})
     ChatStore.dialogOpen = false;
   }
   cancel = function(){
     ChatStore.callingDialogOpen = false;
+    ChatStore.from="";
+  ChatStore.to="";
+  ChatStore.callFrom="";
+  ChatStore.callTo="";
     socket.emit('cancel',{to:ChatStore.conversationSelected.userTwo,room:ChatStore.roomToJoin,from: UserStore.user.username});
   }
   render() {

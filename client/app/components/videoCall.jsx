@@ -55,6 +55,8 @@ socket.on(UserStore.user.username+"hangups",function(data){
   ChatStore.to="";
   ChatStore.callFrom="";
   ChatStore.callTo="";
+  ChatStore.isBusy = false;
+  ChatStore.answer = false;
    webrtc.leaveRoom();
    webrtc.stopLocalVideo();
     browserHistory.push('/');
