@@ -15,6 +15,9 @@ class ChatStore {
     @observable answer = false;
     @observable callTo = '';
     @observable callFrom = '';
+    @observable allOn = true;
+    @observable videoOff = false;
+    @observable micOff = false;
     // @observable fullscreen = !
 }
 

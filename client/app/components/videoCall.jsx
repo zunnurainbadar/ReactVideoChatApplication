@@ -12,8 +12,10 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Drawer from 'material-ui/Drawer';
 import {MenuItem, FloatingActionButton} from 'material-ui';
 import UserStore from "../store/UserStore";
-import VideCallIcon from "material-ui/svg-icons/av/videocam";
+import VideoCallIcon from "material-ui/svg-icons/av/videocam";
+import VideoCallOffIcon from "material-ui/svg-icons/av/videocam-off";
 import Mic from "material-ui/svg-icons/av/mic";
+import MicOff from "material-ui/svg-icons/av/mic-off";
 import Hangup from "material-ui/svg-icons/communication/call-end";
 import { browserHistory } from "react-router";
 
@@ -27,7 +29,12 @@ const muiTheme = getMuiTheme({
 export default class videoCall extends React.Component {
   constructor() {
     super();
-    this.state = {open: false}
+    this.state = {open: false,
+   MicButton : <Mic />,
+VideoButton : <VideoCallIcon />  ,
+MicButtonStatus:true,
+VideoButtonStatus:true
+  }
   }
   componentWillMount () {
     UserStore.user =JSON.parse(localStorage.getItem("userInfo"));
@@ -64,9 +71,28 @@ socket.on(UserStore.user.username+"hangups",function(data){
 };
 muteVideo(){
   console.log("MuteVideo is called");
+  console.log("Thiss is videButton state ",this.state.VideoButton);
+  console.log("THis is dsaasdasd ",<VideoCallIcon/>)
+  if(this.state.VideoButtonStatus == true ){
+    console.log("Inside if of muteVideo");
+  this.setState({  VideoButton : <VideoCallOffIcon />,
+  VideoButtonStatus:false })
+}else{
+  console.log("Inside Else of mute Video");
+      this.setState({  VideoButton : <VideoCallIcon />,
+      VideoButtonStatus:true })
+  }
 }
 mute(){
   console.log("Mute is called");
+    if(this.state.MicButtonStatus == true ){
+  this.setState({  MicButton : <MicOff />,
+  MicButtonStatus:false
+ })
+  }else{
+      this.setState({  MicButton : <Mic />,
+      MicButtonStatus:true })
+  }
 }
 add(){
   console.log("Add is called");
@@ -96,7 +122,7 @@ hangup(){
                  labelColor={'#FFFFFF'}
                 onClick={this.muteVideo.bind(this)}
               >
-                    <VideCallIcon/>
+                    {this.state.VideoButton}
                </FloatingActionButton>
                <FloatingActionButton 
                  mini={true}
@@ -105,7 +131,7 @@ hangup(){
                  labelColor={'#FFFFFF'}
                 onClick={this.mute.bind(this)}
               >
-                    <Mic/>
+                    {this.state.MicButton}
                </FloatingActionButton>
                 <FloatingActionButton 
                  mini={true}
