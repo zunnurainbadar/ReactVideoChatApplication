@@ -77,10 +77,12 @@ muteVideo(){
     console.log("Inside if of muteVideo");
   this.setState({  VideoButton : <VideoCallOffIcon />,
   VideoButtonStatus:false })
+   webrtc.pauseVideo();
 }else{
   console.log("Inside Else of mute Video");
       this.setState({  VideoButton : <VideoCallIcon />,
       VideoButtonStatus:true })
+      webrtc.resumeVideo();
   }
 }
 mute(){
@@ -89,9 +91,11 @@ mute(){
   this.setState({  MicButton : <MicOff />,
   MicButtonStatus:false
  })
+ webrtc.mute();
   }else{
       this.setState({  MicButton : <Mic />,
       MicButtonStatus:true })
+      webrtc.unmute();
   }
 }
 add(){
