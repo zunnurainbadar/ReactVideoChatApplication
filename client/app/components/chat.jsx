@@ -40,7 +40,6 @@ const chatinputbox = {
   height: '3.5rem',
   margin: '0 0 0rem',
   resize: 'none',
-  marginLeft: "-7%",
   border: "none",
 };
 const muiTheme = getMuiTheme({
@@ -118,8 +117,8 @@ export default class Chat extends React.Component {
  
   render() {
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
-        <div>
+      <MuiThemeProvider muiTheme={muiTheme} >
+        <div className="scrollbar">
                     <hr/>
             <div style={sty}>
               
@@ -140,7 +139,7 @@ export default class Chat extends React.Component {
                       {messages.message}
                   </h4>
                   </div>
-                    <div className="col-md-1">
+                    <div>
                     <b>{messages.time}</b>
                     </div>
                     </div>
@@ -162,7 +161,7 @@ export default class Chat extends React.Component {
                       {messages.message}
                     </h4>
                   </div>
-                  <div className="col-md-1">
+                  <div >
                     <time>
                       <b>{messages.time}</b>
                     </time>

@@ -18,6 +18,7 @@ class ChatStore {
     @observable allOn = true;
     @observable videoOff = false;
     @observable micOff = false;
+    @observable busyDialogOpen = false;
     // @observable fullscreen = !
 }
 

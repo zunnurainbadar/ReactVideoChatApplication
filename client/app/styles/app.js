@@ -1,14 +1,19 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+  'html': {
+    'overflow': 'hidden'
+  },
   'backgroundLeft': {
     'backgroundColor': '#F0F4F8',
     'height': [{ 'unit': 'string', 'value': '-webkit-fill-available' }]
   },
   'mineMsg': {
+    'wordWrap': 'break-word',
     'backgroundColor': '#C7EDFC'
   },
   'otherMsg': {
+    'wordWrap': 'break-word',
     'backgroundColor': '#ffffff'
   },
   'hr': {
@@ -128,8 +133,11 @@ export default StyleSheet.create({
     'width': [{ 'unit': '%H', 'value': 1 }],
     'textAlign': 'center'
   },
-  'vCenterItems': {
-    'display': 'flex',
-    'alignItems': 'center'
+  'scrollbar': {
+    'float': 'left',
+    'width': [{ 'unit': 'px', 'value': 1000 }],
+    'overflowX': 'hidden',
+    'overflowY': 'auto',
+    'height': [{ 'unit': 'px', 'value': 475 }]
   }
 });

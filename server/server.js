@@ -210,8 +210,13 @@ boot(app, __dirname, function(err) {
             })
             //When user clicks cancel
         socket.on('cancel', function(data) {
+                //Sending call notification
+                io.sockets.emit(data.to + 'cancels', data)
+            })
+            //When user is busy on another call
+        socket.on('busy', function(data) {
             //Sending call notification
-            io.sockets.emit(data.to + 'cancels', data)
+            io.sockets.emit(data.to + 'busys', data)
         })
     });
 })

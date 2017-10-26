@@ -1,13 +1,19 @@
+html {
+    overflow: hidden;
+}
+
 .backgroundLeft {
     background-color: #F0F4F8;
     height: -webkit-fill-available;
 }
 
 .mineMsg {
+    word-wrap: break-word;
     background-color: #C7EDFC;
 }
 
 .otherMsg {
+    word-wrap: break-word;
     background-color: #ffffff;
 }
 
@@ -152,7 +158,10 @@ textarea:focus {
     text-align: center;
 }
 
-.vCenterItems {
-    display: flex;
-    align-items: center;
+.scrollbar {
+    float: left;
+    width: 1000px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 475px;
 }
