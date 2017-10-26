@@ -86,13 +86,24 @@ export default class Chat extends React.Component {
     if (this.refs.message.value == '') {
       console.log('Cannot send message is empty');
     } else {
+      //Getting Date 
+      var currentDate = new Date()
+      var day = currentDate.getDate()
+      var month = currentDate.getMonth() + 1
+      var year = currentDate.getFullYear()
+      var date = day + "/" + month + "/" + year ;
+      var hour = currentDate.getHours();
+      var minute = currentDate.getMinutes();
+      var second = currentDate.getSeconds();
+      var time = hour+":"+minute+":"+second;
       //Emitting send message
       socket.emit('sendMessage', {
         to: ChatStore.conversationSelected.userTwo,
         message: this.refs.message.value,
         sender: UserStore.user.username,
         conversationWith: ChatStore.conversationSelected.userTwo,
-        time: Date.now(),
+        time: time,
+        date:date,
         cid: ChatStore.conversationSelected.cid,
       });
       this.refs.message.value = '';
@@ -130,7 +141,7 @@ export default class Chat extends React.Component {
                   </h4>
                   </div>
                     <div className="col-md-1">
-                    <b>{time}</b>
+                    <b>{messages.time}</b>
                     </div>
                     </div>
                   </li>
@@ -153,7 +164,7 @@ export default class Chat extends React.Component {
                   </div>
                   <div className="col-md-1">
                     <time>
-                      <b>{time}</b>
+                      <b>{messages.time}</b>
                     </time>
                   </div>
                   
