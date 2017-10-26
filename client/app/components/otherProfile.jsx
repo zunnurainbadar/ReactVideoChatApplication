@@ -109,13 +109,23 @@ export default class OtherProfile extends React.Component {
     // browserHistory.push('/videoCall/'+ChatStore.roomToJoin)
   };
   Call = function() {
-    //Changing call for view
+     ChatStore.callingDialogOpen = true;
+     console.log("This is video call function");
+    //Changing view for video call
     Store.videoCallView = false;
     Store.callView = true;
     Store.conversationView = false;
     ChatStore.videoCall = false;    
     ChatStore.call = true;
-    // browserHistory.push('/call/'+ChatStore.roomToJoin)
+    ChatStore.roomToJoin = ChatStore.conversationSelected.cid;
+    ChatStore.to = ChatStore.conversationSelected.userTwo;
+    ChatStore.from = UserStore.user.username;
+    ChatStore.callTo =ChatStore.conversationSelected.userTwo;
+    ChatStore.callFrom = UserStore.user.username;
+    console.log("This is chatStore conversation selected ",ChatStore.conversationSelected.userTwo);
+    // Sending Notification of call to Other person
+    socket.emit("NewCall",{to:ChatStore.conversationSelected.userTwo,room:ChatStore.roomToJoin,from: UserStore.user.username,videoCall:false,call:true});
+    // browserHistory.push('/videoCall/'+ChatStore.roomToJoin)
   };
   // when user answers the call
   answer = function(){

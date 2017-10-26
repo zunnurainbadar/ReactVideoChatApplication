@@ -127,5 +127,9 @@ export default StyleSheet.create({
     'backgroundPosition': 'center',
     'width': [{ 'unit': '%H', 'value': 1 }],
     'textAlign': 'center'
+  },
+  'vCenterItems': {
+    'display': 'flex',
+    'alignItems': 'center'
   }
 });

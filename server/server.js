@@ -186,10 +186,14 @@ boot(app, __dirname, function(err) {
                 //Sending call notification
                 io.sockets.emit(data.to + 'calling', data)
             })
+            //For call
+        socket.on('NewCall', function(data) {
+                //Sending call notification
+                io.sockets.emit(data.to + 'calling', data)
+            })
             //When user click on answer
         socket.on('answer', function(data) {
                 //Sending notification that answer is clicked
-                console.log("Inside answer ", data);
                 io.sockets.emit(data.to + 'answers', data)
             })
             //When user rejects the call

@@ -130,7 +130,7 @@ export default class Chat extends React.Component {
                   </h4>
                   </div>
                     <div className="col-md-1">
-                    {time}
+                    <b>{time}</b>
                     </div>
                     </div>
                   </li>
@@ -153,7 +153,7 @@ export default class Chat extends React.Component {
                   </div>
                   <div className="col-md-1">
                     <time>
-                      {time}
+                      <b>{time}</b>
                     </time>
                   </div>
                   

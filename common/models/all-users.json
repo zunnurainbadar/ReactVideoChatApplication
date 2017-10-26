@@ -7,7 +7,8 @@
     },
     "properties": {
         "avatar": {
-            "type": "string"
+            "type": "string",
+            "default": "http://moviecriticnextdoor.com/sites/moviecriticnextdoor.com/files/blogs/MovieCriticND/unfriended.png?1429806206"
         },
         "desc": {
             "type": "string"
