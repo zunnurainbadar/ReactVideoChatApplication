@@ -10,11 +10,13 @@ export default StyleSheet.create({
   },
   'mineMsg': {
     'wordWrap': 'break-word',
+    'borderRadius': '15px',
     'backgroundColor': '#C7EDFC'
   },
   'otherMsg': {
     'wordWrap': 'break-word',
-    'backgroundColor': '#ffffff'
+    'borderRadius': '15px',
+    'backgroundColor': '#F0F4F8'
   },
   'hr': {
     'marginTop': [{ 'unit': 'px', 'value': 10 }],
@@ -102,6 +104,13 @@ export default StyleSheet.create({
     'OTransform': 'rotate(335deg)',
     'MsTransform': 'rotate(335deg)',
     'transform': 'rotate(335deg)'
+  },
+  'rotateAnswer': {
+    'WebkitTransform': 'rotate(135deg)',
+    'MozTransform': 'rotate(135deg)',
+    'OTransform': 'rotate(135deg)',
+    'MsTransform': 'rotate(135deg)',
+    'transform': 'rotate(135deg)'
   },
   'remoteVideo > video': {
     'marginLeft': [{ 'unit': '%H', 'value': 0.1 }],

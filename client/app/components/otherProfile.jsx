@@ -16,7 +16,7 @@ import Call from './call';
 import videoCall from './videoCall';
 import RaisedButton from 'material-ui/RaisedButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import VideCallIcon from 'material-ui/svg-icons/av/videocam';
+import VideoCallIcon from 'material-ui/svg-icons/av/videocam';
 import CallIcon from 'material-ui/svg-icons/communication/call';
 import AddPerson from 'material-ui/svg-icons/social/person-add';
 import {browserHistory} from 'react-router';
@@ -200,31 +200,43 @@ export default class OtherProfile extends React.Component {
   };
   render() {
     const actions = [
-      <FlatButton
-        label="Answer"
-        primary={true}
-        keyboardFocused={true}
-        backgroundColor={'#00ff00'}
-        color={'#000000'}
-        onClick={this.answer.bind(this)}
-      />,
-      <FlatButton
-        label="Reject"
-        primary={true}
-        backgroundColor={'#ff0000'}
-        color={'#000000'}
-        onClick={this.reject.bind(this)}
-      />,
+      <FloatingActionButton
+      backgroundColor={'#2b842b'}
+      color={'#ffffff'}
+      onClick={this.answer.bind(this)}
+      style={{marginRight:"1%"}}
+      labelColor={'#FFFFFF'}
+      onClick={this.answer.bind(this)}
+    >
+      <CallIcon />
+    </FloatingActionButton>
+      ,
+      <FloatingActionButton
+      backgroundColor={'#ff0000'}
+      color={'#ffffff'}
+      labelColor={'#FFFFFF'}
+      onClick={this.reject.bind(this)}
+      style={{marginRight:"1%"}}
+      className="rotateAnswer"
+    >
+      <CallIcon />
+    </FloatingActionButton>
+      ,
     ];
     const actionsCalling = [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        keyboardFocused={true}
-        backgroundColor={'#ff0000'}
-        color={'#000000'}
-        onClick={this.cancel.bind(this)}
-      />,
+      <center>
+      <FloatingActionButton
+      backgroundColor={'#ff0000'}
+      color={'#ffffff'}
+      labelColor={'#FFFFFF'}
+      onClick={this.cancel.bind(this)}
+      style={{marginRight:"1%"}}
+      className="rotateAnswer"
+    >
+      <CallIcon />
+    </FloatingActionButton>
+    </center>
+      ,
     ];
     if (ChatStore.conversationSelected) {
       return (
@@ -260,7 +272,7 @@ export default class OtherProfile extends React.Component {
                     labelColor={'#FFFFFF'}
                     onClick={this.videoCall.bind(this)}
                   >
-                    <VideCallIcon />
+                    <VideoCallIcon />
                   </FloatingActionButton>
                   <FloatingActionButton
                     backgroundColor={'#077DB4'}
@@ -270,6 +282,7 @@ export default class OtherProfile extends React.Component {
                   >
                     <CallIcon />
                   </FloatingActionButton>
+
                   <FloatingActionButton
                     backgroundColor={'#FFFFFF'}
                     disabled={true}
@@ -285,16 +298,23 @@ export default class OtherProfile extends React.Component {
               actions={actions}
               modal={false}
               open={ChatStore.dialogOpen}
+              titleStyle	={{backgroundColor:"#000000",color:"#ffffff"}}
+              actionsContainerStyle={{backgroundColor:"#000000",color:"#ffffff"}}
+              bodyStyle={{backgroundColor:"#000000",color:"#ffffff"}}
             >
-              {ChatStore.from} is calling you
+            <h3>{ChatStore.callFrom} is calling you </h3>
             </Dialog>
             <Dialog
               title="Calling"
               actions={actionsCalling}
               modal={false}
               open={ChatStore.callingDialogOpen}
+              titleStyle	= {{backgroundColor:"#000000",color:"#ffffff",textAlign:"center"}}
+              actionsContainerStyle={{backgroundColor:"#000000",color:"#ffffff"}}
+              bodyStyle={{backgroundColor:"#000000",color:"#ffffff"}}
+              contentStyle={{width: '40%'}}
             >
-              Calling......
+<center>            <img src="E:/work/React/chat application/ReactVideoChatApplication/client/public/images/Calling.gif"  width="30%"/></center>
             </Dialog>
             <Dialog title="Busy" modal={false} open={ChatStore.busyDialogOpen}>
               {ChatStore.to} is busy on another Call.Please try again later

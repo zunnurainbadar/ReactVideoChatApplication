@@ -9,12 +9,14 @@ html {
 
 .mineMsg {
     word-wrap: break-word;
+    border-radius: 15px;
     background-color: #C7EDFC;
 }
 
 .otherMsg {
     word-wrap: break-word;
-    background-color: #ffffff;
+    border-radius: 15px;
+    background-color: #F0F4F8;
 }
 
 hr {
@@ -119,6 +121,14 @@ textarea:focus {
     -o-transform: rotate(335deg);
     -ms-transform: rotate(335deg);
     transform: rotate(335deg);
+}
+
+.rotateAnswer {
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    -o-transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    transform: rotate(135deg);
 }
 
 .remoteVideo>video {
