@@ -314,7 +314,8 @@ export default class OtherProfile extends React.Component {
               bodyStyle={{backgroundColor:"#000000",color:"#ffffff"}}
               contentStyle={{width: '40%'}}
             >
-<center>            <img src="E:/work/React/chat application/ReactVideoChatApplication/client/public/images/Calling.gif"  width="30%"/></center>
+            <center><img src="https://www.rogers.com/web/smb/bss/images/widget-loader-lg_no-lang.gif"  width="10%"/></center>
+          
             </Dialog>
             <Dialog title="Busy" modal={false} open={ChatStore.busyDialogOpen}>
               {ChatStore.to} is busy on another Call.Please try again later
