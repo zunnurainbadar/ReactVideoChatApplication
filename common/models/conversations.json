@@ -1,37 +1,43 @@
 {
-  "name": "conversations",
-  "base": "PersistedModel",
-  "idInjection": true,
-  "options": {
-    "validateUpsert": true
-  },
-  "properties": {
-    "id": {
-      "type": "string",
-      "id": true,
-      "generated": true
+    "name": "conversations",
+    "base": "PersistedModel",
+    "idInjection": true,
+    "options": {
+        "validateUpsert": true
     },
-    "userOne": {
-      "type": "string",
-      "id": 1,
-      "required": true
+    "properties": {
+        "id": {
+            "type": "string",
+            "id": true,
+            "generated": true
+        },
+        "userOne": {
+            "type": "string",
+            "id": 1,
+            "required": true
+        },
+        "userTwo": {
+            "type": "string",
+            "id": 2,
+            "required": true
+        },
+        "date": {
+            "type": "date",
+            "defaultFn": "now"
+        },
+        "cid": {
+            "type": "string",
+            "required": true
+        },
+        "lastMessage": {
+            "type": "string"
+        },
+        "lastMessageTime": {
+            "type": "string"
+        }
     },
-    "userTwo": {
-      "type": "string",
-      "id": 2,
-      "required": true
-    },
-    "date": {
-      "type": "date",
-      "defaultFn": "now"
-    },
-    "cid": {
-      "type": "string",
-      "required": true
-    }
-  },
-  "validations": [],
-  "relations": {},
-  "acls": [],
-  "methods": {}
+    "validations": [],
+    "relations": {},
+    "acls": [],
+    "methods": {}
 }

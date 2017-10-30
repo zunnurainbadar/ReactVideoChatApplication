@@ -115,6 +115,30 @@ boot(app, __dirname, function(err) {
                 }
             })
         });
+        //For Getting all recent conversations
+        socket.on('gettingRecentConversation', function(data) {
+            app.models.Conversations.find({ order: 'lastMessageTime DESC', where: { userOne: data.username } }, function(err, _conversations) {
+                if (err) throw err;
+                else {
+                    console.log("This is recent conversations ", _conversations);
+                    const getUser = async() => {
+                        for (var i = 0; i < _conversations.length; i++) {
+                            let _users = await app.models.allUsers.findOne({ where: { username: _conversations[i].userTwo } });
+                            if (_users) {
+                                _conversations[i].avatar = _users.avatar;
+                                _conversations[i].desc = _users.desc;
+                            } else {}
+                        }
+                    }
+                    getUser()
+                        .then(function() {
+                            console.log("This is conversation ", _conversations);
+                            io.sockets.emit(data.to + 'myConversations', _conversations)
+                        })
+                        .catch(err => console.log(err));
+                }
+            })
+        });
         //For Getting Messages of selected conversation
         socket.on('gettingMessages', function(data) {
             if (data) {
@@ -136,6 +160,12 @@ boot(app, __dirname, function(err) {
                 else {
                     io.sockets.emit(data.to + 'messageSent', data)
                     io.sockets.emit(data.sender + 'messageSent', data)
+                }
+            })
+            app.models.Conversations.updateAll({ cid: data.cid }, { lastMessage: data.message, lastMessageTime: Date.now() }, function(err, _conv) {
+                if (err) throw err;
+                else {
+                    console.log("Conversation updated successfully ", _conv);
                 }
             })
         });
