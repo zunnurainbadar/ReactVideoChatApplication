@@ -1,6 +1,6 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import Store from '../store/UIstore.js';
+import UIStore from '../store/UIstore.js';
 import UserStore from '../store/UserStore';
 import ChatStore from '../store/ChatStore';
 import SimpleWebRTC from '../../node_modules/simplewebrtc/out/simplewebrtc.bundle';
@@ -22,6 +22,7 @@ import Message from "material-ui/svg-icons/communication/message.js"
 import VideCallIcon from "material-ui/svg-icons/av/videocam";
 import Image from "material-ui/svg-icons/image/image.js";
 import FloatingActionButton from 'material-ui/FloatingActionButton';
+import Home from '../components/home.jsx'
 
 var time;
 const style = {
@@ -116,106 +117,120 @@ export default class Chat extends React.Component {
   //Function for realtime search
  
   render() {
-    return (
-      <MuiThemeProvider muiTheme={muiTheme} >
-        <div className="scrollbar">
-                    <hr/>
-            <div style={sty}>
-              
-              {ChatStore.messages.map(messages => {
-                // time = messages.time.split("T");
-                // time = time[1].substr(0,7);
-                // Check if message is mine or not
-                if(messages.sender == UserStore.user.username)
-                return (
-                  <div>
-                  <ul style={liStyle}>
-                  <li key={messages.id}>
-                  <div className="row">
-                  <div className="col-md-1">
-                  </div>
-                  <div className="col-md-10 mineMsg">
-                  <h4 style={{padding:"1%",paddingRight:"0%"}}>
-                      {messages.message}
-                  </h4>
-                  </div>
+    if(UIStore.home == false){
+      console.log("Inside if")
+      return (
+        <MuiThemeProvider muiTheme={muiTheme} >
+          <div className="scrollbar">
+                      <hr/>
+              <div style={sty}>
+                
+                {ChatStore.messages.map(messages => {
+                  // time = messages.time.split("T");
+                  // time = time[1].substr(0,7);
+                  // Check if message is mine or not
+                  if(messages.sender == UserStore.user.username)
+                  return (
                     <div>
-                    <b>{messages.time}</b>
+                    <ul style={liStyle}>
+                    <li key={messages.id}>
+                    <div className="row">
+                    <div className="col-md-1">
                     </div>
-                    </div>
-                  </li>
-                  </ul>
-                  </div>
-                );
-                else
-           return(
-                  <div className="otherMsg">
-                  <ul style={liStyle}>
-                  <li key={messages.id}>
-                  <div className="row">
-                  <div  className="col-md-1">
-                   <Avatar src={ChatStore.conversationSelected.avatar} size={35} />
-                  </div>
-                  <div className="col-md-10">
-                    <h4 style={{padding:"1%",paddingLeft:"0%"}}>
-                      {messages.message}
+                    <div className="col-md-10 mineMsg">
+                    <h4 style={{padding:"1%",paddingRight:"0%"}}>
+                        {messages.message}
                     </h4>
-                  </div>
-                  <div >
-                    <time>
+                    </div>
+                      <div>
                       <b>{messages.time}</b>
-                    </time>
-                  </div>
-                  
-                  </div>
-                  
-                  </li>
-                  </ul>
-                  </div>
-                );
-              })}
+                      </div>
+                      </div>
+                    </li>
+                    </ul>
+                    </div>
+                  );
+                  else
+             return(
+                    <div className="otherMsg">
+                    <ul style={liStyle}>
+                    <li key={messages.id}>
+                    <div className="row">
+                    <div  className="col-md-1">
+                     <Avatar src={ChatStore.conversationSelected.avatar} size={35} />
+                    </div>
+                    <div className="col-md-10">
+                      <h4 style={{padding:"1%",paddingLeft:"0%"}}>
+                        {messages.message}
+                      </h4>
+                    </div>
+                    <div >
+                      <time>
+                        <b>{messages.time}</b>
+                      </time>
+                    </div>
+                    
+                    </div>
+                    
+                    </li>
+                    </ul>
+                    </div>
+                  );
+                })}
+              </div>
+              <br/>
+              <br/>
+              <div className ="row fixedbutton">
+              <div className="col-md-12">
+              <div className="col-md-8">
+              <textarea
+                rows="2"
+                  ref="message"
+                  style={chatinputbox}
+                  placeholder="Type a message here......."
+                  className="form-control"
+                  errorText="This field is required"
+                />
+              </div>         
+              <div className = "col-md-4">              
+                  <div className="row">
+                  <IconButton disabled={true}><Image color="#077DB4" style={{ width: 30,height: 30}}/></IconButton>
+                  <IconButton disabled={true}>
+                  <Message color="#077DB4" style={{ width: 30,height: 30}} >
+                  <VideCallIcon color="#ffffff" />
+                  </Message>
+                  </IconButton>
+                  <IconButton disabled={true}><Contacts color="#077DB4"  style={{ width: 30,height: 30}}/></IconButton>
+                  <IconButton disabled={true}><Attachment color="#077DB4" className="rotate" style={{ width: 30,height: 30}}/></IconButton>
+                  <IconButton disabled={true}><Mood color="#077DB4" style={{ width: 30,height: 30}} /></IconButton>  
+                  <FloatingActionButton 
+                   mini={true}
+                   backgroundColor={"#077DB4"} 
+                   disabled={false} 
+                   labelColor={'#FFFFFF'}
+                  onClick={this.sendMessage.bind(this)}
+                >
+                      <Send className="rotateSend"/>
+                 </FloatingActionButton>
+              </div>   
+                </div>
+             
+                </div>
+                </div>
             </div>
-            <br/>
-            <br/>
-            <div className ="row fixedbutton">
-            <div className="col-md-12">
-            <div className="col-md-8">
-            <textarea
-              rows="2"
-                ref="message"
-                style={chatinputbox}
-                placeholder="Type a message here......."
-                className="form-control"
-                errorText="This field is required"
-              />
-            </div>         
-            <div className = "col-md-4">              
-                <div className="row">
-                <IconButton disabled={true}><Image color="#077DB4" style={{ width: 30,height: 30}}/></IconButton>
-                <IconButton disabled={true}>
-                <Message color="#077DB4" style={{ width: 30,height: 30}} >
-                <VideCallIcon color="#ffffff" />
-                </Message>
-                </IconButton>
-                <IconButton disabled={true}><Contacts color="#077DB4"  style={{ width: 30,height: 30}}/></IconButton>
-                <IconButton disabled={true}><Attachment color="#077DB4" className="rotate" style={{ width: 30,height: 30}}/></IconButton>
-                <IconButton disabled={true}><Mood color="#077DB4" style={{ width: 30,height: 30}} /></IconButton>  
-                <FloatingActionButton 
-                 mini={true}
-                 backgroundColor={"#077DB4"} 
-                 disabled={false} 
-                 labelColor={'#FFFFFF'}
-                onClick={this.sendMessage.bind(this)}
-              >
-                    <Send className="rotateSend"/>
-               </FloatingActionButton>
-            </div>   
-              </div>
-           
-              </div>
-              </div>
+        </MuiThemeProvider>
+      );
+    }else{
+      return(      
+        <MuiThemeProvider muiTheme={muiTheme}>
+        <div className="row">
+          <div className="col-md-12">
+            <Home/>
           </div>
-      </MuiThemeProvider>
-    );
+        </div>
+      </MuiThemeProvider>);
+
+    }
+
   }
 }

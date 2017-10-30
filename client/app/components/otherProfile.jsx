@@ -1,6 +1,6 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import Store from '../store/UIstore.js';
+import UIStore from '../store/UIstore.js';
 import UserStore from '../store/UserStore';
 import ChatStore from '../store/ChatStore';
 import SimpleWebRTC from '../../node_modules/simplewebrtc/out/simplewebrtc.bundle';
@@ -199,142 +199,161 @@ export default class OtherProfile extends React.Component {
     });
   };
   render() {
-    const actions = [
-      <FloatingActionButton
-      backgroundColor={'#2b842b'}
-      color={'#ffffff'}
-      onClick={this.answer.bind(this)}
-      style={{marginRight:"1%"}}
-      labelColor={'#FFFFFF'}
-      onClick={this.answer.bind(this)}
-    >
-      <CallIcon />
-    </FloatingActionButton>
-      ,
-      <FloatingActionButton
-      backgroundColor={'#ff0000'}
-      color={'#ffffff'}
-      labelColor={'#FFFFFF'}
-      onClick={this.reject.bind(this)}
-      style={{marginRight:"1%"}}
-      className="rotateAnswer"
-    >
-      <CallIcon />
-    </FloatingActionButton>
-      ,
-    ];
-    const actionsCalling = [
-      <center>
-      <FloatingActionButton
-      backgroundColor={'#ff0000'}
-      color={'#ffffff'}
-      labelColor={'#FFFFFF'}
-      onClick={this.cancel.bind(this)}
-      style={{marginRight:"1%"}}
-      className="rotateAnswer"
-    >
-      <CallIcon />
-    </FloatingActionButton>
-    </center>
-      ,
-    ];
-    if (ChatStore.conversationSelected) {
-      return (
-        <MuiThemeProvider muiTheme={muiTheme}>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-6">
-                <List style={{display: 'inline-flex', width: '100%'}}>
-                  <ListItem
-                    disabled={true}
-                    leftAvatar={
-                      <Avatar
-                        src={ChatStore.conversationSelected.avatar}
-                        size={70}
-                      />
-                    }
-                  />
-                  <ListItem>
-                    <h2 style={{marginTop: '2%'}}>
-                      {ChatStore.conversationSelected.userTwo}
-                    </h2>
-                    <h5>
-                      {UserStore.user.desc}
-                    </h5>
-                  </ListItem>
-                </List>
+    if(UIStore.home == false){
+      const actions = [
+        <FloatingActionButton
+        backgroundColor={'#2b842b'}
+        color={'#ffffff'}
+        onClick={this.answer.bind(this)}
+        style={{marginRight:"1%"}}
+        labelColor={'#FFFFFF'}
+        onClick={this.answer.bind(this)}
+      >
+        <CallIcon />
+      </FloatingActionButton>
+        ,
+        <FloatingActionButton
+        backgroundColor={'#ff0000'}
+        color={'#ffffff'}
+        labelColor={'#FFFFFF'}
+        onClick={this.reject.bind(this)}
+        style={{marginRight:"1%"}}
+        className="rotateAnswer"
+      >
+        <CallIcon />
+      </FloatingActionButton>
+        ,
+      ];
+      const actionsCalling = [
+        <center>
+        <FloatingActionButton
+        backgroundColor={'#ff0000'}
+        color={'#ffffff'}
+        labelColor={'#FFFFFF'}
+        onClick={this.cancel.bind(this)}
+        style={{marginRight:"1%"}}
+        className="rotateAnswer"
+      >
+        <CallIcon />
+      </FloatingActionButton>
+      </center>
+        ,
+      ];
+      if (ChatStore.conversationSelected) {
+        return (
+          <MuiThemeProvider muiTheme={muiTheme}>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-6">
+                  <List style={{display: 'inline-flex', width: '100%'}}>
+                    <ListItem
+                      disabled={true}
+                      leftAvatar={
+                        <Avatar
+                          src={ChatStore.conversationSelected.avatar}
+                          size={70}
+                        />
+                      }
+                    />
+                    <ListItem>
+                      <h2 style={{marginTop: '2%'}}>
+                        {ChatStore.conversationSelected.userTwo}
+                      </h2>
+                      <h5>
+                        {UserStore.user.desc}
+                      </h5>
+                    </ListItem>
+                  </List>
+                </div>
+                <div className="col-md-6">
+                  <div className="pull-right" style={{marginTop: '5%'}}>
+                    <FloatingActionButton
+                      backgroundColor={'#077DB4'}
+                      disabled={false}
+                      labelColor={'#FFFFFF'}
+                      onClick={this.videoCall.bind(this)}
+                    >
+                      <VideoCallIcon />
+                    </FloatingActionButton>
+                    <FloatingActionButton
+                      backgroundColor={'#077DB4'}
+                      disabled={false}
+                      labelColor={'#FFFFFF'}
+                      onClick={this.Call.bind(this)}
+                    >
+                      <CallIcon />
+                    </FloatingActionButton>
+  
+                    <FloatingActionButton
+                      backgroundColor={'#FFFFFF'}
+                      disabled={true}
+                      labelColor={'#077DB4'}
+                    >
+                      <AddPerson />
+                    </FloatingActionButton>
+                  </div>
+                </div>
               </div>
-              <div className="col-md-6">
-                <div className="pull-right" style={{marginTop: '5%'}}>
-                  <FloatingActionButton
-                    backgroundColor={'#077DB4'}
-                    disabled={false}
-                    labelColor={'#FFFFFF'}
-                    onClick={this.videoCall.bind(this)}
-                  >
-                    <VideoCallIcon />
-                  </FloatingActionButton>
-                  <FloatingActionButton
-                    backgroundColor={'#077DB4'}
-                    disabled={false}
-                    labelColor={'#FFFFFF'}
-                    onClick={this.Call.bind(this)}
-                  >
-                    <CallIcon />
-                  </FloatingActionButton>
-
-                  <FloatingActionButton
-                    backgroundColor={'#FFFFFF'}
-                    disabled={true}
-                    labelColor={'#077DB4'}
-                  >
-                    <AddPerson />
-                  </FloatingActionButton>
+              <Dialog
+                title="Video Call"
+                actions={actions}
+                modal={false}
+                open={ChatStore.dialogOpen}
+                titleStyle	={{backgroundColor:"#000000",color:"#ffffff"}}
+                actionsContainerStyle={{backgroundColor:"#000000",color:"#ffffff"}}
+                bodyStyle={{backgroundColor:"#000000",color:"#ffffff"}}
+              >
+              <h3>{ChatStore.callFrom} is calling you </h3>
+              </Dialog>
+              <Dialog
+                title="Calling"
+                actions={actionsCalling}
+                modal={false}
+                open={ChatStore.callingDialogOpen}
+                titleStyle	= {{backgroundColor:"#000000",color:"#ffffff",textAlign:"center"}}
+                actionsContainerStyle={{backgroundColor:"#000000",color:"#ffffff"}}
+                bodyStyle={{backgroundColor:"#000000",color:"#ffffff"}}
+                contentStyle={{width: '40%'}}
+              >
+              <center><img src="https://www.rogers.com/web/smb/bss/images/widget-loader-lg_no-lang.gif"  width="10%"/></center>
+            
+              </Dialog>
+              <Dialog title="Busy" modal={false} open={ChatStore.busyDialogOpen}>
+                {ChatStore.to} is busy on another Call.Please try again later
+              </Dialog>
+            </div>
+          </MuiThemeProvider>
+        );
+      } else {
+        return (
+          <MuiThemeProvider muiTheme={muiTheme}>
+            <div className="row">
+              <div className="col-md-12">
+                <div>
+                  <h3> You have no conversations please create a conversation</h3>
                 </div>
               </div>
             </div>
-            <Dialog
-              title="Video Call"
-              actions={actions}
-              modal={false}
-              open={ChatStore.dialogOpen}
-              titleStyle	={{backgroundColor:"#000000",color:"#ffffff"}}
-              actionsContainerStyle={{backgroundColor:"#000000",color:"#ffffff"}}
-              bodyStyle={{backgroundColor:"#000000",color:"#ffffff"}}
-            >
-            <h3>{ChatStore.callFrom} is calling you </h3>
-            </Dialog>
-            <Dialog
-              title="Calling"
-              actions={actionsCalling}
-              modal={false}
-              open={ChatStore.callingDialogOpen}
-              titleStyle	= {{backgroundColor:"#000000",color:"#ffffff",textAlign:"center"}}
-              actionsContainerStyle={{backgroundColor:"#000000",color:"#ffffff"}}
-              bodyStyle={{backgroundColor:"#000000",color:"#ffffff"}}
-              contentStyle={{width: '40%'}}
-            >
-            <center><img src="https://www.rogers.com/web/smb/bss/images/widget-loader-lg_no-lang.gif"  width="10%"/></center>
-          
-            </Dialog>
-            <Dialog title="Busy" modal={false} open={ChatStore.busyDialogOpen}>
-              {ChatStore.to} is busy on another Call.Please try again later
-            </Dialog>
-          </div>
-        </MuiThemeProvider>
-      );
-    } else {
-      return (
-        <MuiThemeProvider muiTheme={muiTheme}>
-          <div className="row">
-            <div className="col-md-12">
-              <div>
-                <h3> You have no conversations please create a conversation</h3>
-              </div>
+          </MuiThemeProvider>
+        );      
+    }
+
+    }else{
+      return(      <MuiThemeProvider muiTheme={muiTheme}>
+        <div className="row container">
+          <div className="col-md-12">
+            <div>
+            <br/>
+            <br/>
+              <h2 style={{marginLeft:"5%"}}> Home </h2>
+              <br/>
+              <br/>
+             
             </div>
           </div>
-        </MuiThemeProvider>
-      );
+        </div>
+      </MuiThemeProvider>);
+
     }
   }
 }

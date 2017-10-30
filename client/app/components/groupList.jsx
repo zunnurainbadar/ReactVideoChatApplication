@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
-import Store from "../store/UIstore.js";
+import UIStore from "../store/UIstore.js";
 import UserStore from "../store/UserStore";
 import ChatStore from "../store/ChatStore";
 import SimpleWebRTC from "../../node_modules/simplewebrtc/out/simplewebrtc.bundle"
@@ -61,6 +61,7 @@ export default class GroupList extends React.Component {
     });
   }
   btnConversation = conv => {
+    UIStore.home = false;
       console.log("inside conversation");
     //Selected conversation
     ChatStore.conversationSelected = conv;

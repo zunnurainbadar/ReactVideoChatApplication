@@ -7,6 +7,7 @@ class Store {
     @observable callView = false;
     @observable alert = false;
     @observable alertSignup = false;
+    @observable home = false;
 
 
     // @observable fullscreen = !
