@@ -29,7 +29,7 @@ require("style!css!sass!applicationStyles");
 // require("style!css!sass!homepage");
 
 // $(document).foundation();
-// injectTapEventPlugin();
+injectTapEventPlugin();
 
 // const NotFound = () => <h1>404.. This page is not found!</h1>;
 function requireVerification(nextState, replace)  {
