@@ -31,38 +31,53 @@ export default class MyProfile extends React.Component {
   componentWillMount() {
     UserStore.user = JSON.parse(localStorage.getItem('userInfo'));
   }
-  signOut(){
-    console.log("This is logout ");
+  signOut() {
+    console.log('This is logout ');
     localStorage.clear();
     browserHistory.push('/login');
+  }
+  settings() {
+    browserHistory.push('/settings');
   }
   componentDidMount() {}
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <div >
+        <div>
           <List style={{display: 'inline-flex'}}>
             <ListItem
               disabled={true}
-              leftAvatar={
-                <Avatar src={UserStore.user.avatar} size={70} />
-              }
-/>
-              <ListItem style={{display: "flex"}}>
-              <b><h3 style={{marginTop:"2%"}}>{UserStore.user.fullname}</h3></b>
-              </ListItem>
-              <ListItem style={{display: "flex"}}>
+              leftAvatar={<Avatar src={UserStore.user.avatar} size={70} />}
+            />
+            <ListItem style={{display: 'flex'}}>
+              <b>
+                <h3 style={{marginTop: '2%'}}>
+                  {UserStore.user.fullname}
+                </h3>
+              </b>
+            </ListItem>
+            <ListItem style={{display: 'flex'}}>
               <IconMenu
-              iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-              anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-              targetOrigin={{horizontal: 'left', vertical: 'top'}}
-              style={{marginLeft:"0%"}}
-            >
-              <MenuItem primaryText="Settings" />
-              <MenuItem primaryText="Help" />
-              <MenuItem primaryText="Sign out" onTouchTap={this.signOut.bind(this)} />
-            </IconMenu>
-              </ListItem>
+                iconButtonElement={
+                  <IconButton>
+                    <MoreVertIcon />
+                  </IconButton>
+                }
+                anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+                targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                style={{marginLeft: '0%'}}
+              >
+                <MenuItem
+                  primaryText="Settings"
+                  onTouchTap={this.settings.bind(this)}
+                />
+                <MenuItem primaryText="Help" />
+                <MenuItem
+                  primaryText="Sign out"
+                  onTouchTap={this.signOut.bind(this)}
+                />
+              </IconMenu>
+            </ListItem>
           </List>
         </div>
       </MuiThemeProvider>

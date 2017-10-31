@@ -151,5 +151,8 @@ export default StyleSheet.create({
   },
   'selected': {
     'color': '#00bbff'
+  },
+  'profile': {
+    'margin': [{ 'unit': '%V', 'value': 0.05 }, { 'unit': '%H', 'value': 0.05 }, { 'unit': '%V', 'value': 0.05 }, { 'unit': '%H', 'value': 0.05 }]
   }
 });

@@ -12,6 +12,7 @@ import Login from "./components/login.jsx";
 import Signup from "./components/signup.jsx";
 import Chat from "./components/chat.jsx";
 import videoCall from "./components/videoCall.jsx";
+import Settings from "./components/settings.jsx";
 import Call from "./components/call.jsx";
 import injectTapEventPlugin from "react-tap-event-plugin";
 import Store from "./store/UIstore.js";
@@ -51,15 +52,28 @@ ReactDOM.render(
   // <Router history={hashHistory}>
   <Router history={browserHistory}>
     <Route path="/" component={Main} onEnter={requireVerification}>
-      {" "}
+      {' '}
     </Route>
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
-    <Route path="/call/:roomToJoin" component={Call} onEnter={requireVerification} />
-    <Route path="/videoCall/:roomToJoin" component={videoCall} onEnter={requireVerification}/>
+    <Route
+      path="/settings"
+      component={Settings}
+      onEnter={requireVerification}
+    />
+    <Route
+      path="/call/:roomToJoin"
+      component={Call}
+      onEnter={requireVerification}
+    />
+    <Route
+      path="/videoCall/:roomToJoin"
+      component={videoCall}
+      onEnter={requireVerification}
+    />
     <Route path="*" component={NotFound} />
   </Router>,
-  document.getElementById("app")
+  document.getElementById('app')
 );
 
 // <Route path="*" component={NotFound} />
