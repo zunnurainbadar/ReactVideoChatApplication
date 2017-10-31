@@ -15,6 +15,7 @@ import {MenuItem, makeSelectable} from 'material-ui';
 import Avatar from 'material-ui/Avatar';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
+import {map} from 'mobx';
 let SelectableList = makeSelectable(List);
 
 const muiTheme = getMuiTheme({

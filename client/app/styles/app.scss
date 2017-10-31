@@ -1,177 +1,178 @@
-html {
-    overflow: hidden;
-}
-
-.backgroundLeft {
-    background-color: #F0F4F8;
-    height: -webkit-fill-available;
-}
-
-.mineMsg {
-    word-wrap: break-word;
-    border-radius: 15px;
-    background-color: #C7EDFC;
-}
-
-.otherMsg {
-    word-wrap: break-word;
-    border-radius: 15px;
-    background-color: #F0F4F8;
-}
-
-hr {
-    margin-top: 10px;
-    border: 0.3px solid;
-    color: #D8E5EF;
-    margin-bottom: 2px;
-}
-
-.removing {
-    background: none !important;
-    color: inherit;
-    border: none;
-    padding: 0! important;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit !important;
-}
-
-.buttons {
-    margin-top: "10%"
-}
-
-.groupListStyles {
-    margin-top: "20%"
-}
-
-.search-input {
-    height: 70px;
-    position: relative;
-}
-
-.right {
-    margin-right: "30%";
-}
-
-.search-input::before {
-    content: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAAXNSR0IArs4c6QAAAQJJREFUKBWVkr2uQUEUhf3ET6GRaC5aFRoJKrf1BKpb8SwqovYGXkCj00k0QnRKEYkILYobvpUYmeMMyVnJl7P3mjN7Zu9zwiGv2qRFyMMSRrAFp6JPN8XzBj+wgDkUYAg7WINTYdwpDECxrRLJHeq2accdkgm8bzTvNAg2EDOGeUYI1KNO1gkuzTA1g8T7ojbn4ONQWPuHPWgeHmnzCqoe15tkSNPgPEAn68oVcOmA2XMtGK9FoE/VhOTTVNExqLCGZnxCv2pYauEC6lF0oQxX6IOvb7yX9NPEQafan+aPXDdQC18LsO6Tip5BBY6gIQaSbnMCFRCBZRcIvFkbsvCr4AFGOCxQy+JdGQAAAABJRU5ErkJggg==');
-    display: block;
-    position: absolute;
-    width: 15px;
-    z-index: 3;
-    height: 15px;
-    font-size: 20px;
-    top: 11px;
-    left: 16px;
-    line-height: 32px;
-    opacity: 0.6;
-    margin-top: 7%;
-    margin-left: -3%;
-    // margin-left: -4px;
-}
-
-.search-input>input {
-    width: 100%;
-    font-size: 18px;
-    border: none;
-    line-height: 22px;
-    padding: 5px 10px 5px 25px;
-    height: 32px;
-    position: relative;
-}
-
-.search-input>input:focus {
-    outline: none;
-    // border-bottom: thick solid #ff0000;
-}
-
-.textareas {
-    width: 100%;
-    font-size: 18px;
-    border: none;
-    line-height: 22px;
-    padding: 5px 10px 5px 25px;
-    height: 32px;
-    position: relative; // border-bottom: thick solid #ff0000;
-}
-
-textarea:focus {
-    outline: none;
-    // border-bottom: thick solid #ff0000;
-}
-
-.fixedbutton {
-    position: fixed;
-    bottom: 0%;
-    background-color: #ffffff;
-    width: 80%;
-}
-
-.rotate {
-    -webkit-transform: rotate(135deg);
-    -moz-transform: rotate(135deg);
-    -o-transform: rotate(135deg);
-    -ms-transform: rotate(135deg);
-    transform: rotate(135deg);
-}
-
-.rotateSend {
-    -webkit-transform: rotate(335deg);
-    -moz-transform: rotate(335deg);
-    -o-transform: rotate(335deg);
-    -ms-transform: rotate(335deg);
-    transform: rotate(335deg);
-}
-
-.rotateAnswer {
-    -webkit-transform: rotate(135deg);
-    -moz-transform: rotate(135deg);
-    -o-transform: rotate(135deg);
-    -ms-transform: rotate(135deg);
-    transform: rotate(135deg);
-}
-
-.remoteVideo>video {
-    margin-left: 10%;
-    margin-top: 5%;
-    width: 85% !important;
-    height: 20% !important;
-}
-
-.localVideo {
-    margin-top: 30%;
-    width: 100% !important;
-    height: 40% !important;
-}
-
-.container {
-    position: relative;
-}
-
-.containers video {
-    position: relative;
-    z-index: 0;
-}
-
-.overlay {
-    position: absolute;
-    margin-top: 60%;
-    left: 50%;
-    z-index: 1;
-}
-
-.background {
-    // background-image: url('E:/work/React/chat application/ReactVideoChatApplication/client/public/images/black-background.jpg');
-    background-size: cover;
-    background-position: center;
-    width: 100%;
-    text-align: center;
-}
-
-.scrollbar {
-    float: left;
-    width: 1000px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    height: 475px;
-}
+        html {
+            overflow: hidden;
+        }
+        
+        .backgroundLeft {
+            background-color: #F0F4F8;
+            height: -webkit-fill-available;
+        }
+        
+        .mineMsg {
+            word-wrap: break-word;
+            border-radius: 15px;
+            background-color: #C7EDFC;
+        }
+        
+        .otherMsg {
+            word-wrap: break-word;
+            border-radius: 15px;
+            background-color: #F0F4F8;
+        }
+        
+        hr {
+            margin-top: 10px;
+            border: 0.3px solid;
+            color: #D8E5EF;
+            margin-bottom: 2px;
+        }
+        
+        .removing {
+            background: none !important;
+            color: inherit;
+            border: none;
+            padding: 0! important;
+            font: inherit;
+            cursor: pointer;
+            outline: inherit !important;
+        }
+        
+        .buttons {
+            margin-top: "10%"
+        }
+        
+        .groupListStyles {
+            margin-top: "20%"
+        }
+        
+        .search-input {
+            height: 70px;
+            position: relative;
+        }
+        
+        .right {
+            margin-right: "30%";
+        }
+        
+        .search-input::before {
+            content: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAAXNSR0IArs4c6QAAAQJJREFUKBWVkr2uQUEUhf3ET6GRaC5aFRoJKrf1BKpb8SwqovYGXkCj00k0QnRKEYkILYobvpUYmeMMyVnJl7P3mjN7Zu9zwiGv2qRFyMMSRrAFp6JPN8XzBj+wgDkUYAg7WINTYdwpDECxrRLJHeq2accdkgm8bzTvNAg2EDOGeUYI1KNO1gkuzTA1g8T7ojbn4ONQWPuHPWgeHmnzCqoe15tkSNPgPEAn68oVcOmA2XMtGK9FoE/VhOTTVNExqLCGZnxCv2pYauEC6lF0oQxX6IOvb7yX9NPEQafan+aPXDdQC18LsO6Tip5BBY6gIQaSbnMCFRCBZRcIvFkbsvCr4AFGOCxQy+JdGQAAAABJRU5ErkJggg==');
+            display: block;
+            position: absolute;
+            width: 15px;
+            z-index: 3;
+            height: 15px;
+            font-size: 20px;
+            top: 11px;
+            left: 16px;
+            line-height: 32px;
+            opacity: 0.6;
+            margin-top: 7%;
+            margin-left: -3%; // margin-left: -4px;
+        }
+        
+        .search-input>input {
+            width: 100%;
+            font-size: 18px;
+            border: none;
+            line-height: 22px;
+            padding: 5px 10px 5px 25px;
+            height: 32px;
+            position: relative;
+        }
+        
+        .search-input>input:focus {
+            outline: none; // border-bottom: thick solid #ff0000;
+        }
+        
+        .textareas {
+            width: 100%;
+            font-size: 18px;
+            border: none;
+            line-height: 22px;
+            padding: 5px 10px 5px 25px;
+            height: 32px;
+            position: relative; // border-bottom: thick solid #ff0000;
+        }
+        
+        textarea:focus {
+            outline: none; // border-bottom: thick solid #ff0000;
+        }
+        
+        .fixedbutton {
+            position: fixed;
+            bottom: 0%;
+            background-color: #ffffff;
+            width: 80%;
+        }
+        
+        .rotate {
+            -webkit-transform: rotate(135deg);
+            -moz-transform: rotate(135deg);
+            -o-transform: rotate(135deg);
+            -ms-transform: rotate(135deg);
+            transform: rotate(135deg);
+        }
+        
+        .rotateSend {
+            -webkit-transform: rotate(335deg);
+            -moz-transform: rotate(335deg);
+            -o-transform: rotate(335deg);
+            -ms-transform: rotate(335deg);
+            transform: rotate(335deg);
+        }
+        
+        .rotateAnswer {
+            -webkit-transform: rotate(135deg);
+            -moz-transform: rotate(135deg);
+            -o-transform: rotate(135deg);
+            -ms-transform: rotate(135deg);
+            transform: rotate(135deg);
+        }
+        
+        .remoteVideo>video {
+            margin-left: 10%;
+            margin-top: 5%;
+            width: 85% !important;
+            height: 20% !important;
+        }
+        
+        .localVideo {
+            margin-top: 30%;
+            width: 100% !important;
+            height: 40% !important;
+        }
+        
+        .container {
+            position: relative;
+        }
+        
+        .containers video {
+            position: relative;
+            z-index: 0;
+        }
+        
+        .overlay {
+            position: absolute;
+            margin-top: 60%;
+            left: 50%;
+            z-index: 1;
+        }
+        
+        .background {
+            // background-image: url('E:/work/React/chat application/ReactVideoChatApplication/client/public/images/black-background.jpg');
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .scrollbar {
+            float: left;
+            width: 1000px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: 475px;
+        }
+        
+        .selected {
+            color: rgb(0, 187, 255);
+        }

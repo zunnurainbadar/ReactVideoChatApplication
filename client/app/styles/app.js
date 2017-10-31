@@ -148,5 +148,8 @@ export default StyleSheet.create({
     'overflowX': 'hidden',
     'overflowY': 'auto',
     'height': [{ 'unit': 'px', 'value': 475 }]
+  },
+  'selected': {
+    'color': '#00bbff'
   }
 });
