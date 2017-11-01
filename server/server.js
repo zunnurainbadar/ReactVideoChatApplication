@@ -80,6 +80,7 @@ boot(app, __dirname, function(err) {
     var callUsername;
     var callerId;
     var calleeId;
+
     io.sockets.on('connection', function(socket) {
         connections.push(socket);
         console.log('Connected: %s sockets connected', connections.length);
@@ -211,6 +212,37 @@ boot(app, __dirname, function(err) {
                     }
                 })
             })
+            //Change Password
+        socket.on('changePassword', function(data) {
+                app.models.allUsers.findOne({ where: { _id: data.id } }, function(err, _user) {
+                    if (err) throw err;
+                    else {
+                        _user.hasPassword(
+                            data.oldPassword,
+                            function(err, isMatch) {
+                                if (!isMatch) {
+                                    console.log("Not matched");
+                                    io.sockets.emit(data.to + 'changedPassword', { msg: "Please Enter correct old password" })
+                                } else {
+                                    _user.updateAttribute('password', data.newPassword, function(err, nuser) {
+                                        if (err) throw error;
+                                        else {
+                                            console.log(new Date(), '> password reset processed successfully for ', nuser);
+                                            io.sockets.emit(data.to + 'changedPassword', { msg: "Password updated Succesfully" })
+                                                // cb(null, nuser);
+
+                                        }
+                                    });
+                                    console.log("Passwords matched");
+                                }
+                            }
+                        );
+
+
+
+                    }
+                });
+            })
             //For Video call
         socket.on('NewVideoCall', function(data) {
                 //Sending call notification
@@ -248,5 +280,6 @@ boot(app, __dirname, function(err) {
             //Sending call notification
             io.sockets.emit(data.to + 'busys', data)
         })
+
     });
 })

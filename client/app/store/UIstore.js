@@ -8,7 +8,8 @@ class Store {
     @observable alert = false;
     @observable alertSignup = false;
     @observable home = false;
-
+    @observable alertSuccesfulUpdation = false;
+    @observable alertincorrectOldPassword = false;
 
     // @observable fullscreen = !
 }
