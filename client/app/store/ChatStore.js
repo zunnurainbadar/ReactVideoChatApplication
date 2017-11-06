@@ -13,6 +13,7 @@ class ChatStore {
     @observable from = '';
     @observable to = '';
     @observable answer = false;
+    @observable receivedCall = false;
     @observable callTo = '';
     @observable callFrom = '';
     @observable allOn = true;

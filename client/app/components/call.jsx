@@ -34,7 +34,6 @@ MicButtonStatus:true,
   }
   componentWillMount () {
     UserStore.user =JSON.parse(localStorage.getItem("userInfo"));
-        console.log("This is in parameter ",this.props.params.roomToJoin)
         room = this.props.params.roomToJoin;
                     webrtc = new SimpleWebRTC({
                         autoRequestMedia: false,
@@ -54,7 +53,21 @@ MicButtonStatus:true,
                         webrtc.joinRoom(ChatStore.roomToJoin);
 
                     })
-        console.log("This is username ",UserStore.user.username);
+  webrtc.on('videoRemoved', function(video, peer) {
+              console.log('Video removed is called');
+              ChatStore.isBusy = false;
+              ChatStore.answer = false;
+              socket.emit('hangup', {
+                to: ChatStore.callTo,
+                from: ChatStore.callFrom,
+                answer: ChatStore.answer,
+              });
+              socket.emit('hangup', {
+              to: UserStore.user.username,
+              from:ChatStore.callFrom,
+              answer:ChatStore.answer,
+              });
+         });
         
 
   }

@@ -23,7 +23,8 @@ import {browserHistory} from 'react-router';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
-var answer = false;
+// var answer = false;
+// var callReceived = false;
 const muiTheme = getMuiTheme({
   palette: {},
 });
@@ -42,8 +43,8 @@ export default class OtherProfile extends React.Component {
   componentDidMount() {
     //Show the dialog that use is calling
     socket.on(UserStore.user.username + 'calling', function(data) {
-      console.log('THis is busy option ', ChatStore.isBusy);
       if (ChatStore.isBusy == false) {
+       ChatStore.receivedCall =true;
         console.log(data.from + ' is calling you');
         ChatStore.callFrom = data.from;
         ChatStore.callTo = data.to;
@@ -53,12 +54,15 @@ export default class OtherProfile extends React.Component {
         ChatStore.dialogOpen = true;
         ChatStore.isBusy == true;
       } else {
+        ChatStore.receivedCall = true;
         socket.emit('busy', {to: data.from, from: data.to});
       }
     });
     //When other user pressed answer
     socket.on(UserStore.user.username + 'answers', function(data) {
       ChatStore.isBusy = true;
+      ChatStore.answer = true;
+      ChatStore.receivedCall = true;
       if (ChatStore.videoCall == true) {
         browserHistory.push('/videoCall/' + ChatStore.roomToJoin);
         ChatStore.callingDialogOpen = false;
@@ -69,6 +73,8 @@ export default class OtherProfile extends React.Component {
     });
     //When other user press reject
     socket.on('rejects', function(data) {
+      ChatStore.receivedCall = true;
+      ChatStore.answer = false;
       console.log('User clicked on Reject button', data);
       ChatStore.callingDialogOpen = false;
       ChatStore.from = '';
@@ -78,6 +84,7 @@ export default class OtherProfile extends React.Component {
     });
     //When user clicks on cancel button
     socket.on(UserStore.user.username + 'cancels', function(data) {
+     ChatStore.receivedCall = true;
       ChatStore.dialogOpen = false;
       ChatStore.from = '';
       ChatStore.to = '';
@@ -86,6 +93,7 @@ export default class OtherProfile extends React.Component {
     });
     //When Other user is busy on another call
     socket.on(UserStore.user.username + 'busys', function(data) {
+     ChatStore.receivedCall = true;
       ChatStore.callingDialogOpen = false;
       ChatStore.from = '';
       ChatStore.to = '';
@@ -99,6 +107,7 @@ export default class OtherProfile extends React.Component {
   }
   //For video calling
   videoCall = function() {
+   ChatStore.receivedCall = false;
     ChatStore.callingDialogOpen = true;
     console.log('This is video call function');
     //Changing view for video call
@@ -112,11 +121,10 @@ export default class OtherProfile extends React.Component {
     ChatStore.from = UserStore.user.username;
     ChatStore.callTo = ChatStore.conversationSelected.userTwo;
     ChatStore.callFrom = UserStore.user.username;
-    console.log(
-      'This is chatStore conversation selected ',
-      ChatStore.conversationSelected.userTwo
-    );
     // Sending Notification of call to Other person
+            for (var i = 0; i < 2; i++) {
+            if (i == 0) {
+              console.log("First time");
     socket.emit('NewVideoCall', {
       to: ChatStore.conversationSelected.userTwo,
       room: ChatStore.roomToJoin,
@@ -124,9 +132,53 @@ export default class OtherProfile extends React.Component {
       videoCall: true,
       call: false,
     });
+            } else {
+              // console.log("Second time ",receivedCall);
+
+                window.setTimeout(function() {
+                  console.log("Inside timeout ");
+                  console.log("Answer ",ChatStore.answer);
+                  console.log("receivedCall", ChatStore.answer);
+                    if (ChatStore.receivedCall == false) {
+                        if (ChatStore.answer == false) {
+                          socket.emit('NewVideoCall', {
+                            to: ChatStore.conversationSelected.userTwo,
+                            room: ChatStore.roomToJoin,
+                            from: UserStore.user.username,
+                            videoCall: true,
+                            call: false,
+                          });
+                        }
+                    } else {
+                       ChatStore.receivedCall =true; 
+                    }
+                }, 10000);
+            }
+        }
+        //Cancel call after some time
+        window.setTimeout(function() {
+          console.log("Inside below timeout ");
+          console.log('Answer ', ChatStore.answer);
+          console.log('receivedCall', ChatStore.answer);
+            if (ChatStore.answer == false) {
+             ChatStore.callingDialogOpen = false;
+               ChatStore.answer = false;
+               socket.emit('cancel', {
+                 to: ChatStore.conversationSelected.userTwo,
+                 room: ChatStore.roomToJoin,
+                 from: UserStore.user.username,
+               });
+                socket.emit('cancel', {
+                  to: UserStore.user.username,
+                  room: ChatStore.roomToJoin,
+                  from: UserStore.user.username,
+                });
+            }
+        }, 25000);
     // browserHistory.push('/videoCall/'+ChatStore.roomToJoin)
   };
   Call = function() {
+   ChatStore.receivedCall = false;
     ChatStore.callingDialogOpen = true;
     console.log('This is video call function');
     //Changing view for video call
@@ -140,11 +192,10 @@ export default class OtherProfile extends React.Component {
     ChatStore.from = UserStore.user.username;
     ChatStore.callTo = ChatStore.conversationSelected.userTwo;
     ChatStore.callFrom = UserStore.user.username;
-    console.log(
-      'This is chatStore conversation selected ',
-      ChatStore.conversationSelected.userTwo
-    );
     // Sending Notification of call to Other person
+     for (var i = 0; i < 2; i++) {
+            if (i == 0) {
+              console.log("First time");
     socket.emit('NewCall', {
       to: ChatStore.conversationSelected.userTwo,
       room: ChatStore.roomToJoin,
@@ -152,16 +203,57 @@ export default class OtherProfile extends React.Component {
       videoCall: false,
       call: true,
     });
+            } else {
+              // console.log("Second time ",receivedCall);
+
+                window.setTimeout(function() {
+                  console.log("Inside timeout ");
+                  console.log("Answer ",ChatStore.answer);
+                  console.log("receivedCall", ChatStore.answer);
+                    if (ChatStore.receivedCall == false) {
+                        if (ChatStore.answer == false) {
+    socket.emit('NewCall', {
+      to: ChatStore.conversationSelected.userTwo,
+      room: ChatStore.roomToJoin,
+      from: UserStore.user.username,
+      videoCall: false,
+      call: true,
+    });
+                        }
+                    } else {
+                       ChatStore.receivedCall =true; 
+                    }
+                }, 10000);
+            }
+        }
+        //Cancel call after some time
+        window.setTimeout(function() {
+            if (ChatStore.answer == false) {
+             ChatStore.callingDialogOpen = false;
+               ChatStore.answer = false;
+               socket.emit('cancel', {
+                 to: ChatStore.conversationSelected.userTwo,
+                 room: ChatStore.roomToJoin,
+                 from: UserStore.user.username,
+               });
+                socket.emit('cancel', {
+                  to: UserStore.user.username,
+                  room: ChatStore.roomToJoin,
+                  from: UserStore.user.username,
+                });
+            }
+        }, 25000);
     // browserHistory.push('/videoCall/'+ChatStore.roomToJoin)
   };
   // when user answers the call
   answer = function() {
-    answer = true;
+   ChatStore.answer = true;
+    ChatStore.receivedCall = true;
     ChatStore.isBusy = true;
     socket.emit('answer', {
       to: ChatStore.callFrom,
       from: ChatStore.callTo,
-      answer: answer,
+      answer: ChatStore.answer,
       isBusy: ChatStore.isBusy,
     });
     ChatStore.dialogOpen = false;
@@ -173,7 +265,8 @@ export default class OtherProfile extends React.Component {
   };
   //When user rejects the call
   reject = function() {
-    answer = false;
+   ChatStore.receivedCall = true;
+    ChatStore.answer = false;
     ChatStore.isBusy = false;
     ChatStore.from = '';
     ChatStore.to = '';
@@ -181,12 +274,13 @@ export default class OtherProfile extends React.Component {
     ChatStore.callTo = '';
     socket.emit('reject', {
       to: ChatStore.from,
-      answer: answer,
+      answer:ChatStore.answer,
       isBusy: ChatStore.isBusy,
     });
     ChatStore.dialogOpen = false;
   };
   cancel = function() {
+    ChatStore.receivedCall = true;
     ChatStore.callingDialogOpen = false;
     ChatStore.from = '';
     ChatStore.to = '';
