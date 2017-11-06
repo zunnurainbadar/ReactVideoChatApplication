@@ -1,6 +1,6 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import UIStore from '../store/UIstore.js';
+import Store from '../store/UIstore.js';
 import UserStore from '../store/UserStore';
 import ChatStore from '../store/ChatStore';
 import SimpleWebRTC from '../../node_modules/simplewebrtc/out/simplewebrtc.bundle';
@@ -199,7 +199,7 @@ export default class OtherProfile extends React.Component {
     });
   };
   render() {
-    if(UIStore.home == false){
+    if(Store.home == false){
       const actions = [
         <FloatingActionButton
         backgroundColor={'#2b842b'}
