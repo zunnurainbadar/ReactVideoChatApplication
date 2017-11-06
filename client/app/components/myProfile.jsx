@@ -39,6 +39,9 @@ export default class MyProfile extends React.Component {
   settings() {
     browserHistory.push('/settings');
   }
+  help() {
+    browserHistory.push('/help');
+  }
   componentDidMount() {}
   render() {
     return (
@@ -71,7 +74,9 @@ export default class MyProfile extends React.Component {
                   primaryText="Profile"
                   onTouchTap={this.settings.bind(this)}
                 />
-                <MenuItem primaryText="Help" />
+                <MenuItem primaryText="Help" 
+                onTouchTap={this.help.bind(this)}
+                />
                 <MenuItem
                   primaryText="Sign out"
                   onTouchTap={this.signOut.bind(this)}

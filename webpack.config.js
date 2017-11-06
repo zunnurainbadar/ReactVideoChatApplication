@@ -29,6 +29,7 @@ module.exports = {
             Buttons: "./client/app/components/buttons.jsx",
             OtherProfile: "./client/app/components/otherProfile.jsx",
             GroupList: "./client/app/components/groupList.jsx",
+            Help: "./client/app/components/help.jsx",
             Settings: "./client/app/components/settings.jsx.jsx",
             UIstore: "./client/app/store/UIstore.js",
             applicationStyles: "client/app/styles/app.scss",

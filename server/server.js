@@ -248,7 +248,6 @@ boot(app, __dirname, function(err) {
                                 io.sockets.emit(data.to + 'descEdited', _users);
                             }
                         })
-
                     }
                 })
             })

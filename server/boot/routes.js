@@ -7,6 +7,7 @@ module.exports = function(app) {
         "/login",
         "/signup",
         "/settings",
+        "/help",
         "/app",
         "/videoCall/:id",
         "/call/:id"

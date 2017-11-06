@@ -10,6 +10,7 @@ class Store {
     @observable home = false;
     @observable alertSuccesfulUpdation = false;
     @observable alertincorrectOldPassword = false;
+    @observable alertSuccesfulUpdateDescription = false;
 
     // @observable fullscreen = !
 }

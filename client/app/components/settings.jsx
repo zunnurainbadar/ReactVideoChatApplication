@@ -49,6 +49,7 @@ export default class Settings extends React.Component {
       dialogChangePassword: false,
       alertincorrectOldPassword: false,
       alertSuccesfulUpdation: false,
+      alertSuccesfulUpdateDescription: false,
       edit: false,
     };
   }
@@ -69,6 +70,12 @@ export default class Settings extends React.Component {
   };
   showAlertSuccessfull = () => {
     this.msg.success('Passwords updated succesfully', {
+      time: 2000,
+    });
+  };
+  showAlertDesc = () => {
+    console.log("Inside showing alert");
+    this.msg.success('Description is changed successfully', {
       time: 2000,
     });
   };
@@ -110,11 +117,14 @@ export default class Settings extends React.Component {
   }
 
   componentDidMount() {
-    socket.on(UserStore.user.username+'descEdited',function(data){
-      if(data){
-        console.log("Edited successfully",data);
+    socket.on(UserStore.user.username + 'descEdited', function(data) {
+      if (data) {
+        console.log("Inside alert");
+        Store.alertSuccesfulUpdateDescription = true;
+         Store.alertSuccesfulUpdateDescription = false;
         UserStore.user = data;
         localStorage.setItem('userInfo', JSON.stringify(data));
+      
       }
     });
     socket.on(UserStore.user.fullname + 'changedPassword', function(data) {
@@ -131,12 +141,10 @@ export default class Settings extends React.Component {
     browserHistory.push('/');
   }
   edit() {
-    console.log("This is edit description")
+    console.log('This is edit description');
     this.setState({edit: true});
   }
   saveEdit() {
-    console.log("This is refs ",this.refs);
-    console.log('This is description in edit ', this.refs.txtDesc.value);
     socket.emit('saveDesc', {
       to: UserStore.user.username,
       id: UserStore.user.userId,
@@ -150,6 +158,9 @@ export default class Settings extends React.Component {
     }
     if (Store.alertSuccesfulUpdation) {
       this.showAlertSuccessfull();
+    }
+    if (Store.alertSuccesfulUpdateDescription) {
+      this.showAlertDesc();
     }
     const actions = [
       <RaisedButton
@@ -166,7 +177,7 @@ export default class Settings extends React.Component {
         backgroundColor={'#2b842b'}
         labelColor={'#ffffff'}
       />,
-    ]; 
+    ];
     const actionsEdit = [
       <RaisedButton
         label="Cancel"
@@ -183,9 +194,16 @@ export default class Settings extends React.Component {
         labelColor={'#ffffff'}
       />,
     ];
-    return <MuiThemeProvider muiTheme={muiTheme}>
+    return (
+      <MuiThemeProvider muiTheme={muiTheme}>
         <div>
-          <RaisedButton labelColor="#ffffff" backgroundColor="#3fb93f" label="Back" style={style} onTouchTap={this.back.bind(this)} />
+          <RaisedButton
+            labelColor="#ffffff"
+            backgroundColor="#3fb93f"
+            label="Back"
+            style={style}
+            onTouchTap={this.back.bind(this)}
+          />
           <div className="container profile">
             <Card>
               <CardTitle title="Settings" subtitle="" />
@@ -233,7 +251,10 @@ export default class Settings extends React.Component {
                             </h3>
                           </div>
                           <div className="col-md-2" style={{marginTop: '2%'}}>
-                            <FloatingActionButton mini={true} onClick={this.edit.bind(this)}>
+                            <FloatingActionButton
+                              mini={true}
+                              onClick={this.edit.bind(this)}
+                            >
                               <Edit />
                             </FloatingActionButton>
                           </div>
@@ -241,7 +262,12 @@ export default class Settings extends React.Component {
                         <hr />
                         <br />
                         <center>
-                          <RaisedButton labelColor="#ffffff" backgroundColor="#3fb93f" label="Change Password" onTouchTap={this.changePassword.bind(this)} />
+                          <RaisedButton
+                            labelColor="#ffffff"
+                            backgroundColor="#3fb93f"
+                            label="Change Password"
+                            onTouchTap={this.changePassword.bind(this)}
+                          />
                         </center>
                       </CardText>
                     </Card>
@@ -249,26 +275,59 @@ export default class Settings extends React.Component {
                 </div>
               </CardText>
             </Card>
-            <Dialog title="Change Password" actions={actions} modal={false} open={this.state.dialogChangePassword} contentStyle={{width: '40%'}}>
+            <Dialog
+              title="Change Password"
+              actions={actions}
+              modal={false}
+              open={this.state.dialogChangePassword}
+              contentStyle={{width: '40%'}}
+            >
               <h3>
                 <label>Old Password</label>
-                <input type="text" className="form-control" ref="oldPassword" placeholder="Enter Your old password" />
+                <input
+                  type="text"
+                  className="form-control"
+                  ref="oldPassword"
+                  placeholder="Enter Your old password"
+                />
                 <br />
                 <label>New Password</label>
-                <input type="text" className="form-control" ref="newPassword" placeholder="Enter Your New password" />
+                <input
+                  type="text"
+                  className="form-control"
+                  ref="newPassword"
+                  placeholder="Enter Your New password"
+                />
                 <br />
                 <label>Confirm Password</label>
-                <input type="text" className="form-control" ref="confirmPassword" placeholder="Confirm new password" />
+                <input
+                  type="text"
+                  className="form-control"
+                  ref="confirmPassword"
+                  placeholder="Confirm new password"
+                />
               </h3>
             </Dialog>
-            <Dialog title="Change Description" actions={actionsEdit} modal={false} open={this.state.edit} contentStyle={{width: '40%'}}>
+            <Dialog
+              title="Change Description"
+              actions={actionsEdit}
+              modal={false}
+              open={this.state.edit}
+              contentStyle={{width: '40%'}}
+            >
               <label>Description</label>
-              <input type="text" ref="txtDesc" defaultValue={UserStore.user.desc} className="form-control" />
+              <input
+                type="text"
+                ref="txtDesc"
+                defaultValue={UserStore.user.desc}
+                className="form-control"
+              />
             </Dialog>
             <AlertContainer ref={a => (this.msg = a)} {...this.alertOptions} />
           </div>
         </div>
-      </MuiThemeProvider>;
+      </MuiThemeProvider>
+    );
   }
 }
             //  <TextField
