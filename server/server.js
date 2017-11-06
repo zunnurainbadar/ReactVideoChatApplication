@@ -214,34 +214,43 @@ boot(app, __dirname, function(err) {
             })
             //Change Password
         socket.on('changePassword', function(data) {
-                app.models.allUsers.findOne({ where: { _id: data.id } }, function(err, _user) {
+            app.models.allUsers.findOne({ where: { _id: data.id } }, function(err, _user) {
+                if (err) throw err;
+                else {
+                    _user.hasPassword(
+                        data.oldPassword,
+                        function(err, isMatch) {
+                            if (!isMatch) {
+                                io.sockets.emit(data.to + 'changedPassword', { msg: "Please Enter correct old password" })
+                            } else {
+                                _user.updateAttribute('password', data.newPassword, function(err, nuser) {
+                                    if (err) throw error;
+                                    else {
+                                        io.sockets.emit(data.to + 'changedPassword', { msg: "Password updated Succesfully" })
+                                    }
+                                });
+                                console.log("Passwords matched");
+                            }
+                        }
+                    );
+                }
+            });
+        })
+
+        //Changin description of person
+        socket.on('saveDesc', function(data) {
+                app.models.allUsers.updateAll({ _id: data.id }, { desc: data.desc }, function(err, _user) {
                     if (err) throw err;
                     else {
-                        _user.hasPassword(
-                            data.oldPassword,
-                            function(err, isMatch) {
-                                if (!isMatch) {
-                                    console.log("Not matched");
-                                    io.sockets.emit(data.to + 'changedPassword', { msg: "Please Enter correct old password" })
-                                } else {
-                                    _user.updateAttribute('password', data.newPassword, function(err, nuser) {
-                                        if (err) throw error;
-                                        else {
-                                            console.log(new Date(), '> password reset processed successfully for ', nuser);
-                                            io.sockets.emit(data.to + 'changedPassword', { msg: "Password updated Succesfully" })
-                                                // cb(null, nuser);
-
-                                        }
-                                    });
-                                    console.log("Passwords matched");
-                                }
+                        app.models.allUsers.findOne({ where: { _id: data.id } }, function(err, _users) {
+                            if (err) throw err;
+                            else {
+                                io.sockets.emit(data.to + 'descEdited', _users);
                             }
-                        );
-
-
+                        })
 
                     }
-                });
+                })
             })
             //For Video call
         socket.on('NewVideoCall', function(data) {

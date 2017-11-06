@@ -48,7 +48,7 @@ var Main = () => {
   // if(Store.conversationView == true && Store.videoCallView == false && Store.callView == false){
   return (
     <MuiThemeProvider muiTheme={muiTheme}>
-    <div style={leftSide}>
+    <div style={leftSide} className="scrolls">
       <div className="col-md-3 backgroundLeft">
       <div className="row">
       <MyProfile style={myProfileStyle}></MyProfile>

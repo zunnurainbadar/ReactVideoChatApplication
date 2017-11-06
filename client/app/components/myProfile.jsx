@@ -68,7 +68,7 @@ export default class MyProfile extends React.Component {
                 style={{marginLeft: '0%'}}
               >
                 <MenuItem
-                  primaryText="Settings"
+                  primaryText="Profile"
                   onTouchTap={this.settings.bind(this)}
                 />
                 <MenuItem primaryText="Help" />

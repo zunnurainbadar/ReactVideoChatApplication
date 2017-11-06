@@ -1,9 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  'html': {
-    'overflow': 'hidden'
-  },
   'backgroundLeft': {
     'backgroundColor': '#F0F4F8',
     'height': [{ 'unit': 'string', 'value': '-webkit-fill-available' }]
@@ -154,5 +151,8 @@ export default StyleSheet.create({
   },
   'profile': {
     'margin': [{ 'unit': '%V', 'value': 0.05 }, { 'unit': '%H', 'value': 0.05 }, { 'unit': '%V', 'value': 0.05 }, { 'unit': '%H', 'value': 0.05 }]
+  },
+  'scrolls': {
+    'overflow': 'hidden'
   }
 });
