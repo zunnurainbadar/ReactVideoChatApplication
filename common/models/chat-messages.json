@@ -29,6 +29,12 @@
         "cid": {
             "type": "string",
             "required": true
+        },
+        "status": {
+            "type": "string",
+            "required": true,
+            "enum": ["read", "unread"],
+            "default": "unread"
         }
     },
     "validations": [],

@@ -63,7 +63,7 @@ export default class GroupList extends React.Component {
   }
   btnConversation = conv => {
     UIStore.home = false;
-      console.log("inside conversation");
+      console.log("inside conversation",conv);
     //Selected conversation
     ChatStore.conversationSelected = conv;
     //Emittin getting messages

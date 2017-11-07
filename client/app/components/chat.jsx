@@ -103,8 +103,9 @@ export default class Chat extends React.Component {
         sender: UserStore.user.username,
         conversationWith: ChatStore.conversationSelected.userTwo,
         time: time,
-        date:date,
+        date: date,
         cid: ChatStore.conversationSelected.cid,
+        convId: ChatStore.conversationSelected.id,
       });
       this.refs.message.value = '';
     }
@@ -117,6 +118,7 @@ export default class Chat extends React.Component {
   //Function for realtime search
  
   render() {
+    if (ChatStore.conversationSelected) {
     if(UIStore.home == false){
       console.log("Inside if")
       return (
@@ -231,6 +233,24 @@ export default class Chat extends React.Component {
       </MuiThemeProvider>);
 
     }
-
+  }else{
+          return <MuiThemeProvider muiTheme={muiTheme}>
+              <div className="row">
+                <div className="col-md-12">
+                  <br />
+                  <br />
+                  <br />
+                  <hr />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <p>You dont't have any messages yet</p>
+                </div>
+              </div>
+            </MuiThemeProvider>;
+  }
   }
 }

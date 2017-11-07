@@ -140,6 +140,32 @@ boot(app, __dirname, function(err) {
                 }
             })
         });
+        //For Getting all recent conversations
+        socket.on('unreadConversations', function(data) {
+            console.log("Unread conversation");
+            app.models.Conversations.find({ where: { isRead: "true" } }, function(err, _conv) {
+                if (err) throw err;
+                else {
+                    const getUser = async() => {
+                        for (var i = 0; i < _conv.length; i++) {
+                            console.log("indside for");
+                            let _users = await app.models.allUsers.findOne({ where: { username: _conv[i].userTwo } });
+                            console.log("This is users ", _users);
+                            if (_users) {
+                                _conv[i].avatar = _users.avatar;
+                                _conv[i].desc = _users.desc;
+                            } else {}
+                        }
+                    }
+                    getUser()
+                        .then(function() {
+                            console.log('This is conversation ', _conv);
+                            io.sockets.emit(data.to + 'myConversations', _conv);
+                        })
+                        .catch(err => console.log(err));
+                }
+            })
+        });
         //For Getting Messages of selected conversation
         socket.on('gettingMessages', function(data) {
             if (data) {
@@ -147,57 +173,74 @@ boot(app, __dirname, function(err) {
                     app.models.chatMessages.find({ where: { cid: data.conv.cid } }, function(err, _messages) {
                         if (err) throw err;
                         else {
+                            for (var i = 0; i < _messages.length; i++) {
+                                app.models.chatMessages.updateAll({ _id: _messages[i]._id }, { status: "read" }, function(err, _conv) {
+                                    if (err) throw err;
+                                    else {
+                                        console.log("Conversation updated successfully ", _conv);
+                                    }
+                                })
+                            }
                             io.sockets.emit(data.to + 'myMessages', _messages)
                         }
                     })
                 }
+                try {
+                    app.models.Conversations.updateAll({ _id: data.conv.id }, { isRead: "false" }, function(err, docs) {
+                        if (err) throw err;
+                        else {
+                            console.log("isRead updated successfully");
+                        }
+                    })
+                } catch (e) {
+                    console.log("Error is catched on 174");
+                }
+
             }
 
         });
         //For Sending Messages
         socket.on('sendMessage', function(data) {
-            app.models.chatMessages.create(data, function(err, _messages) {
-                if (err) throw err;
-                else {
-                    io.sockets.emit(data.to + 'messageSent', data)
-                    io.sockets.emit(data.sender + 'messageSent', data)
+            app.models.chatMessages.create({
+                    to: data.to,
+                    message: data.message,
+                    sender: data.sender,
+                    conversationWith: data.conversationWith,
+                    time: data.time,
+                    date: data.date,
+                    cid: data.cid,
+                    status: 'unread',
+                },
+                function(err, _messages) {
+                    if (err) throw err;
+                    else {
+                        io.sockets.emit(data.to + 'messageSent', data);
+                        io.sockets.emit(data.sender + 'messageSent', data);
+                    }
                 }
-            })
-            app.models.Conversations.updateAll({ cid: data.cid }, { lastMessage: data.message, lastMessageTime: Date.now() }, function(err, _conv) {
-                if (err) throw err;
-                else {
-                    console.log("Conversation updated successfully ", _conv);
+            );
+            app.models.Conversations.updateAll({ cid: data.cid }, { lastMessage: data.message, lastMessageTime: Date.now() },
+                function(err, _conv) {
+                    if (err) throw err;
+                    else {
+                        console.log(
+                            'Conversation updated successfully ',
+                            _conv
+                        );
+                    }
                 }
-            })
-        });
-        //For Creating conversations
-        socket.on('createConversation', function(data) {
-            //Generate cid here
-            var uuid = uuidv4();;
-            app.models.Conversations.create({
-                userOne: data.userOne,
-                userTwo: data.userTwo,
-                date: data.date,
-                cid: uuid
-            }, function(err, _messages) {
-                if (err) throw err;
-                else {
-                    //Creatin other person's conversation
-                    app.models.Conversations.create({
-                        userOne: data.userTwo,
-                        userTwo: data.userOne,
-                        date: data.date,
-                        cid: uuid
-                    }, function(err, _messages) {
-                        if (err) throw err;
-                        else {
-                            io.sockets.emit(data.userOne + 'conversationCreated', {})
-                            io.sockets.emit(data.userTwo + 'conversationCreated', {})
-                        }
-                    })
+            );
+            app.models.Conversations.updateAll({ _id: data.convId }, { isRead: 'true' },
+                function(err, _conv) {
+                    if (err) throw err;
+                    else {
+                        console.log(
+                            'Conversation updated successfully ',
+                            _conv
+                        );
+                    }
                 }
-            })
-
+            );
         });
         //For storing all users in store to search
         socket.on('gettingALlUsers', function(data) {

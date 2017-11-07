@@ -43,10 +43,18 @@ UIStore.home = true;
 console.log("Inside go to home UIStore ",UIStore.home)
   }
   all(){
-console.log("Inside All")
-  }
+         //Emitting event to receive conversations
+         socket.emit('gettingConversation', {
+           to: UserStore.user.username,
+           username: UserStore.user.username,
+         });
+       }
   unread(){
-console.log("Inside unread")
+ //Emitting event to receive conversations
+     socket.emit('unreadConversations', {
+      to: UserStore.user.username,
+      username: UserStore.user.username,
+    });
   }
   contacts = function(){
     this.setState({recent:false,contacts:true});

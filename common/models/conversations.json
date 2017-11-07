@@ -34,6 +34,10 @@
         },
         "lastMessageTime": {
             "type": "string"
+        },
+        "isRead": {
+            "type": "boolean",
+            "default": false
         }
     },
     "validations": [],
