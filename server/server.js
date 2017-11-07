@@ -143,7 +143,7 @@ boot(app, __dirname, function(err) {
         //For Getting all recent conversations
         socket.on('unreadConversations', function(data) {
             console.log("Unread conversation");
-            app.models.Conversations.find({ where: { isRead: "true" } }, function(err, _conv) {
+            app.models.Conversations.find({ where: { and: [{ isRead: "true" }, { userTwo: data.username }] } }, function(err, _conv) {
                 if (err) throw err;
                 else {
                     const getUser = async() => {
