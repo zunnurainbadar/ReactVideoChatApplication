@@ -11,13 +11,12 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 // import { greenA400 } from "material-ui/styles/colors";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Drawer from 'material-ui/Drawer';
-import {MenuItem, makeSelectable} from 'material-ui';
+import {MenuItem, makeSelectable, Badge} from 'material-ui';
 import Avatar from 'material-ui/Avatar';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import {map} from 'mobx';
 let SelectableList = makeSelectable(List);
-
 const muiTheme = getMuiTheme({
   palette: {},
 });
@@ -89,7 +88,12 @@ export default class GroupList extends React.Component {
                     value={conv._id}
                     leftAvatar={<Avatar src={conv.avatar} />}
                     onClick={this.btnConversation.bind(this,conv)}
-                     />
+                    rightIconButton={<Badge
+                        badgeContent={4}
+                        badgeStyle={{backgroundColor:"#FF8C00",color:"#ffffff"}}
+                      >
+                      </Badge>}
+                  />
                   </div>
                 );
               })}
