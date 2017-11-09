@@ -38,6 +38,10 @@
         "isRead": {
             "type": "boolean",
             "default": false
+        },
+        "unreadCount": {
+            "type": "number",
+            "default": 0
         }
     },
     "validations": [],

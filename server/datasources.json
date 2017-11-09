@@ -1,16 +1,17 @@
 {
-  "db": {
-    "name": "db",
-    "connector": "memory"
-  },
-  "ReactMessengerHL": {
-    "host": "",
-    "port": 0,
-    "url": "mongodb://localhost:27017/ReactMessengerHL",
-    "database": "",
-    "password": "",
-    "name": "ReactMessengerHL",
-    "user": "",
-    "connector": "mongodb"
-  }
+    "db": {
+        "name": "db",
+        "connector": "memory"
+    },
+    "ReactMessengerHL": {
+        "host": "",
+        "port": 0,
+        "url": "mongodb://localhost:27017/ReactMessengerHL",
+        "database": "",
+        "password": "",
+        "name": "ReactMessengerHL",
+        "user": "",
+        "connector": "mongodb",
+        "allowExtendedOperators": true
+    }
 }

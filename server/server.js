@@ -186,12 +186,34 @@ boot(app, __dirname, function(err) {
                     })
                 }
                 try {
-                    app.models.Conversations.updateAll({ _id: data.conv.id }, { isRead: "false" }, function(err, docs) {
+                    app.models.Conversations.updateAll({ _id: data.conv.id }, { isRead: "false", unreadCount: 0 }, function(err, docs) {
+                            if (err) throw err;
+                            else {
+                                console.log("isRead updated successfully");
+                            }
+                        })
+                        //Updating chat list 
+                    app.models.Conversations.find({ where: { userOne: data.to } }, function(err, _conversations) {
                         if (err) throw err;
                         else {
-                            console.log("isRead updated successfully");
+                            const getUser = async() => {
+                                for (var i = 0; i < _conversations.length; i++) {
+                                    let _users = await app.models.allUsers.findOne({ where: { username: _conversations[i].userTwo } });
+                                    if (_users) {
+                                        _conversations[i].avatar = _users.avatar;
+                                        _conversations[i].desc = _users.desc;
+                                    } else {}
+                                }
+                            }
+                            getUser()
+                                .then(function() {
+                                    console.log("This is conversation ", _conversations);
+                                    io.sockets.emit(data.to + 'updatedConversations', _conversations)
+                                })
+                                .catch(err => console.log(err));
                         }
                     })
+
                 } catch (e) {
                     console.log("Error is catched on 174");
                 }
@@ -201,6 +223,7 @@ boot(app, __dirname, function(err) {
         });
         //For Sending Messages
         socket.on('sendMessage', function(data) {
+            //Saving message
             app.models.chatMessages.create({
                     to: data.to,
                     message: data.message,
@@ -219,6 +242,7 @@ boot(app, __dirname, function(err) {
                     }
                 }
             );
+            //Time and last message
             app.models.Conversations.updateAll({ cid: data.cid }, { lastMessage: data.message, lastMessageTime: Date.now() },
                 function(err, _conv) {
                     if (err) throw err;
@@ -230,17 +254,44 @@ boot(app, __dirname, function(err) {
                     }
                 }
             );
-            app.models.Conversations.updateAll({ _id: data.convId }, { isRead: 'true' },
-                function(err, _conv) {
-                    if (err) throw err;
-                    else {
-                        console.log(
-                            'Conversation updated successfully ',
-                            _conv
-                        );
-                    }
+            //Updating that there is a message to read
+            const getUser = async() => {
+                let _conv = await app.models.Conversations.updateAll({ and: [{ userOne: data.to }, { userTwo: data.sender }] }, { isRead: 'true', $inc: { unreadCount: 1 } });
+                if (_conv) {
+                    console.log(
+                        'Conversation updated successfully ',
+                        _conv
+                    );
                 }
-            );
+            };
+            getUser()
+                .then(function() {
+                    //Updating chat list 
+                    app.models.Conversations.find({ where: { userOne: data.to } }, function(err, _conversations) {
+                        if (err) throw err;
+                        else {
+                            const getUser = async() => {
+                                for (var i = 0; i < _conversations.length; i++) {
+                                    let _users = await app.models.allUsers.findOne({ where: { username: _conversations[i].userTwo } });
+                                    if (_users) {
+                                        _conversations[i].avatar = _users.avatar;
+                                        _conversations[i].desc = _users.desc;
+                                    } else {}
+                                }
+                            }
+                            getUser()
+                                .then(function() {
+                                    console.log("This is conversation ", _conversations);
+                                    io.sockets.emit(data.to + 'updatedConversations', _conversations)
+                                    console.log('---------------------------------')
+                                })
+                                .catch(err => console.log(err));
+                        }
+                    })
+                })
+                .catch(err => console.log(err));
+
+
         });
         //For storing all users in store to search
         socket.on('gettingALlUsers', function(data) {

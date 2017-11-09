@@ -34,6 +34,10 @@ export default class GroupList extends React.Component {
     userstore.user =JSON.parse(localStorage.getItem("userInfo"));    
   }
   componentDidMount() {
+    socket.on(UserStore.user.username+'updatedConversations',function(data){
+      console.log("inside conversation updation ",data);
+      ChatStore.conversations = data;      
+    })
     //Receiving all conversations
     socket.on(UserStore.user.username + 'myConversations', function(data) {
       ChatStore.conversations = data;
@@ -80,6 +84,7 @@ export default class GroupList extends React.Component {
             <SelectableList>
               {ChatStore.conversations.map(conv => {
                 //Mapping all converations
+                if (conv.unreadCount>0) {
                 return (
                   <div key={conv._id} >
                        
@@ -89,13 +94,27 @@ export default class GroupList extends React.Component {
                     leftAvatar={<Avatar src={conv.avatar} />}
                     onClick={this.btnConversation.bind(this,conv)}
                     rightIconButton={<Badge
-                        badgeContent={4}
+                        badgeContent={conv.unreadCount}
                         badgeStyle={{backgroundColor:"#FF8C00",color:"#ffffff"}}
                       >
                       </Badge>}
                   />
                   </div>
                 );
+                }else{
+                                  return (
+                  <div key={conv._id} >
+                       
+                      <ListItem
+                    primaryText= {conv.userTwo}
+                    value={conv._id}
+                    leftAvatar={<Avatar src={conv.avatar} />}
+                    onClick={this.btnConversation.bind(this,conv)}
+                      />
+                  </div>
+                );
+                }
+
               })}
             </SelectableList>
             </div>
