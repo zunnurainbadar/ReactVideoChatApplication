@@ -293,6 +293,36 @@ boot(app, __dirname, function(err) {
 
 
         });
+
+         //For Creating conversations
+        socket.on('createConversation', function(data) {
+            //Generate cid here
+            var uuid = uuidv4();;
+            app.models.Conversations.create({
+                userOne: data.userOne,
+                userTwo: data.userTwo,
+                date: data.date,
+                cid: uuid
+            }, function(err, _messages) {
+                if (err) throw err;
+                else {
+                    //Creatin other person's conversation
+                    app.models.Conversations.create({
+                        userOne: data.userTwo,
+                        userTwo: data.userOne,
+                        date: data.date,
+                        cid: uuid
+                    }, function(err, _messages) {
+                        if (err) throw err;
+                        else {
+                            io.sockets.emit(data.userOne + 'conversationCreated', {})
+                            io.sockets.emit(data.userTwo + 'conversationCreated', {})
+                        }
+                    })
+                }
+            })
+
+        });
         //For storing all users in store to search
         socket.on('gettingALlUsers', function(data) {
                 app.models.allUsers.find({}, function(err, _users) {
