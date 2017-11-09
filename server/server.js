@@ -98,9 +98,7 @@ boot(app, __dirname, function(err) {
                 else {
                     const getUser = async() => {
                         for (var i = 0; i < _conversations.length; i++) {
-                            console.log("indside for");
                             let _users = await app.models.allUsers.findOne({ where: { username: _conversations[i].userTwo } });
-                            console.log("This is users ", _users);
                             if (_users) {
                                 _conversations[i].avatar = _users.avatar;
                                 _conversations[i].desc = _users.desc;
@@ -109,7 +107,6 @@ boot(app, __dirname, function(err) {
                     }
                     getUser()
                         .then(function() {
-                            console.log("This is conversation ", _conversations);
                             io.sockets.emit(data.to + 'myConversations', _conversations)
                         })
                         .catch(err => console.log(err));
@@ -121,7 +118,6 @@ boot(app, __dirname, function(err) {
             app.models.Conversations.find({ order: 'lastMessageTime DESC', where: { userOne: data.username } }, function(err, _conversations) {
                 if (err) throw err;
                 else {
-                    console.log("This is recent conversations ", _conversations);
                     const getUser = async() => {
                         for (var i = 0; i < _conversations.length; i++) {
                             let _users = await app.models.allUsers.findOne({ where: { username: _conversations[i].userTwo } });
@@ -133,7 +129,6 @@ boot(app, __dirname, function(err) {
                     }
                     getUser()
                         .then(function() {
-                            console.log("This is conversation ", _conversations);
                             io.sockets.emit(data.to + 'myConversations', _conversations)
                         })
                         .catch(err => console.log(err));
@@ -142,15 +137,12 @@ boot(app, __dirname, function(err) {
         });
         //For Getting all recent conversations
         socket.on('unreadConversations', function(data) {
-            console.log("Unread conversation");
             app.models.Conversations.find({ where: { and: [{ isRead: "true" }, { userTwo: data.username }] } }, function(err, _conv) {
                 if (err) throw err;
                 else {
                     const getUser = async() => {
                         for (var i = 0; i < _conv.length; i++) {
-                            console.log("indside for");
                             let _users = await app.models.allUsers.findOne({ where: { username: _conv[i].userTwo } });
-                            console.log("This is users ", _users);
                             if (_users) {
                                 _conv[i].avatar = _users.avatar;
                                 _conv[i].desc = _users.desc;
@@ -159,7 +151,6 @@ boot(app, __dirname, function(err) {
                     }
                     getUser()
                         .then(function() {
-                            console.log('This is conversation ', _conv);
                             io.sockets.emit(data.to + 'myConversations', _conv);
                         })
                         .catch(err => console.log(err));
@@ -207,7 +198,6 @@ boot(app, __dirname, function(err) {
                             }
                             getUser()
                                 .then(function() {
-                                    console.log("This is conversation ", _conversations);
                                     io.sockets.emit(data.to + 'updatedConversations', _conversations)
                                 })
                                 .catch(err => console.log(err));
@@ -281,9 +271,7 @@ boot(app, __dirname, function(err) {
                             }
                             getUser()
                                 .then(function() {
-                                    console.log("This is conversation ", _conversations);
                                     io.sockets.emit(data.to + 'updatedConversations', _conversations)
-                                    console.log('---------------------------------')
                                 })
                                 .catch(err => console.log(err));
                         }
@@ -294,7 +282,7 @@ boot(app, __dirname, function(err) {
 
         });
 
-         //For Creating conversations
+        //For Creating conversations
         socket.on('createConversation', function(data) {
             //Generate cid here
             var uuid = uuidv4();;
@@ -338,7 +326,7 @@ boot(app, __dirname, function(err) {
             })
             //Change Password
         socket.on('changePassword', function(data) {
-            app.models.allUsers.findOne({ where: { _id: data.id } }, function(err, _user) {
+            app.models.allUsers.findOne({ where: { username: data.username } }, function(err, _user) {
                 if (err) throw err;
                 else {
                     _user.hasPassword(
@@ -363,10 +351,10 @@ boot(app, __dirname, function(err) {
 
         //Changin description of person
         socket.on('saveDesc', function(data) {
-                app.models.allUsers.updateAll({ _id: data.id }, { desc: data.desc }, function(err, _user) {
+                app.models.allUsers.update({ username: data.username }, { desc: data.desc }, function(err, _user) {
                     if (err) throw err;
                     else {
-                        app.models.allUsers.findOne({ where: { _id: data.id } }, function(err, _users) {
+                        app.models.allUsers.findOne({ where: { username: data.username } }, function(err, _users) {
                             if (err) throw err;
                             else {
                                 io.sockets.emit(data.to + 'descEdited', _users);

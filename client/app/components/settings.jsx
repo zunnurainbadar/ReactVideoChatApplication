@@ -74,7 +74,6 @@ export default class Settings extends React.Component {
     });
   };
   showAlertDesc = () => {
-    console.log("Inside showing alert");
     this.msg.success('Description is changed successfully', {
       time: 2000,
     });
@@ -83,18 +82,13 @@ export default class Settings extends React.Component {
     UserStore.user = JSON.parse(localStorage.getItem('userInfo'));
   }
   changePassword() {
-    console.log('You are Changing your Password');
     this.setState({dialogChangePassword: true});
   }
   cancel() {
-    console.log('You are canceling your Password');
     this.setState({dialogChangePassword: false});
     this.setState({edit: false});
   }
   save() {
-    console.log('This is old passworrd ', this.refs.oldPassword);
-    console.log('This is new passworrd ', this.refs.newPassword);
-    console.log('This is confirm passworrd ', this.refs.confirmPassword);
     if (
       this.refs.oldPassword.value == '' ||
       this.refs.newPassword.value == '' ||
@@ -102,11 +96,9 @@ export default class Settings extends React.Component {
     ) {
       this.showAlertEmpty();
     } else if (this.refs.newPassword.value == this.refs.confirmPassword.value) {
-      console.log('You are saving your Password');
-      console.log('THis is id in resst password ', UserStore.user.userId);
       socket.emit('changePassword', {
-        to: UserStore.user.fullname,
-        id: UserStore.user.userId,
+        to: UserStore.user.username,
+        username: UserStore.user.username,
         oldPassword: this.refs.oldPassword.value,
         newPassword: this.refs.newPassword.value,
       });
@@ -119,7 +111,7 @@ export default class Settings extends React.Component {
   componentDidMount() {
     socket.on(UserStore.user.username + 'descEdited', function(data) {
       if (data) {
-        console.log("Inside alert");
+        console.log("Alert is about to show");
         Store.alertSuccesfulUpdateDescription = true;
          Store.alertSuccesfulUpdateDescription = false;
         UserStore.user = data;
@@ -127,11 +119,12 @@ export default class Settings extends React.Component {
       
       }
     });
-    socket.on(UserStore.user.fullname + 'changedPassword', function(data) {
+    socket.on(UserStore.user.username + 'changedPassword', function(data) {
       if (data.msg == 'Please Enter correct old password') {
         Store.alertincorrectOldPassword = true;
         Store.alertincorrectOldPassword = false;
       } else if (data.msg == 'Password updated Succesfully') {
+        
         Store.alertSuccesfulUpdation = true;
         Store.alertSuccesfulUpdation = false;
       }
@@ -141,13 +134,12 @@ export default class Settings extends React.Component {
     browserHistory.push('/');
   }
   edit() {
-    console.log('This is edit description');
     this.setState({edit: true});
   }
   saveEdit() {
     socket.emit('saveDesc', {
       to: UserStore.user.username,
-      id: UserStore.user.userId,
+      username: UserStore.user.username,
       desc: this.refs.txtDesc.value,
     });
     this.setState({edit: false});
@@ -246,7 +238,7 @@ export default class Settings extends React.Component {
                         <hr />
                         <div className="row">
                           <div className="col-md-10">
-                            <h3>
+                            <h3 style={{"wordWrap": "break-word"}}>
                               {UserStore.user.desc}
                             </h3>
                           </div>
@@ -285,7 +277,7 @@ export default class Settings extends React.Component {
               <h3>
                 <label>Old Password</label>
                 <input
-                  type="text"
+                  type="password"
                   className="form-control"
                   ref="oldPassword"
                   placeholder="Enter Your old password"
@@ -293,7 +285,7 @@ export default class Settings extends React.Component {
                 <br />
                 <label>New Password</label>
                 <input
-                  type="text"
+                  type="password"
                   className="form-control"
                   ref="newPassword"
                   placeholder="Enter Your New password"
@@ -301,7 +293,7 @@ export default class Settings extends React.Component {
                 <br />
                 <label>Confirm Password</label>
                 <input
-                  type="text"
+                  type="password"
                   className="form-control"
                   ref="confirmPassword"
                   placeholder="Confirm new password"
