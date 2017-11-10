@@ -59,7 +59,8 @@ export default class Login extends React.Component {
       time: 2000,
     })
   }
-  btnLogin = () => {
+  btnLogin = (e) => {
+    e.preventDefault();
     if(this.refs.email.value == "" ||this.refs.password.value == "")
     {
       if(this.refs.email.value == ""){
@@ -111,42 +112,47 @@ this.showAlertWrong();
     {
       marginTop: "10%",    
     }
-    return (
-          <MuiThemeProvider muiTheme={muiTheme}>
-      <div className="container" style={sty}>
-          <div className="login-box">
-    <div className="login-logo">
-       <center><h2 ui-sref="messenger">Messenger</h2></center>
-    </div>
-    <div className="login-box-body">
-       <center><p className="login-box-msg">Sign in to start your session</p></center>
-        <div className="col-md-4 col-md-offset-4">
-            <div className="form-group has-feedback">
-                <input name="email" type="email" className="form-control" placeholder="Email" ref="email"/>
-                <span className="glyphicon glyphicon-envelope form-control-feedback"></span>
-            </div>
-            <div className="form-group has-feedback">
-                <input  name="password" type="password" className="form-control" placeholder="Password" ref="password"/>
-                <span className="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div>
-            <div className="row">
-                <div className="col-xs-8">
-                    <a href="/signup">SignUp</a>
+    return <MuiThemeProvider muiTheme={muiTheme}>
+        <div className="container" style={sty}>
+          <form onSubmit={this.btnLogin.bind(this)}>
+            <div className="login-box">
+              <div className="login-logo">
+                <center>
+                  <h2 ui-sref="messenger">Messenger</h2>
+                </center>
+              </div>
+              <div className="login-box-body">
+                <center>
+                  <p className="login-box-msg">
+                    Sign in to start your session
+                  </p>
+                </center>
+                <div className="col-md-4 col-md-offset-4">
+                  <div className="form-group has-feedback">
+                    <input name="email" type="email" className="form-control" placeholder="Email" ref="email" />
+                    <span className="glyphicon glyphicon-envelope form-control-feedback" />
+                  </div>
+                  <div className="form-group has-feedback">
+                    <input name="password" type="password" className="form-control" placeholder="Password" ref="password" />
+                    <span className="glyphicon glyphicon-lock form-control-feedback" />
+                  </div>
+                  <div className="row">
+                    <div className="col-xs-8">
+                      <a href="/signup">SignUp</a>
+                    </div>
+                    <div className="col-xs-4">
+                      <button type="submit" className="btn btn-primary btn-block btn-flat">
+                        Sign In
+                      </button>
+                    </div>
+                  </div>
+                  <AlertContainer ref={a => (this.msg = a)} {...this.alertOptions} />
                 </div>
-                <div className="col-xs-4">
-                    <button type="submit" className="btn btn-primary btn-block btn-flat" onClick={this.btnLogin.bind(this)}>Sign In</button>
-                </div>
+              </div>
             </div>
-            <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
-
-    </div>
-
-
-</div>
-</div>
-      </div>
-</MuiThemeProvider>
-    );
+          </form>
+        </div>
+      </MuiThemeProvider>;
   }
 }
  

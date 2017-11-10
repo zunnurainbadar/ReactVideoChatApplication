@@ -176,18 +176,7 @@ export default class Chat extends React.Component {
             <br />
             <br />
             <div className="row fixedbutton">
-              <form onSubmit={
-                this.sendMessage.bind(this)
-      // (e) => {
-      //   console.log("Inside onSubmit");
-      //   /**
-      //    * Prevent submit from reloading the page
-      //    */
-      //   this.sendMessage.bind(this);
-      //   e.preventDefault();
-      //   e.stopPropagation();
-      // }
-    }>
+              <form onSubmit={this.sendMessage.bind(this)}>
                 <div className="col-md-12">
                   <div className="col-md-8">
                     <input type="text" ref="message" style={chatinputbox} placeholder="Type a message here......." className="form-control" errorText="This field is required" />
