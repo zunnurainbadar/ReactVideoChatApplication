@@ -43,6 +43,7 @@ UIStore.home = true;
 console.log("Inside go to home UIStore ",UIStore.home)
   }
   all(){
+        UIStore.home = false;
          //Emitting event to receive conversations
          socket.emit('gettingConversation', {
            to: UserStore.user.username,
@@ -50,6 +51,7 @@ console.log("Inside go to home UIStore ",UIStore.home)
          });
        }
   unread(){
+        UIStore.home = false;
  //Emitting event to receive conversations
      socket.emit('unreadConversations', {
       to: UserStore.user.username,
@@ -57,6 +59,9 @@ console.log("Inside go to home UIStore ",UIStore.home)
     });
   }
   contacts = function(){
+    UIStore.home = false;
+    UIStore.recent = false;
+    UIStore.contacts = true;
     this.setState({recent:false,contacts:true});
      //Emitting event to receive conversations
      socket.emit('gettingConversation', {
@@ -65,6 +70,9 @@ console.log("Inside go to home UIStore ",UIStore.home)
     });
   }
   recent = function(){
+        UIStore.home = false;
+        UIStore.recent = true;
+        UIStore.contacts = false;
         this.setState({recent: true, contacts: false});
    //Emitting event to receive recent conversations
    socket.emit('gettingRecentConversation', {

@@ -11,7 +11,8 @@ class Store {
     @observable alertSuccesfulUpdation = false;
     @observable alertincorrectOldPassword = false;
     @observable alertSuccesfulUpdateDescription = false;
-
+    @observable recent = false;
+    @observable contacts = true;
     // @observable fullscreen = !
 }
 

@@ -15,7 +15,7 @@ import {MenuItem, makeSelectable, Badge} from 'material-ui';
 import Avatar from 'material-ui/Avatar';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
-import {map} from 'mobx';
+import {map, observable} from 'mobx';
 let SelectableList = makeSelectable(List);
 const muiTheme = getMuiTheme({
   palette: {},
@@ -36,10 +36,15 @@ export default class GroupList extends React.Component {
   componentDidMount() {
     socket.on(UserStore.user.username+'updatedConversations',function(data){
       console.log("inside conversation updation ",data);
+      console.log('Inside myconversations', UIStore.recent);
+      if(!UIStore.recent){
       ChatStore.conversations = data;      
+      }
     })
     //Receiving all conversations
     socket.on(UserStore.user.username + 'myConversations', function(data) {
+      console.log("Inside myconversations",data);
+
       ChatStore.conversations = data;
       ChatStore.conversationSelected = data[0];
       //Getting messages when click on conversation
@@ -71,10 +76,14 @@ export default class GroupList extends React.Component {
     ChatStore.conversationSelected = conv;
     //Emittin getting messages
     socket.emit('gettingMessages', {to: UserStore.user.username, conv: conv});
+    socket.emit('updatingchatlist', { 
+        to:  UserStore.user.username
+      });
     //Receiving messsages on selecting conversation
     socket.on(UserStore.user.username + 'myMessages', function(data) {
       ChatStore.messages = data;
     });
+    
   };
   render() {
     return (

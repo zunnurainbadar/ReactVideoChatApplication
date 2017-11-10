@@ -107,6 +107,9 @@ boot(app, __dirname, function(err) {
                     }
                     getUser()
                         .then(function() {
+                            console.log("Emitting my conversation..........................................");
+                            console.log("Emitting my conversation..........................................");
+                            console.log("Emitting my conversation..........................................");
                             io.sockets.emit(data.to + 'myConversations', _conversations)
                         })
                         .catch(err => console.log(err));
@@ -129,6 +132,9 @@ boot(app, __dirname, function(err) {
                     }
                     getUser()
                         .then(function() {
+                            console.log('Emitting my conversation..........................................');
+                            console.log('Emitting my conversation..........................................');
+                            console.log('Emitting my conversation..........................................');
                             io.sockets.emit(data.to + 'myConversations', _conversations)
                         })
                         .catch(err => console.log(err));
@@ -151,6 +157,9 @@ boot(app, __dirname, function(err) {
                     }
                     getUser()
                         .then(function() {
+                            console.log('Emitting my conversation..........................................');
+                            console.log('Emitting my conversation..........................................');
+                            console.log('Emitting my conversation..........................................');
                             io.sockets.emit(data.to + 'myConversations', _conv);
                         })
                         .catch(err => console.log(err));
@@ -159,6 +168,7 @@ boot(app, __dirname, function(err) {
         });
         //For Getting Messages of selected conversation
         socket.on('gettingMessages', function(data) {
+            console.log("Getting messages is called", data);
             if (data) {
                 if (data.conv) {
                     app.models.chatMessages.find({ where: { cid: data.conv.cid } }, function(err, _messages) {
@@ -168,7 +178,7 @@ boot(app, __dirname, function(err) {
                                 app.models.chatMessages.updateAll({ _id: _messages[i]._id }, { status: "read" }, function(err, _conv) {
                                     if (err) throw err;
                                     else {
-                                        console.log("Conversation updated successfully ", _conv);
+                                        // console.log("Conversation updated successfully ", _conv);
                                     }
                                 })
                             }
@@ -178,31 +188,12 @@ boot(app, __dirname, function(err) {
                 }
                 try {
                     app.models.Conversations.updateAll({ _id: data.conv.id }, { isRead: "false", unreadCount: 0 }, function(err, docs) {
-                            if (err) throw err;
-                            else {
-                                console.log("isRead updated successfully");
-                            }
-                        })
-                        //Updating chat list 
-                    app.models.Conversations.find({ where: { userOne: data.to } }, function(err, _conversations) {
                         if (err) throw err;
                         else {
-                            const getUser = async() => {
-                                for (var i = 0; i < _conversations.length; i++) {
-                                    let _users = await app.models.allUsers.findOne({ where: { username: _conversations[i].userTwo } });
-                                    if (_users) {
-                                        _conversations[i].avatar = _users.avatar;
-                                        _conversations[i].desc = _users.desc;
-                                    } else {}
-                                }
-                            }
-                            getUser()
-                                .then(function() {
-                                    io.sockets.emit(data.to + 'updatedConversations', _conversations)
-                                })
-                                .catch(err => console.log(err));
+                            console.log("isRead updated successfully");
                         }
                     })
+
 
                 } catch (e) {
                     console.log("Error is catched on 174");
@@ -211,6 +202,33 @@ boot(app, __dirname, function(err) {
             }
 
         });
+        socket.on('updatingchatlist', function(data) {
+            //Updating chat list 
+            app.models.Conversations.find({ where: { userOne: data.to } }, function(err, _conversations) {
+                if (err) throw err;
+                else {
+                    const getUser = async() => {
+                        for (var i = 0; i < _conversations.length; i++) {
+                            let _users = await app.models.allUsers.findOne({ where: { username: _conversations[i].userTwo } });
+                            if (_users) {
+                                _conversations[i].avatar = _users.avatar;
+                                _conversations[i].desc = _users.desc;
+                            } else {}
+                        }
+                    }
+                    getUser()
+                        .then(function() {
+                            console.log("Inside Getting messagegs..........................................");
+                            console.log("Emitting updaterd conversation..........................................");
+                            console.log("Emitting updaterd conversation..........................................");
+                            console.log("Emitting updaterd conversation..........................................");
+                            io.sockets.emit(data.to + 'updatedConversations', _conversations)
+                        })
+                        .catch(err => console.log(err));
+                }
+            })
+        })
+
         //For Sending Messages
         socket.on('sendMessage', function(data) {
             //Saving message
@@ -237,21 +255,24 @@ boot(app, __dirname, function(err) {
                 function(err, _conv) {
                     if (err) throw err;
                     else {
-                        console.log(
-                            'Conversation updated successfully ',
-                            _conv
-                        );
+                        // console.log(
+                        //     'Conversation updated successfully ',
+                        //     _conv
+                        // );
                     }
                 }
             );
             //Updating that there is a message to read
             const getUser = async() => {
+                console.log("THis is data.to ", data.to);
+                console.log("THis is data.sender ", data.sender);
+
                 let _conv = await app.models.Conversations.updateAll({ and: [{ userOne: data.to }, { userTwo: data.sender }] }, { isRead: 'true', $inc: { unreadCount: 1 } });
                 if (_conv) {
-                    console.log(
-                        'Conversation updated successfully ',
-                        _conv
-                    );
+                    // console.log(
+                    //     'Conversation updated successfully ',
+                    //     _conv
+                    // );
                 }
             };
             getUser()
@@ -271,6 +292,10 @@ boot(app, __dirname, function(err) {
                                 }
                                 getUser()
                                     .then(function() {
+                                        console.log("Inside send messages..........................................");
+                                        console.log("Emitting updaterd conversation..........................................");
+                                        console.log("Emitting updaterd conversation..........................................");
+                                        console.log("Emitting updaterd conversation..........................................");
                                         io.sockets.emit(data.to + 'updatedConversations', _conversations)
                                     })
                                     .catch(err => console.log(err));
