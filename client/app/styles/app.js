@@ -86,7 +86,8 @@ export default StyleSheet.create({
     'position': 'fixed',
     'bottom': [{ 'unit': '%V', 'value': 0 }],
     'backgroundColor': '#ffffff',
-    'width': [{ 'unit': '%H', 'value': 0.8 }]
+    'width': [{ 'unit': '%H', 'value': 0.8 }],
+    'marginLeft': [{ 'unit': '%H', 'value': 0 }]
   },
   'rotate': {
     'WebkitTransform': 'rotate(135deg)',

@@ -258,22 +258,29 @@ boot(app, __dirname, function(err) {
                 .then(function() {
                     //Updating chat list 
                     app.models.Conversations.find({ where: { userOne: data.to } }, function(err, _conversations) {
+                            if (err) throw err;
+                            else {
+                                const getUser = async() => {
+                                    for (var i = 0; i < _conversations.length; i++) {
+                                        let _users = await app.models.allUsers.findOne({ where: { username: _conversations[i].userTwo } });
+                                        if (_users) {
+                                            _conversations[i].avatar = _users.avatar;
+                                            _conversations[i].desc = _users.desc;
+                                        } else {}
+                                    }
+                                }
+                                getUser()
+                                    .then(function() {
+                                        io.sockets.emit(data.to + 'updatedConversations', _conversations)
+                                    })
+                                    .catch(err => console.log(err));
+                            }
+                        })
+                        //     //Updating recent list
+                    app.models.Conversations.find({ where: { and: [{ isRead: "true" }, { userOne: data.to }] } }, function(err, _conv) {
                         if (err) throw err;
                         else {
-                            const getUser = async() => {
-                                for (var i = 0; i < _conversations.length; i++) {
-                                    let _users = await app.models.allUsers.findOne({ where: { username: _conversations[i].userTwo } });
-                                    if (_users) {
-                                        _conversations[i].avatar = _users.avatar;
-                                        _conversations[i].desc = _users.desc;
-                                    } else {}
-                                }
-                            }
-                            getUser()
-                                .then(function() {
-                                    io.sockets.emit(data.to + 'updatedConversations', _conversations)
-                                })
-                                .catch(err => console.log(err));
+                            console.log("This is length count ", _conv.length);
                         }
                     })
                 })
